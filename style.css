@@ -402,7 +402,9 @@ body.menu-is-open .burger-toggle {
     background-color: var(--color-bg-darkest);
     color: var(--color-text);
     border-radius: 5px;
+    -webkit-appearance: textfield;
     -moz-appearance: textfield;
+    appearance: textfield;
     transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
@@ -549,7 +551,7 @@ body.menu-is-open .burger-toggle {
 .result-detail { display: flex; justify-content: space-around; font-size: 1.1rem; color: var(--color-text-muted); padding: 0 10px; transition: color 0.3s; }
 .result-divider { border: 0; border-top: 1px solid var(--color-border); margin: 12px 0; transition: border-color 0.3s; }
 .result-total { font-size: 3.5rem; font-weight: 700; color: var(--color-text); line-height: 1; transition: color 0.3s; }
-.result-descriptor { font-size: 1.3rem; color: #f0e8c; font-style: italic; min-height: 1.5rem; margin-top: 5px; }
+.result-descriptor { font-size: 1.3rem; color: #f0e8f8; font-style: italic; min-height: 1.5rem; margin-top: 5px; }
 
 #spend-fate-point-button {
     margin-top: 15px;
@@ -573,7 +575,7 @@ body.menu-is-open .burger-toggle {
 .roll-log-item.muted { color: var(--color-text-muted); font-style: italic; transition: color 0.3s; }
 .log-item-header { display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; font-weight: 700; }
 .log-item-total { font-size: 1.3rem; font-weight: 700; }
-.log-item-desc { font-size: 1rem; color: #f0e8c; font-style: italic; }
+.log-item-desc { font-size: 1rem; color: #f0e8f8; font-style: italic; }
 .log-item-details { font-size: 0.9rem; color: var(--color-text-muted); transition: color 0.3s; }
 .log-item-details.fate-spent {
     color: var(--color-accent-magic);
@@ -846,4 +848,53 @@ body.menu-is-open .burger-toggle {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+}
+/* YENİ: Beceri listesindeki <select> stilini <input> ile eşleştir */
+.skill-entry select {
+    width: 70px; /* Input'tan biraz daha geniş */
+    padding: 5px;
+    font-size: 1rem;
+    text-align: center;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-darkest);
+    color: var(--color-text);
+    border-radius: 5px;
+    font-family: var(--font-main);
+    font-weight: 700;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+.skill-entry select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--focus-shadow);
+}
+/* YENİ: Dolu kampanya kartı stilleri */
+.campaign-card-full .campaign-card-header h3 {
+    text-shadow: none;
+    color: var(--color-text-muted);
+}
+.campaign-card-full .campaign-card-body {
+    opacity: 0.6;
+}
+.campaign-card-full .campaign-card-footer button.btn-primary {
+    background-color: var(--color-secondary);
+    color: var(--color-text-muted);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* YENİ: Stunt Sayacı Stilleri */
+.stunt-counter {
+    background-color: var(--color-bg-med);
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    color: var(--color-text-muted);
+}
+.stunt-counter strong {
+    color: var(--color-text);
+    font-size: 1.2rem;
 }

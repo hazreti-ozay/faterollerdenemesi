@@ -77,7 +77,7 @@
                     <div class="stats-grid">
                         <div class="form-group">
                             <label for="char-refresh">Refresh:</label>
-                            <input type="number" id="char-refresh" class="char-field" value="3">
+                            <input type="number" id="char-refresh" class="char-field" value="3" min="1" max="5">
                         </div>
                         <div class="form-group fate-tracker">
                             <label>Fate Puanı:</label>
@@ -120,6 +120,11 @@
                 </div>
                 <div class="character-card">
                     <h2 class="card-title">Yetenekler (Stunts)</h2>
+                    
+                    <div id="stunt-counter" class="stunt-counter">
+                    <span>Toplam Stunt Hakkı: <strong id="stunt-limit-display">3</strong></span>
+                    <span>Kullanılan: <strong id="stunt-current-display">0</strong></span>
+                </div>
                     <div id="stunt-list-ul" class="stunt-list"></div>
                     <div class="stunt-adder-group">
                         <input type="text" id="stunt-input" placeholder="Yeni Stunt açıklaması...">
@@ -181,9 +186,14 @@
                         <div id="result-total" class="result-total">0</div>
                         <div id="result-descriptor" class="result-descriptor">...</div>
                         
-                        <button id="spend-fate-point-button" class="btn btn-accent" style="display: none;">
-                            Fate Puanı Harca (+2)
-                        </button>
+                        <div id="fate-spend-buttons" style="display: none; margin-top: 15px; display: flex; gap: 10px;">
+                            <button id="spend-fate-point-button" class="btn btn-accent" style="flex-grow: 1;">
+                                Fate Puanı Harca (+2)
+                            </button>
+                            <button id="reroll-fate-button" class="btn btn-secondary" style="flex-grow: 1;">
+                                Yeniden At (1 Fate Puanı)
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -227,6 +237,10 @@
                         <input type="text" id="new-campaign-name" class="char-field" placeholder="Örn: 'Kayıp Kader Kristali'">
                     </div>
                     <div class="form-group">
+                        <label for="new-campaign-gm-name">GM Adı:</label>
+                        <input type="text" id="new-campaign-gm-name" class="char-field" placeholder="Görünmesini istediğiniz isim...">
+                    </div>
+                    <div class="form-group">
                         <label for="new-campaign-system">Sistem:</label>
                         <input type="text" id="new-campaign-system" class="char-field" value="FATE">
                     </div>
@@ -266,10 +280,13 @@
                     <button id="create-campaign-button" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
                         Kampanyayı Lobiye Ekle
                     </button>
+                    <button id="update-campaign-button" class="btn btn-accent" style="width: 100%; margin-top: 10px; display: none;">
+                        Kampanya Bilgilerini Güncelle
                 </div>
             </section>
             
             <section id="gm-admin-view" class="tab-content">
+                
                 <div class="character-card">
                     <h2 id="gm-admin-title" class="card-title">Kampanya Yönetimi</h2>
                     <p class="card-description">
@@ -297,6 +314,15 @@
                     <h2 class="card-title">Onaylanmış Oyuncular</h2>
                     <div id="gm-approved-players-list">
                     </div>
+                    </div> <div class="character-card danger-zone">
+                    <h2 class="card-title">Tehlikeli Bölge</h2>
+                    <p class="card-description">
+                        Bu işlem geri alınamaz. Kampanyayı, içindeki tüm oyuncuları ve başvuruları kalıcı olarak siler.
+                    </p>
+                    <button id="edit-campaign-button" class="btn btn-secondary" style="margin-bottom: 10px; width: 100%;">Kampanya Bilgilerini Düzenle</button>
+
+                    <button id="delete-campaign-button" class="btn btn-danger">Kampanyayı Kalıcı Olarak Sil</button>
+                </div>
                 </div>
             </section>
 
@@ -342,6 +368,25 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="app.js"></script>
 
+    <div id="modal-overlay" class="modal-hidden">
+        <div id="modal-container">
+            <h2 id="modal-title" class="card-title" style="margin-top: 0; margin-bottom: 15px;"></h2>
+            <p id="modal-message"></p>
+            
+            <div id="modal-input-group" class="form-group-vertical" style="display: none;">
+                <input type="text" id="modal-input" class="char-field">
+            </div>
+
+            <div class="modal-buttons">
+                <button id="modal-cancel-button" class="btn btn-secondary">İptal</button>
+                <button id="modal-confirm-button" class="btn btn-primary">Onayla</button>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
 </body>
 </html>

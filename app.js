@@ -21,6 +21,13 @@ const FATE_SKILLS = [
     "Empathy", "Fight", "Investigate", "Lore", "Notice", "Physique",
     "Provoke", "Rapport", "Resources", "Shoot", "Stealth", "Will"
 ];
+// YENİ: Beceri Piramidi Limitleri
+const SKILL_PYRAMID_LIMITS = {
+    4: 1, // 1 adet +4
+    3: 2, // 2 adet +3
+    2: 3, // 3 adet +2
+    1: 4  // 4 adet +1
+};
 
 const fateLadderDescriptors = {
     "8": "Efsanevi!", "7": "Olağanüstü!", "6": "Muazzam!", "5": "Süper!",
@@ -36,7 +43,8 @@ let lastRoll = { total: 0, descriptor: "", logEntry: null };
 
 let currentManagedCampaignId = null;
 let liveCharacterListener = null; 
-let liveAspectListener = null; 
+let liveAspectListener = null;
+let liveSubmissionListener = null; 
 
 
 function getDefaultCharacter() {
@@ -86,6 +94,9 @@ const skillListContainer = document.getElementById('skill-list');
 const stuntListUl = document.getElementById('stunt-list-ul');
 const stuntInput = document.getElementById('stunt-input');
 const addStuntButton = document.getElementById('add-stunt-button');
+const stuntCounter = document.getElementById('stunt-counter');
+const stuntLimitDisplay = document.getElementById('stunt-limit-display');
+const stuntCurrentDisplay = document.getElementById('stunt-current-display');
 const physicalStressTrack = document.getElementById('physical-stress-track');
 const mentalStressTrack = document.getElementById('mental-stress-track');
 const consequenceMildInput = document.getElementById('consequence-mild');
@@ -103,9 +114,12 @@ const resultTotal = document.getElementById('result-total');
 const resultDescriptor = document.getElementById('result-descriptor');
 const rollLogList = document.getElementById('roll-log-list');
 const spendFatePointButton = document.getElementById('spend-fate-point-button');
+const fateSpendButtons = document.getElementById('fate-spend-buttons');
+const rerollFateButton = document.getElementById('reroll-fate-button');
 
 // GM Kampanya Formu Elementleri
 const newCampaignNameInput = document.getElementById('new-campaign-name');
+const newCampaignGmNameInput = document.getElementById('new-campaign-gm-name');
 const newCampaignSystemInput = document.getElementById('new-campaign-system');
 const newCampaignSettingInput = document.getElementById('new-campaign-setting');
 const newCampaignLoreInput = document.getElementById('new-campaign-lore');
@@ -127,6 +141,9 @@ const gmSituationAspectInput = document.getElementById('gm-situation-aspect-inpu
 const gmAddSituationAspectButton = document.getElementById('gm-add-situation-aspect-button');
 const gmSubmittedCharList = document.getElementById('gm-submitted-char-list');
 const gmApprovedPlayersList = document.getElementById('gm-approved-players-list');
+const deleteCampaignButton = document.getElementById('delete-campaign-button');
+const editCampaignButton = document.getElementById('edit-campaign-button');
+const updateCampaignButton = document.getElementById('update-campaign-button');
 
 // Canlı Aspekt Listesi Elementleri
 const liveSituationAspectsCard = document.getElementById('live-situation-aspects-card');
@@ -148,10 +165,9 @@ const ANIMATION_FLICKER_RATE = 50;
 
 
 // === YENİ: MODAL SİSTEMİ ===
-// Bu değişken, modal'ın "resolve" (onay) veya "reject" (iptal) fonksiyonunu tutacak
-let modalResolver = null;
+let modalResolver = null; // Modal'ın cevabını (Promise) tutar
 
-// 'prompt'u taklit eden fonksiyon (bir Promise döndürür)
+// 'prompt'u taklit eden fonksiyon
 function showModalPrompt({ title, message, inputType = 'text' }) {
     modalTitle.textContent = title;
     modalMessage.textContent = message;
@@ -161,41 +177,76 @@ function showModalPrompt({ title, message, inputType = 'text' }) {
     modalInputGroup.style.display = 'block';
 
     modalCancelButton.style.display = 'inline-block';
+    modalConfirmButton.textContent = "Onayla";
     
     modalOverlay.classList.remove('modal-hidden');
     modalInput.focus();
 
-    // Bir Promise oluşturuyoruz. Bu, kodun "beklemesini" sağlayacak.
-    return new Promise((resolve, reject) => {
-        // 'resolve' ve 'reject' fonksiyonlarını global değişkene atıyoruz
-        // böylece butonlar onlara erişebilir
-        modalResolver = { resolve, reject };
+    return new Promise((resolve) => {
+        modalResolver = resolve;
     });
 }
 
+// YENİ: 'confirm'i taklit eden fonksiyon
+function showModalConfirm({ title, message }) {
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+
+    modalInputGroup.style.display = 'none'; // Input'u gizle
+
+    modalCancelButton.style.display = 'inline-block'; // İptal'i göster
+    modalConfirmButton.textContent = "Onayla";
+    
+    modalOverlay.classList.remove('modal-hidden');
+
+    return new Promise((resolve) => {
+        // 'resolve(true)' veya 'resolve(null)' olarak çözülecek
+        modalResolver = resolve; 
+    });
+}
+
+// YENİ: 'alert'i taklit eden fonksiyon
+function showModalAlert({ title, message }) {
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+
+    modalInputGroup.style.display = 'none'; // Input'u gizle
+
+    modalCancelButton.style.display = 'none'; // İptal'i GİZLE
+    modalConfirmButton.textContent = "Tamam"; // Buton metnini "Tamam" yap
+    
+    modalOverlay.classList.remove('modal-hidden');
+
+    return new Promise((resolve) => {
+        // Sadece 'Tamam'a basılmasını bekliyor
+        modalResolver = resolve; 
+    });
+}
+
+// GÜNCELLENDİ: handleModalConfirm (Buton metnini sıfırlar)
 function handleModalConfirm() {
     if (!modalResolver) return;
     
-    // Eğer input alanı görünürse, input'un değerini döndür
     if (modalInputGroup.style.display === 'block') {
-        modalResolver.resolve(modalInput.value);
+        modalResolver(modalInput.value);
     } else {
-        // Değilse, sadece "true" (onay) döndür
-        modalResolver.resolve(true);
+        modalResolver(true); // 'Confirm' ve 'Alert' için 'true' döndür
     }
     
     modalOverlay.classList.add('modal-hidden');
     modalResolver = null;
+    modalConfirmButton.textContent = "Onayla"; // Metni varsayılana döndür
 }
 
+// GÜNCELLENDİ: handleModalCancel (Buton metnini sıfırlar)
 function handleModalCancel() {
     if (!modalResolver) return;
 
-    // 'null' döndürerek (veya hata fırlatarak) 'prompt'un "iptal"ini taklit et
-    modalResolver.resolve(null);
+    modalResolver(null); // 'Confirm' ve 'Prompt' için 'null' döndür
     
     modalOverlay.classList.add('modal-hidden');
     modalResolver = null;
+    modalConfirmButton.textContent = "Onayla"; // Metni varsayılana döndür
 }
 // === MODAL SİSTEMİ SONU ===
 
@@ -235,9 +286,15 @@ function detachAllListeners() {
         liveAspectListener();
         liveAspectListener = null;
     }
+    // YENİ: Başvuru dinleyicisini de kapat
+    if (liveSubmissionListener) {
+        liveSubmissionListener();
+        liveSubmissionListener = null;
+    }
+    
 }
 
-function showCampaignStatus(status, campaignName = '') {
+async function showCampaignStatus(status, campaignName = '') {
     if (status === 'approved') {
         campaignStatusText.textContent = `CANLI MOD: "${campaignName}" oyununa bağlısınız.`;
         campaignStatusDisplay.style.display = 'flex';
@@ -251,7 +308,7 @@ function showCampaignStatus(status, campaignName = '') {
         leaveCampaignButton.style.display = 'none';
         if (status === 'denied') {
             // (Bunu da yakında modal'a çevireceğiz)
-            alert("Başvurunuz reddedildi veya GM tarafından oyundan çıkarıldınız. Lokal karakterinize döndünüz.");
+            await showModalAlert({ title: "Başvuru Durumu", message: "Başvurunuz reddedildi veya GM tarafından oyundan çıkarıldınız. Lokal karakterinize döndünüz." });
         }
     }
 }
@@ -293,12 +350,13 @@ function loadCharacter() {
     checkActiveCampaignStatus();
 }
 
+// GÜNCELLENDİ: "Anlık Onay" özelliğini ekler (Yeniden Yükleme Hatası Düzeltildi)
 async function checkActiveCampaignStatus() {
     const activeCampaignId = localStorage.getItem('fateActiveCampaignId');
     const activeCharacterName = localStorage.getItem('fateActiveCharacterName');
 
     if (!activeCampaignId || !activeCharacterName) {
-        return; 
+        return; // Aktif oyun yok, lokalden devam (zaten edildi)
     }
 
     const campaignRef = db.collection("publicCampaigns").doc(activeCampaignId);
@@ -311,10 +369,15 @@ async function checkActiveCampaignStatus() {
 
         const playerDoc = await playerRef.get();
 
+        // DURUM 1: OYUNCU ONAYLANMIŞ (CANLI MOD)
         if (playerDoc.exists) {
             localStorage.setItem('fateCampaignStatus', 'approved');
-            showCampaignStatus('approved', campaignName);
+            await showCampaignStatus('approved', campaignName);
 
+            // Önceki dinleyicileri temizle
+            detachAllListeners();
+
+            // CANLI KARAKTERİ DİNLE
             liveCharacterListener = playerRef.onSnapshot(liveDoc => {
                 console.log("CANLI VERİ GELDİ!");
                 
@@ -329,23 +392,44 @@ async function checkActiveCampaignStatus() {
 
                 localStorage.setItem('fateCharacterData', JSON.stringify(characterData));
                 updateUIFromData(); 
-            }, (error) => {
+            }, async (error) => {
                 console.error("Canlı karakter dinlemesi başarısız:", error);
-                alert("Hata: Oyuna olan canlı bağlantı koptu.");
+                await showModalAlert({ title: "Bağlantı Hatası", message: "Hata: Oyuna olan canlı bağlantı koptu." });
             });
         } 
+        // DURUM 2: ONAYLANMAMIŞ (BEKLEMEDE VEYA REDDEDİLMİŞ)
         else {
-            const subDoc = await submissionRef.get();
-            if (subDoc.exists) {
-                localStorage.setItem('fateCampaignStatus', 'pending');
-                showCampaignStatus('pending', campaignName);
-            } 
-            else {
-                localStorage.removeItem('fateActiveCampaignId');
-                localStorage.removeItem('fateActiveCharacterName');
-                localStorage.setItem('fateCampaignStatus', 'offline');
-                showCampaignStatus('denied');
-            }
+            // Önceki "onay bekleme" dinleyicisini temizle (varsa)
+            if (liveSubmissionListener) liveSubmissionListener();
+
+            // Onaylanıp onaylanmadığını anlamak için başvurusunu DİNLE
+            liveSubmissionListener = submissionRef.onSnapshot(async (subDoc) => {
+                if (subDoc.exists) {
+                    // Başvuru hala oradaysa: Beklemede
+                    localStorage.setItem('fateCampaignStatus', 'pending');
+                    await showCampaignStatus('pending', campaignName);
+                } 
+                else {
+                    // Başvuru SİLİNDİ (GM onayladı VEYA reddetti)
+                    // Dinleyiciyi durdur
+                    detachAllListeners(); 
+
+                    await showModalAlert({ title: "Başvuru Durumu", message: "GM başvurunuzu inceledi. Durumunuz güncelleniyor..." });
+                    
+                    // --- HATA DÜZELTMESİ BURADA ---
+                    // Sadece loadCharacter() çağırmak yetmez.
+                    // Sayfa açılışındaki tüm sırayı yeniden çalıştırmalıyız.
+                    
+                    loadCharacter(); // 1. Veriyi (artık canlı) yükle
+                    populateSkillManager(); // 2. Beceri menülerini yeniden oluştur
+                    populateSkillSelector(); // 3. Zar atıcı menüsünü yeniden oluştur
+                    updateUIFromData(); // 4. UI'ı yeni veriyle güncelle
+                    // --- DÜZELTME SONU ---
+                }
+            }, (error) => {
+                 console.error("Başvuru dinlenirken hata:", error);
+                 // (Hata olursa sessiz kal, oyuncu zaten lokal modda)
+            });
         }
     } catch (error) {
         console.error("Kampanya durumu kontrol edilirken hata:", error);
@@ -376,6 +460,25 @@ function toggleBurgerMenu() {
 }
 
 function switchView(viewName) {
+
+    // YENİ: Formu sıfırlama mantığı
+    // Eğer 'campaign' sekmesinden AYRILIYORSAK, butonları 'Oluştur' moduna sıfırla
+    if (document.querySelector('.nav-button[data-view="campaign"].active')) {
+        if (viewName !== 'campaign') {
+            createCampaignButton.style.display = 'block';
+            updateCampaignButton.style.display = 'none';
+            // Formu da temizleyebiliriz
+            newCampaignNameInput.value = "";
+            newCampaignGmNameInput.value = "";
+            newCampaignSystemInput.value = "FATE";
+            newCampaignSettingInput.value = "";
+            newCampaignLoreInput.value = "";
+            newCampaignPlayersInput.value = "3";
+            newCampaignDescInput.value = "";
+            newCampaignPasswordInput.value = "";
+        }
+    }
+    // --- YENİ KOD SONU ---
     allViews.forEach(view => view.classList.remove('active'));
     navButtons.forEach(button => button.classList.remove('active'));
     
@@ -408,6 +511,30 @@ function switchView(viewName) {
 }
 
 // === STUNT YÖNETİMİ ===
+
+// YENİ: Refresh ve Stunt limitlerini kontrol eden ve UI'ı güncelleyen ana fonksiyon
+function updateRefreshAndStunts() {
+    if (!characterData || !characterData.skills) return; // Veri henüz yüklenmemişse çık
+
+    const currentRefresh = parseInt(characterData.refresh) || 1;
+    const maxStunts = 6 - currentRefresh;
+    const currentStunts = characterData.stunts.length;
+
+    // UI'ı Güncelle
+    stuntLimitDisplay.textContent = maxStunts;
+    stuntCurrentDisplay.textContent = currentStunts;
+
+    // Stunt Ekleme Butonunu Yönet
+    if (currentStunts >= maxStunts) {
+        stuntInput.disabled = true;
+        addStuntButton.disabled = true;
+        stuntInput.placeholder = "Maksimum Stunt hakkına ulaştınız.";
+    } else {
+        stuntInput.disabled = false;
+        addStuntButton.disabled = false;
+        stuntInput.placeholder = "Yeni Stunt açıklaması...";
+    }
+}
 async function renderStunts() { 
     stuntListUl.innerHTML = "";
     if (!characterData.stunts || characterData.stunts.length === 0) {
@@ -432,6 +559,19 @@ async function renderStunts() {
     });
 }
 async function handleAddStunt() { 
+    // YENİ: Stunt eklemeden önce limiti kontrol et
+    const currentRefresh = parseInt(characterData.refresh) || 1;
+    const maxStunts = 6 - currentRefresh;
+    const currentStunts = characterData.stunts.length;
+
+    if (currentStunts >= maxStunts) {
+        await showModalAlert({
+            title: "Limit Dolu",
+            message: `Stunt limitine ulaştınız (${maxStunts} adet). Daha fazla Stunt eklemek için Refresh puanınızı düşürmelisiniz.`
+        });
+        return; // Fonksiyonu durdur
+    }
+    // --- KONTROL SONU ---
     const stuntText = stuntInput.value.trim();
     if (stuntText) {
         characterData.stunts.push(stuntText);
@@ -444,6 +584,7 @@ async function handleRemoveStunt(index) {
     characterData.stunts.splice(index, 1);
     await saveCharacter(); 
     renderStunts();
+    updateRefreshAndStunts(); // Refresh ve Stunt limitlerini güncelle
 }
 
 // === KAMPANYA YÖNETİMİ (FIREBASE) ===
@@ -451,14 +592,15 @@ async function handleRemoveStunt(index) {
 async function handleCreateCampaign() {
     const name = newCampaignNameInput.value.trim();
     const system = newCampaignSystemInput.value.trim();
+    const gmName = newCampaignGmNameInput.value.trim();
     const setting = newCampaignSettingInput.value.trim(); 
     const lore = newCampaignLoreInput.value.trim(); 
     const players = parseInt(newCampaignPlayersInput.value) || 0;
     const desc = newCampaignDescInput.value.trim();
     const password = newCampaignPasswordInput.value.trim();
 
-    if (!name || !password || !desc || !setting) {
-        alert("Hata: Lütfen Oyun Adı, Sistem, Setting, Hikaye Kancası ve Yönetim Şifresi alanlarını doldurun.");
+    if (!name || !password || !desc || !setting || !gmName) {
+       await showModalAlert({ title: "Eksik Bilgi", message: "Hata: Lütfen Oyun Adı, GM Adı, Sistem, Setting, Hikaye Kancası ve Yönetim Şifresi alanlarını doldurun." });
         return;
     }
     
@@ -468,10 +610,12 @@ async function handleCreateCampaign() {
     try {
         const newCampaign = {
             name: name,
+            gmName: gmName,
             system: system,
             setting: setting, 
             lore: lore, 
             maxPlayers: players,
+            currentPlayerCount: 0, // <-- YENİ SATIR
             description: desc, 
             password: password, 
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -480,9 +624,10 @@ async function handleCreateCampaign() {
 
         await db.collection("publicCampaigns").add(newCampaign);
 
-        alert("Başarılı! Kampanyanız lobiye eklendi.");
+        await showModalAlert({ title: "Başarılı", message: "Kampanyanız lobiye eklendi." });
         
         newCampaignNameInput.value = "";
+        newCampaignGmNameInput.value = ""; // <-- YENİ SATIR
         newCampaignSystemInput.value = "FATE";
         newCampaignSettingInput.value = ""; 
         newCampaignLoreInput.value = ""; 
@@ -494,13 +639,79 @@ async function handleCreateCampaign() {
 
     } catch (error) {
         console.error("Kampanya oluşturulurken hata:", error);
-        alert("Hata: Kampanya oluşturulamadı. Lütfen konsolu (F12) kontrol edin.");
+        await showModalAlert({ title: "Firebase Hatası", message: "Hata: Kampanya oluşturulamadı. Lütfen konsolu (F12) kontrol edin." });
     }
 
     createCampaignButton.disabled = false;
     createCampaignButton.textContent = "Kampanyayı Lobiye Ekle";
 }
+// YENİ: Kampanyayı Güncelleme
+async function handleUpdateCampaign() {
+    if (!currentManagedCampaignId) return; // Güncellenecek ID yoksa dur
 
+    // 1. Formdan verileri oku
+    const name = newCampaignNameInput.value.trim();
+    const gmName = newCampaignGmNameInput.value.trim();
+    const system = newCampaignSystemInput.value.trim();
+    const setting = newCampaignSettingInput.value.trim(); 
+    const lore = newCampaignLoreInput.value.trim(); 
+    const players = parseInt(newCampaignPlayersInput.value) || 0;
+    const desc = newCampaignDescInput.value.trim();
+    const password = newCampaignPasswordInput.value.trim();
+
+    // 2. Doğrulama
+    if (!name || !password || !desc || !setting || !gmName) {
+        await showModalAlert({ title: "Eksik Bilgi", message: "Hata: Lütfen Oyun Adı, GM Adı, Sistem, Setting, Hikaye Kancası ve Yönetim Şifresi alanlarını doldurun." });
+        return;
+    }
+    
+    updateCampaignButton.disabled = true;
+    updateCampaignButton.textContent = "Güncelleniyor...";
+
+    try {
+        const updatedCampaignData = {
+            name: name,
+            gmName: gmName,
+            system: system,
+            setting: setting, 
+            lore: lore, 
+            maxPlayers: players,
+            description: desc, 
+            password: password, 
+            // createdAt ve situationAspects'e dokunmuyoruz, onlar korunacak
+        };
+
+        // 3. .add() yerine .doc().update() kullanıyoruz
+        await db.collection("publicCampaigns").doc(currentManagedCampaignId).update(updatedCampaignData);
+
+        await showModalAlert({ title: "Başarılı", message: "Kampanyanız güncellendi." });
+        
+        // 4. Formu temizle ve butonları sıfırla
+        newCampaignNameInput.value = "";
+        newCampaignGmNameInput.value = ""; 
+        newCampaignSystemInput.value = "FATE";
+        newCampaignSettingInput.value = ""; 
+        newCampaignLoreInput.value = ""; 
+        newCampaignPlayersInput.value = "3";
+        newCampaignDescInput.value = "";
+        newCampaignPasswordInput.value = "";
+
+        // 5. Butonları sıfırla (Oluştur'u göster, Güncelle'yi gizle)
+        createCampaignButton.style.display = 'block';
+        updateCampaignButton.style.display = 'none';
+
+        switchView('find-campaign'); // Lobiye dön
+
+    } catch (error) {
+        console.error("Kampanya güncellenirken hata:", error);
+        await showModalAlert({ title: "Firebase Hatası", message: "Hata: Kampanya güncellenemedi. Lütfen konsolu (F12) kontrol edin." });
+    }
+
+    updateCampaignButton.disabled = false;
+    updateCampaignButton.textContent = "Kampanya Bilgilerini Güncelle";
+}
+
+// GÜNCELLENDİ: renderPublicCampaigns (Kapasite kontrolü ve "Dolu" butonu eklendi)
 async function renderPublicCampaigns() {
     publicCampaignListContainer.innerHTML = "<li class='stunt-list-item muted'>Kampanyalar yükleniyor...</li>";
     
@@ -518,18 +729,25 @@ async function renderPublicCampaigns() {
             const campaign = doc.data();
             const campaignId = doc.id;
             
+            // YENİ: Kapasite Kontrolü
+            const maxP = campaign.maxPlayers || 0;
+            const currentP = campaign.currentPlayerCount || 0;
+            const isFull = currentP >= maxP;
+            
             const card = document.createElement('div');
-            card.className = 'campaign-list-card';
+            // YENİ: Kart doluysa CSS sınıfı ekle
+            card.className = `campaign-list-card ${isFull ? 'campaign-card-full' : ''}`;
 
             card.innerHTML = `
                 <div class="campaign-card-header">
-                    <h3>${campaign.name}</h3>
+                    <h3>${campaign.name} ${isFull ? '(DOLU)' : ''}</h3>
                 </div>
                 <div class="campaign-card-body">
                     <div class="campaign-card-stats">
+                        <span><strong>GM:</strong> ${campaign.gmName || 'Bilinmiyor'}</span>
                         <span><strong>Sistem:</strong> ${campaign.system || 'Belirtilmemiş'}</span>
                         <span><strong>Setting:</strong> ${campaign.setting || 'Belirtilmemiş'}</span>
-                        <span><strong>Kişi:</strong> ${campaign.maxPlayers || 'N/A'}</span>
+                        <span><strong>Kişi:</strong> ${currentP} / ${maxP}</span>
                     </div>
                     <p class="campaign-card-desc">"${campaign.description || 'Açıklama yok.'}"</p>
                     
@@ -542,8 +760,8 @@ async function renderPublicCampaigns() {
                     <button class="btn btn-secondary" data-action="manage" data-id="${campaignId}" data-password="${campaign.password}" data-name="${campaign.name}">
                         Yönet
                     </button>
-                    <button class="btn btn-primary" data-action="submit" data-id="${campaignId}" data-name="${campaign.name}">
-                        Karakterimi Gönder
+                    <button class="btn btn-primary" data-action="submit" data-id="${campaignId}" data-name="${campaign.name}" ${isFull ? 'disabled' : ''}>
+                        ${isFull ? 'Kampanya Dolu' : 'Karakterimi Gönder'}
                     </button>
                 </div>
             `;
@@ -553,30 +771,33 @@ async function renderPublicCampaigns() {
                 promptForCampaignPassword(data.id, data.password, data.name);
             });
             
-            card.querySelector('[data-action="submit"]').addEventListener('click', (e) => {
-                const data = e.currentTarget.dataset;
-                handleSubmitToCampaign(data.id, data.name);
-            });
+            // "Dolu" değilse 'submit' dinleyicisini ekle
+            if (!isFull) {
+                card.querySelector('[data-action="submit"]').addEventListener('click', (e) => {
+                    const data = e.currentTarget.dataset;
+                    handleSubmitToCampaign(data.id, data.name);
+                });
+            }
 
             publicCampaignListContainer.appendChild(card);
         });
 
     } catch (error) {
         console.error("Kampanyalar yüklenirken hata:", error);
-        publicCampaignListContainer.innerHTML = "<li class'stunt-list-item danger-zone'>Hata: Kampanyalar yüklenemedi.</li>";
+        publicCampaignListContainer.innerHTML = "<li class='stunt-list-item danger-zone'>Hata: Kampanyalar yüklenemedi.</li>";
     }
 }
 
 
 async function handleSubmitToCampaign(campaignId, campaignName) {
     if (!characterData.name || !characterData.highConcept) {
-        alert("Hata: Lütfen 'Karakter Sayfası' sekmesine gidin ve en azından karakterinizin 'İsim' ve 'High Concept' alanlarını doldurun.");
+       await showModalAlert({ title: "Eksik Karakter", message: "Hata: Lütfen 'Karakter Sayfası' sekmesine gidin ve en azından karakterinizin 'İsim' ve 'High Concept' alanlarını doldurun." });
         switchView('char');
         return;
     }
     
     // (Bunu da yakında modal'a çevireceğiz)
-    const isSure = confirm(`'${characterData.name}' adlı karakterinizi '${campaignName}' oyununa göndermek istediğinizden emin misiniz?`);
+    const isSure = await showModalConfirm({ title: "Onay", message: `${characterData.name}' adlı karakterinizi '${campaignName}' oyununa göndermek istediğinizden emin misiniz?` });
     
     if (!isSure) {
         return;
@@ -595,11 +816,11 @@ async function handleSubmitToCampaign(campaignId, campaignName) {
         localStorage.setItem('fateCampaignStatus', 'pending');
         showCampaignStatus('pending', campaignName);
 
-        alert("Başarılı! Karakteriniz GM'in onayına gönderildi.");
+       await showModalAlert({ title: "Başvuru Alındı", message: "Başarılı! Karakteriniz GM'in onayına gönderildi." });
         
     } catch (error) {
         console.error("Karakter gönderilirken hata:", error);
-        alert("Hata: Karakteriniz gönderilemedi. Lütfen konsolu (F12) kontrol edin.");
+      await showModalAlert({ title: "Firebase Hatası", message: "Hata: Karakteriniz gönderilemedi. Lütfen konsolu (F12) kontrol edin." });
     }
 }
 
@@ -607,7 +828,6 @@ async function handleSubmitToCampaign(campaignId, campaignName) {
 
 // GÜNCELLENDİ: 'prompt' yerine yeni modal'ı kullanır
 async function promptForCampaignPassword(campaignId, correctPassword, campaignName) {
-    // const promptedPassword = prompt(`'${campaignName}' kampanyasını yönetmek için lütfen şifrenizi girin:`);
     
     const promptedPassword = await showModalPrompt({
         title: `Yönetim: ${campaignName}`,
@@ -624,8 +844,7 @@ async function promptForCampaignPassword(campaignId, correctPassword, campaignNa
         loadGmAdminView(campaignName); 
         switchView('gm-admin'); 
     } else {
-        // (Bunu da yakında modal'a çevireceğiz)
-        alert("Şifre yanlış!");
+        await showModalAlert({ title: "Giriş Hatası", message: "Şifre yanlış!" });
     }
 }
 
@@ -758,15 +977,25 @@ async function renderSubmittedCharacters() {
     }
 }
 
+// GÜNCELLENDİ: renderApprovedPlayers (Başlığa sayaç eklendi)
 async function renderApprovedPlayers() {
     if (!currentManagedCampaignId) return;
 
-    gmApprovedPlayersList.innerHTML = "<li class='stunt-list-item muted'>Oyuncular yükleniyor...</li>";
+    gmApprovedPlayersList.innerHTML = "<li class'stunt-list-item muted'>Oyuncular yükleniyor...</li>";
 
     try {
+        // Önce ana kampanya dokümanını alıp limiti öğrenelim
+        const campaignDoc = await db.collection("publicCampaigns").doc(currentManagedCampaignId).get();
+        const maxPlayers = campaignDoc.data().maxPlayers || 0;
+
+        // Şimdi oyuncuları dinle
         db.collection("publicCampaigns").doc(currentManagedCampaignId).collection("players")
             .onSnapshot((snapshot) => {
                 
+                const currentPlayers = snapshot.size;
+                // YENİ: Kartın başlığını güncelle
+                gmApprovedPlayersList.parentElement.querySelector('h2.card-title').textContent = `Onaylanmış Oyuncular (${currentPlayers} / ${maxPlayers})`;
+
                 const openCards = new Set();
                 gmApprovedPlayersList.querySelectorAll('.gm-player-card.is-open').forEach(card => {
                     openCards.add(card.dataset.playerId);
@@ -843,7 +1072,6 @@ async function renderApprovedPlayers() {
                     }
                     stuntsHtml += '</ul>';
 
-
                     details.innerHTML = `
                         <h3>Aspektler</h3>
                         <ul>
@@ -887,7 +1115,7 @@ async function renderApprovedPlayers() {
 async function handleDenyCharacter(submissionId, charName) {
     if (!currentManagedCampaignId) return;
 
-    const isSure = confirm(`'${charName}' adlı karakterin başvurusunu reddetmek (ve silmek) istediğinizden emin misiniz?`);
+    const isSure = await showModalConfirm({ title: "Onay", message: `${charName}' adlı karakterin başvurusunu reddetmek (ve silmek) istediğinizden emin misiniz?` });
     if (!isSure) return;
 
     try {
@@ -895,17 +1123,39 @@ async function handleDenyCharacter(submissionId, charName) {
                 .collection("submissions").doc(submissionId).delete();
     } catch (error) {
         console.error("Başvuru reddedilirken hata:", error);
-        alert("Hata: Başvuru reddedilemedi.");
+     await showModalAlert({ title: "Hata", message: "Hata: Başvuru reddedilemedi." });
     }
 }
 
+// GÜNCELLENDİ: handleApproveCharacter (Kapasite Kontrolü Eklendi)
 async function handleApproveCharacter(submissionId, characterObject) {
     if (!currentManagedCampaignId) return;
 
-    const isSure = confirm(`'${characterObject.name}' adlı karakteri oyuna onaylamak istediğinizden emin misiniz?`);
-    if (!isSure) return;
-
     try {
+        // --- YENİ KONTROL BAŞLANGICI ---
+        // 1. Mevcut oyuncu sayısını ve limiti al
+        const campaignRef = db.collection("publicCampaigns").doc(currentManagedCampaignId);
+        const campaignDoc = await campaignRef.get();
+        const maxPlayers = campaignDoc.data().maxPlayers || 0; // Limiti al
+        
+        const playersSnapshot = await campaignRef.collection("players").get();
+        const currentPlayers = playersSnapshot.size; // Mevcut oyuncu sayısını al
+
+        // 2. Limiti kontrol et
+        if (currentPlayers >= maxPlayers) {
+            await showModalAlert({ title: "Kapasite Dolu", message: `Bu oyun zaten ${maxPlayers} oyuncu limitine ulaşmış. Yeni oyuncu onaylayamazsınız.` });
+            return; // Fonksiyonu durdur
+        }
+        // --- YENİ KONTROL SONU ---
+
+        // 3. Onay al (Eğer limit dolu değilse)
+        const isSure = await showModalConfirm({ 
+            title: "Onay", 
+            message: `'${characterObject.name}' adlı karakteri oyuna onaylamak istediğinizden emin misiniz? (${currentPlayers + 1} / ${maxPlayers} oyuncu olacak)` 
+        });
+        if (!isSure) return;
+        
+        // 4. Oyuncuyu onayla
         delete characterObject.submittedAt;
 
         await db.collection("publicCampaigns").doc(currentManagedCampaignId)
@@ -913,28 +1163,111 @@ async function handleApproveCharacter(submissionId, characterObject) {
 
         await db.collection("publicCampaigns").doc(currentManagedCampaignId)
                 .collection("submissions").doc(submissionId).delete();
+
+        await campaignRef.update({
+            currentPlayerCount: firebase.firestore.FieldValue.increment(1)
+        });
         
-        alert(`'${characterObject.name}' oyuna onaylandı!`);
+        await showModalAlert({ title: "Başarılı", message: `'${characterObject.name}' oyuna onaylandı!` });
 
     } catch (error) {
         console.error("Karakter onaylanırken hata:", error);
-        alert("Hata: Karakter onaylanamadı.");
+        await showModalAlert({ title: "Hata", message: "Hata: Karakter onaylanamadı. Konsolu kontrol edin." });
     }
 }
 
 async function handleKickPlayer(playerName) {
     if (!currentManagedCampaignId) return;
 
-    const isSure = confirm(`'${playerName}' adlı oyuncuyu oyundan atmak (ve karakterini silmek) istediğinizden emin misiniz?`);
+    const isSure = await showModalConfirm({ title: "Onay", message: `${playerName} adlı oyuncuyu oyundan atmak (ve karakterini silmek) istediğinizden emin misiniz?` });
     if (!isSure) return;
 
     try {
         await db.collection("publicCampaigns").doc(currentManagedCampaignId)
                 .collection("players").doc(playerName).delete();
-        alert(`'${playerName}' oyundan atıldı.`);
+                const campaignRef = db.collection("publicCampaigns").doc(currentManagedCampaignId);
+        await campaignRef.update({
+            currentPlayerCount: firebase.firestore.FieldValue.increment(-1)
+        });
+        await showModalAlert({ title: "Başarılı", message: `${playerName} oyundan atıldı.` });
     } catch (error) {
         console.error("Oyuncu atılırken hata:", error);
-        alert("Hata: Oyuncu atılamadı.");
+        await showModalAlert({ title: "Hata", message: "Hata: Oyuncu atılamadı." });
+    }
+}
+// YENİ: Kampanyayı Kalıcı Olarak Silme
+async function handleDeleteCampaign() {
+    if (!currentManagedCampaignId) return;
+
+    // 1. Onay Al
+    const isSure = await showModalConfirm({ 
+        title: "DİKKAT! KAMPANYAYI SİL", 
+        message: "Bu kampanyayı kalıcı olarak silmek istediğinizden emin misiniz? Bu işlem geri alınamaz ve tüm başvurular/oyuncular silinir."
+    });
+    if (!isSure) return;
+
+    // 2. Ekstra Onay (Kullanıcının yanlışlıkla tıklamasını engelle)
+    const campaignDoc = await db.collection("publicCampaigns").doc(currentManagedCampaignId).get();
+    const campaignName = campaignDoc.data().name;
+    const confirmationText = await showModalPrompt({
+        title: "Son Onay",
+        message: `Silmek için lütfen kampanya adını tam olarak yazın: "${campaignName}"`,
+        inputType: "text"
+    });
+
+    if (confirmationText !== campaignName) {
+        await showModalAlert({ title: "İptal Edildi", message: "Kampanya adı eşleşmedi. Silme işlemi iptal edildi." });
+        return;
+    }
+
+    // 3. Silme İşlemi
+    try {
+        // Not: Bu yöntem, alt koleksiyonları (players, submissions) "yetim" bırakır.
+        // Tam bir temizlik için Firebase Functions (Cloud Fonksiyonları) gerekir.
+        // Ancak bu "yetim" veriye artık ulaşılamayacağı için lobi sistemimiz için bu yeterlidir.
+        await db.collection("publicCampaigns").doc(currentManagedCampaignId).delete();
+
+        await showModalAlert({ title: "Başarılı", message: `"${campaignName}" kampanyası başarıyla silindi.` });
+        
+        currentManagedCampaignId = null; // Yönetilen ID'yi temizle
+        switchView('find-campaign'); // Lobiye geri dön
+
+    } catch (error) {
+        console.error("Kampanya silinirken hata:", error);
+        await showModalAlert({ title: "Hata", message: "Hata: Kampanya silinemedi. Lütfen konsolu (F12) kontrol edin." });
+    }
+}
+// YENİ: Kampanya Düzenle formunu yükler
+async function handleEditCampaignClick() {
+    if (!currentManagedCampaignId) return;
+
+    try {
+        const campaignDoc = await db.collection("publicCampaigns").doc(currentManagedCampaignId).get();
+        if (!campaignDoc.exists) {
+            return await showModalAlert({ title: "Hata", message: "Düzenlenecek kampanya bulunamadı." });
+        }
+        const data = campaignDoc.data();
+
+        // 1. Formu doldur
+        newCampaignNameInput.value = data.name || "";
+        newCampaignGmNameInput.value = data.gmName || "";
+        newCampaignSystemInput.value = data.system || "FATE";
+        newCampaignSettingInput.value = data.setting || "";
+        newCampaignPlayersInput.value = data.maxPlayers || 3;
+        newCampaignDescInput.value = data.description || "";
+        newCampaignLoreInput.value = data.lore || "";
+        newCampaignPasswordInput.value = data.password || ""; // Şifreyi de yüklüyoruz
+
+        // 2. Butonları ayarla (Oluştur'u gizle, Güncelle'yi göster)
+        createCampaignButton.style.display = 'none';
+        updateCampaignButton.style.display = 'block';
+
+        // 3. Sayfayı değiştir
+        switchView('campaign');
+
+    } catch (error) {
+        console.error("Kampanya düzenleme verisi çekilirken hata:", error);
+        await showModalAlert({ title: "Hata", message: "Kampanya verisi çekilemedi. Konsolu kontrol edin." });
     }
 }
 
@@ -958,7 +1291,7 @@ async function handleGmAddSituationAspect() {
         
     } catch (error) {
         console.error("Durum aspekti eklenirken hata:", error);
-        alert("Hata: Aspekt eklenemedi.");
+        await showModalAlert({ title: "Hata", message: "Hata: Aspekt eklenemedi." });
     }
     
     gmAddSituationAspectButton.disabled = false;
@@ -967,7 +1300,7 @@ async function handleGmAddSituationAspect() {
 async function handleGmRemoveSituationAspect(aspectText) {
     if (!currentManagedCampaignId) return;
     
-    const isSure = confirm(`'${aspectText}' aspektini silmek istediğinizden emin misiniz?`);
+    const isSure = await showModalConfirm({ title: "Onay", message: `${aspectText} aspektini silmek istediğinizden emin misiniz?` });
     if (!isSure) return;
 
     try {
@@ -979,7 +1312,7 @@ async function handleGmRemoveSituationAspect(aspectText) {
         
     } catch (error) {
         console.error("Durum aspekti silinirken hata:", error);
-        alert("Hata: Aspekt silinemedi.");
+        await showModalAlert({ title: "Hata", message: "Hata: Aspekt silinemedi." });
     }
 }
 
@@ -1041,15 +1374,19 @@ async function handleLeaveCampaign() {
         ? "Şu an bağlı olduğunuz oyundan ayrılmak istediğinize emin misiniz? (Karakteriniz oyundan silinecek)"
         : "Kampanya başvurunuzu geri çekmek istediğinizden emin misiniz?";
     
-    // (Bunu da yakında modal'a çevireceğiz)
-    const isSure = confirm(confirmationText);
+    const isSure = await showModalConfirm({ title: "Oyundan Ayrıl", message: confirmationText });
     if (!isSure) return;
 
     try {
         detachAllListeners();
         
+        const campaignRef = db.collection("publicCampaigns").doc(activeCampaignId); // <-- YENİ REFERANS
         if (status === 'approved') {
             await db.collection("publicCampaigns").doc(activeCampaignId).collection("players").doc(activeCharacterName).delete();
+            // YENİ: Sadece onaylanmış oyuncu ayrılırsa sayacı azalt
+            await campaignRef.update({
+                currentPlayerCount: firebase.firestore.FieldValue.increment(-1)
+            });
         } else if (status === 'pending') {
             await db.collection("publicCampaigns").doc(activeCampaignId).collection("submissions").doc(activeCharacterName).delete();
         }
@@ -1058,14 +1395,14 @@ async function handleLeaveCampaign() {
         localStorage.removeItem('fateActiveCharacterName');
         localStorage.setItem('fateCampaignStatus', 'offline');
         
-        alert("Oyundan başarıyla ayrıldınız. Lokal karakterinize dönülüyor.");
+        await showModalAlert({ title: "Başarılı", message: "Oyundan başarıyla ayrıldınız. Lokal karakterinize dönülüyor." });
         
         loadCharacter(); 
         updateUIFromData(); 
 
     } catch (error) {
         console.error("Oyundan ayrılırken hata:", error);
-        alert("Hata: Oyundan ayrılamadınız. Lütfen tekrar deneyin.");
+        await showModalAlert({ title: "Hata", message: "Hata: Oyundan ayrılamadınız. Lütfen tekrar deneyin." });
     }
 }
 
@@ -1133,6 +1470,7 @@ function updateUIFromData() {
     consequenceMildInput.value = characterData.consequences.mild;
     consequenceModerateInput.value = characterData.consequences.moderate;
     consequenceSevereInput.value = characterData.consequences.severe;
+    updateRefreshAndStunts();
 }
 async function handleChangeFatePoints(amount) { 
     if (typeof amount !== 'number') {
@@ -1144,7 +1482,7 @@ async function handleChangeFatePoints(amount) {
     current += amount;
     if (current < 0) current = 0;
     if (current > refresh && amount > 0) {
-        alert("Fate Puanı, Refresh değerinden yüksek olamaz.");
+        await showModalAlert({ title: "Limit Aşıldı", message: "Fate Puanı, Refresh değerinden yüksek olamaz." });
         current = refresh;
     }
     characterData.currentFatePoints = current;
@@ -1152,15 +1490,42 @@ async function handleChangeFatePoints(amount) {
     
     charFatePointsDisplay.textContent = characterData.currentFatePoints;
 }
+// GÜNCELLENDİ: handleCharacterInputChange (Refresh/Stunt kuralı eklendi)
 async function handleCharacterInputChange(event) { 
     const id = event.target.id;
-    const value = event.target.type === 'number' ? parseInt(event.target.value) || 0 : event.target.value;
+    let value = event.target.type === 'number' ? parseInt(event.target.value) || 0 : event.target.value;
+
+    // === YENİ REFRESH/STUNT KONTROLÜ ===
     if (id === 'char-refresh') {
+        const oldValue = characterData.refresh;
+        
+        // 1. Min/Max sınırlarını zorunlu kıl (min 1 stunt, max 5 stunt)
+        if (value > 5) value = 5; // Max 5 Refresh (çünkü min 1 Stunt)
+        if (value < 1) value = 1; // Min 1 Refresh
+        event.target.value = value; // UI'ı düzelt
+
+        const newMaxStunts = 6 - value;
+        const currentStunts = characterData.stunts.length;
+
+        // 2. Kuralı kontrol et: Mevcut stunt sayısı, yeni limitten fazla olamaz
+        if (currentStunts > newMaxStunts) {
+            await showModalAlert({
+                title: "Kural İhlali",
+                message: `Refresh'i ${value}'e düşüremezsiniz. Önce ${currentStunts - newMaxStunts} adet Stunt silmelisiniz.`
+            });
+            // Değişikliği geri al
+            event.target.value = oldValue;
+            return; // Fonksiyondan çık, kaydetme
+        }
+        
+        // Geçerliyse:
         characterData.refresh = value;
         if (characterData.currentFatePoints > value) {
             characterData.currentFatePoints = value;
         }
     }
+    // === KONTROL SONU ===
+
     const keyMap = {
         'char-name': 'name', 'char-desc': 'description',
         'char-high-concept': 'highConcept', 'char-trouble': 'trouble',
@@ -1179,38 +1544,106 @@ async function handleCharacterInputChange(event) {
             characterData[key] = value;
         }
     }
+
     await saveCharacter(); 
     
+    // Refresh değiştiyse UI'ı güncelle
     if (id === 'char-refresh') {
-         charFatePointsDisplay.textContent = characterData.currentFatePoints;
+        charFatePointsDisplay.textContent = characterData.currentFatePoints;
+        updateRefreshAndStunts(); // Stunt sayacını güncelle
     }
 }
-async function handleSkillInputChange(skillName, event) { 
-    const value = parseInt(event.target.value) || 0;
-    characterData.skills[skillName] = value;
-    await saveCharacter(); 
+// YENİ: Beceri Piramidini doğrulayan yardımcı fonksiyon
+async function validateSkillPyramid(skills, changedSkill, newValue) {
+    // Eğer 0'a çekiliyorsa her zaman izin ver
+    if (newValue === 0) return true;
+
+    // Yeni değeri hesaba katmadan önce mevcut sayımı yap
+    const counts = { 4: 0, 3: 0, 2: 0, 1: 0 };
+    Object.keys(skills).forEach(skill => {
+        // Değiştirdiğimiz beceriyi sayma, onu yeni değeriyle ayrıca ele alacağız
+        if (skill === changedSkill) return; 
+        
+        const level = skills[skill];
+        if (level > 0 && level <= 4) {
+            counts[level]++;
+        }
+    });
+
+    // Şimdi yeni değeri ekle
+    counts[newValue]++;
+    
+    // Limiti aşıp aşmadığını kontrol et
+    if (counts[newValue] > SKILL_PYRAMID_LIMITS[newValue]) {
+        // (Bunu yakında modal'a çevireceğiz)
+        await showModalAlert({ title: "Piramit Kuralı İhlali", message: `Sadece ${SKILL_PYRAMID_LIMITS[newValue]} adet "+${newValue}" beceriye sahip olabilirsiniz.` });
+        return false;
+    }
+    
+    return true; // Limit aşılmadı
 }
 
-// === ZAR ATICI VE BECERİ LİSTESİ FONKSİYONLARI ===
+// GÜNCELLENDİ: 'populateSkillManager' (Artık 'select' menüsü oluşturuyor)
 function populateSkillManager() {
     skillListContainer.innerHTML = "";
+    const skillLevels = [
+        { text: "+4", value: 4 },
+        { text: "+3", value: 3 },
+        { text: "+2", value: 2 },
+        { text: "+1", value: 1 },
+        { text: " 0", value: 0 }
+    ];
+
     FATE_SKILLS.sort().forEach(skill => {
         const entry = document.createElement('div');
         entry.className = 'skill-entry';
         const skillId = `skill-${skill.toLowerCase()}`;
+        
         const label = document.createElement('label');
         label.setAttribute('for', skillId);
         label.textContent = skill;
-        const input = document.createElement('input');
-        input.type = 'number';
-        input.id = skillId;
-        input.value = characterData.skills[skill] || 0;
-        input.min = "-2"; input.max = "8";
-        input.addEventListener('change', (event) => handleSkillInputChange(skill, event)); 
+        
+        // 'input' yerine 'select'
+        const select = document.createElement('select');
+        select.id = skillId;
+        
+        skillLevels.forEach(level => {
+            const option = document.createElement('option');
+            option.value = level.value;
+            option.textContent = level.text;
+            select.appendChild(option);
+        });
+
+        select.value = characterData.skills[skill] || 0;
+        
+        // Olay dinleyicisini 'change' olarak güncelle
+        select.addEventListener('change', (event) => handleSkillChange(skill, event)); 
+        
         entry.appendChild(label);
-        entry.appendChild(input);
+        entry.appendChild(select);
         skillListContainer.appendChild(entry);
     });
+}
+
+// GÜNCELLENDİ: 'handleSkillInputChange' -> 'handleSkillChange' (Validasyon eklendi)
+async function handleSkillChange(skillName, event) { 
+    const newValue = parseInt(event.target.value);
+    const oldValue = characterData.skills[skillName] || 0;
+
+    // 1. Piramiti kontrol et
+    const isValid = validateSkillPyramid(characterData.skills, skillName, newValue);
+
+    if (isValid) {
+        // 2. Geçerliyse, değeri güncelle ve kaydet
+        characterData.skills[skillName] = newValue;
+        await saveCharacter(); 
+        
+        // Zar atıcıdaki listeyi de güncelle
+        populateSkillSelector(); 
+    } else {
+        // 3. Geçerli değilse, değişikliği geri al
+        event.target.value = oldValue;
+    }
 }
 function populateSkillSelector() {
     skillSelector.innerHTML = "";
@@ -1223,7 +1656,7 @@ function populateSkillSelector() {
 }
 function handleRollClick() {
     rollButton.disabled = true;
-    spendFatePointButton.style.display = 'none';
+    fateSpendButtons.style.display = 'none';
     startDiceAnimation();
     setTimeout(() => {
         stopDiceAnimationAndRoll();
@@ -1301,7 +1734,7 @@ function stopDiceAnimationAndRoll() {
     }
     renderRollLog();
     if (characterData.currentFatePoints > 0) {
-        spendFatePointButton.style.display = 'block';
+        fateSpendButtons.style.display = 'flex'; // 'block' yerine 'flex'
     }
 }
 function getDescriptor(total) {
@@ -1311,7 +1744,7 @@ function getDescriptor(total) {
 }
 async function handleSpendFatePoint() { 
     if (characterData.currentFatePoints <= 0) {
-        alert("Harcanacak Fate Puanın yok!");
+        await showModalAlert({ title: "Yetersiz Puan", message: "Harcanacak Fate Puanın yok!" });
         return;
     }
     characterData.currentFatePoints--;
@@ -1330,7 +1763,21 @@ async function handleSpendFatePoint() {
         lastLogEntry.fateSpent = true;
     }
     renderRollLog();
-    spendFatePointButton.style.display = 'none';
+    fateSpendButtons.style.display = 'none';
+}
+// YENİ: Fate Puanı ile Yeniden Atma
+async function handleRerollClick() {
+    if (characterData.currentFatePoints <= 0) {
+        await showModalAlert({ title: "Yetersiz Puan", message: "Harcanacak Fate Puanın yok!" });
+        return;
+    }
+
+    // 1. Puanı harca (Bu, saveCharacter'ı ve canlı güncellemeyi tetikler)
+    // handleChangeFatePoints zaten asenkron olduğu için 'await' kullanıyoruz.
+    await handleChangeFatePoints(-1);
+    
+    // 2. Yeniden zar at (Bu, butonları gizleyip animasyonu başlatacak)
+    handleRollClick();
 }
 
 // === İÇE/DIŞA AKTARMA VE SIFIRLAMA ===
@@ -1352,7 +1799,7 @@ function handleImportFile(event) {
     const file = event.target.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
         try {
             const importedData = JSON.parse(e.target.result);
             if (importedData && importedData.skills) {
@@ -1365,21 +1812,21 @@ function handleImportFile(event) {
                 characterData = { ...getDefaultCharacter(), ...importedData };
                 saveCharacter(); 
                 updateUIFromData();
-                alert('Karakter başarıyla yüklendi! (Canlı oyun bağlantısı kesildi)');
+                await showModalAlert({ title: "Başarılı", message: "Karakter başarıyla yüklendi! (Canlı oyun bağlantısı kesildi)" });
                 switchView('char');
             } else {
-                alert('Hata: Geçersiz karakter dosyası.');
+                await showModalAlert({ title: "Hata", message: "Hata: Geçersiz karakter dosyası." });
             }
         } catch (error) {
             console.error("Dosya okunurken hata:", error);
-            alert('Hata: Dosya okunurken bir sorun oluştu. JSON formatında olduğundan emin olun.');
+            await showModalAlert({ title: "Hata", message: "Hata: Dosya okunurken bir sorun oluştu. JSON formatında olduğundan emin olun." });
         }
     };
     reader.readAsText(file);
     event.target.value = null;
 }
-function handleResetCharacter() {
-    const isSure = confirm("UYARI: Bu işlem mevcut karakterinizi tamamen sıfırlayacak. Emin misiniz? (Canlı oyun bağlantınız varsa kesilecektir)");
+async function handleResetCharacter() {
+    const isSure = await showModalConfirm({ title: "Onay Gerekli", message: "UYARI: Bu işlem mevcut karakterinizi tamamen sıfırlayacak. Emin misiniz? (Canlı oyun bağlantınız varsa kesilecektir)" });
     if (isSure) {
         detachAllListeners();
         localStorage.removeItem('fateActiveCampaignId');
@@ -1390,7 +1837,7 @@ function handleResetCharacter() {
         characterData = getDefaultCharacter();
         saveCharacter(); 
         updateUIFromData();
-        alert('Karakter sıfırlandı.');
+        await showModalAlert({ title: "Başarılı", message: "Karakter sıfırlandı." });
         switchView('char');
     }
 }
@@ -1425,13 +1872,16 @@ document.addEventListener('DOMContentLoaded', () => {
     minusFatePointButton.addEventListener('click', () => handleChangeFatePoints(-1));
     
     rollButton.addEventListener('click', handleRollClick);
-    spendFatePointButton.addEventListener('click', handleSpendFatePoint); 
+    spendFatePointButton.addEventListener('click', handleSpendFatePoint);
+    rerollFateButton.addEventListener('click', handleRerollClick); 
     addStuntButton.addEventListener('click', handleAddStunt); 
     stuntInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleAddStunt(); 
     });
+    
 
     createCampaignButton.addEventListener('click', handleCreateCampaign);
+    updateCampaignButton.addEventListener('click', handleUpdateCampaign);
     
     gmAddSituationAspectButton.addEventListener('click', handleGmAddSituationAspect);
     gmSituationAspectInput.addEventListener('keypress', (e) => {
@@ -1439,6 +1889,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     leaveCampaignButton.addEventListener('click', handleLeaveCampaign);
+    // YENİ:
+    editCampaignButton.addEventListener('click', handleEditCampaignClick);
+    // YENİ: Kampanya Silme Butonu
+    deleteCampaignButton.addEventListener('click', handleDeleteCampaign);
     
     // YENİ: Modal Buton Dinleyicileri
     modalConfirmButton.addEventListener('click', handleModalConfirm);
