@@ -2077,7 +2077,20 @@ document.addEventListener('DOMContentLoaded', () => {
     editCampaignButton.addEventListener('click', handleEditCampaignClick);
     // YENİ: Kampanya Silme Butonu
     deleteCampaignButton.addEventListener('click', handleDeleteCampaign);
-    
+    // === YENİ KOD BAŞLANGICI: Modal Input 'Enter' Tuşu ===
+    // Modal'daki input alanındayken 'Enter' tuşuna basılmasını dinle
+    modalInput.addEventListener('keypress', (e) => {
+        // Sadece modal görünürken VE 'Enter' tuşuna basıldığında
+        if (!modalOverlay.classList.contains('modal-hidden') && e.key === 'Enter') {
+            
+            // Enter tuşunun varsayılan 'form submit' eylemini engelle (gerekirse)
+            e.preventDefault(); 
+            
+            // 'Onayla' butonuna tıklanmış gibi yap
+            handleModalConfirm();
+        }
+    });
+    // === YENİ KOD BİTİŞİ ===
     // YENİ: Modal Buton Dinleyicileri
     modalConfirmButton.addEventListener('click', handleModalConfirm);
     modalCancelButton.addEventListener('click', handleModalCancel);
