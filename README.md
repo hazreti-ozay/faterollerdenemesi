@@ -28,7 +28,7 @@ Bu araç, o vizyonun ilk adımıdır ve FATE sistemi üzerine odaklanmıştır.
 Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 
 ### 🧑‍⚖️ GM (Game Master) için:
-* **Kampanya Yönetimi:** Yeni FATE kampanyaları oluşturun (Setting, Lore, Kişi Sayısı vb. detaylarla), mevcut kampanyaları düzenleyin veya silin.
+* **Kampanya Yönetimi:** Yeni FATE kampanyaları oluşturun (Setting, Lore, Kişi Sayısı [1-10 doğrulama dahil] vb. detaylarla), mevcut kampanyaları düzenleyin veya silin.
 * **GM Yönetim Paneli:** Şifre korumalı özel GM paneline erişim.
 * **Başvuru Yönetimi:** Oyuncuların kampanyanıza gönderdiği karakter başvurularını inceleyin, "Onayla" veya "Reddet".
 * **Canlı Oyuncu Takibi:** Onaylanmış oyuncularınızın anlık **Stres** ve **Kader Puanı (Fate Point)** durumlarını canlı olarak izleyin.
@@ -38,11 +38,12 @@ Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 
 ### 🧙 Oyuncu için:
 * **Kampanya Lobisi:** Mevcut tüm kampanyaları "vitrin" kartları olarak listeleyin. Dolu kampanyalara başvuru kilitlenir.
-* **Karakter Yaratma:** FATE kurallarına uygun karakterler yaratın (`validateSkillPyramid` dahil).
+* **FATE Core Kural Uyumlu Karakter Yaratma:** `validateSkillPyramid` (Beceri Piramidi) doğrulaması, **Dinamik Stres Kutuları** (Physique/Will'e göre) ve **Dinamik Consequence Slotları** (+4 beceriye göre) dahil olmak üzere FATE Core kurallarına tam uyumlu karakter yaratma.
 * **Başvuru Sistemi:** Yarattığınız karakteri (tarayıcı hafızasından) bir kampanyaya gönderin.
 * **"Canlı Mod" (Live Mode):** GM tarafından onaylandığınızda, karakter sayfanız otomatik olarak "Canlı Mod"a geçer.
+* **Anlık Onay Bildirimleri:** GM onayı, reddi veya oyundan atılma durumunda sayfayı yenilemeden anında bildirim alma ve duruma göre (Canlı Mod/Lokal Mod) yönlendirilme.
 * **Anlık Güncelleme:** "Canlı Mod"da yaptığınız tüm değişiklikler (Stres almak, Kader Puanı harcamak) anında Firebase'e yazılır ve GM panelinde görünür.
-* **Entegre Zar Atıcı:** "Yeniden At (Reroll)" mekaniğini destekleyen zar atıcı.
+* **Entegre Zar Atıcı:** "Yeniden At (Reroll)" ve "+2 Ekle" mekaniklerini destekleyen, maliyet etiketli zar atıcı.
 * **Oyundan Ayrılma:** Dilediğiniz zaman kampanyadan ayrılarak karakterinizi "Lokal Mod"a geri döndürün.
 
 ## 🛠️ Kullanılan Teknolojiler (Tech Stack)
@@ -71,9 +72,10 @@ Projeyi kendi bilgisayarınızda çalıştırmak ve geliştirmek için:
 Projenin stabilizasyonu ve geleceği için planlanan sıradaki adımlar:
 
 * ✅ **Modal Entegrasyonu:** Tüm yerel `alert/confirm` pencereleri özel modal sistemi ile değiştirildi.
-* ⏳ **"Anlık Onay" UX İyileştirmesi:** Oyuncunun, başvurusu onaylandığında sayfayı yenilemeden "Canlı Mod"a geçmesi.
+* ✅ **"Anlık Onay" UX İyileştirmesi:** Oyuncunun, başvurusu onaylandığında/reddedildiğinde sayfayı yenilemeden bildirim alması ve yönlendirilmesi sağlandı.
+* ✅ **FATE Core Kural Entegrasyonu:** Dinamik Stres ve Consequence mekanikleri (Physique/Will'e dayalı) eklendi.
 * ⏳ **Çoklu Karakter Desteği:** `localStorage` yapısının tek karakterden, çoklu karakter listesine (`fateCharacterList`) dönüştürülmesi.
-* ⏳ **Yeni FATE Kuralları:** Belirlenecek yeni kompleks kuralların entegrasyonu.
+* ⏳ **Yeni FATE Kuralları:** Belirlenecek yeni kompleks kuralların (örn: detaylı çatışma/conflict mekanikleri) entegrasyonu.
 * ✨ **Gelecek Vizyonu:** Diğer (D&D dışı) FRP sistemleri için modüllerin eklenmesi.
 
 ## 🤝 Katkıda Bulunma (Contributing)
@@ -81,8 +83,8 @@ Projenin stabilizasyonu ve geleceği için planlanan sıradaki adımlar:
 Bu proje topluluk odaklıdır ve her türlü katkıya açıktır!
 
 * **Hata Raporlama:** Lütfen [Issues](https://github.com/hazreti-ozay/faterollerdenemesi/issues) sekmesini kullanın.
-* **Kod Katkısı:** Projenin kod tabanına (codebase) aktif olarak katkı sağlamak isterseniz, lütfen öncelikle [**CONTRIBUTING.md**](httpsT://github.com/hazreti-ozay/faterollerdenemesi/blob/main/CONTRIBUTING.md) dosyasını okuyun ve benimle (veya proje sahibiyle) iletişime geçin.
-* **Davranış Kuralları:** Lütfen [**CODE_OF_CONDUCT.md**](httpsS://github.com/hazreti-ozay/faterollerdenemesi/blob/main/CODE_OF_CONDUCT.md) dosyasını inceleyin.
+* **Kod Katkısı:** Projenin kod tabanına (codebase) aktif olarak katkı sağlamak isterseniz, lütfen öncelikle [**CONTRIBUTING.md**](https://github.com/hazreti-ozay/faterollerdenemesi/blob/main/CONTRIBUTING.md) dosyasını okuyun ve benimle (veya proje sahibiyle) iletişime geçin.
+* **Davranış Kuralları:** Lütfen [**CODE_OF_CONDUCT.md**](https://github.com/hazreti-ozay/faterollerdenemesi/blob/main/CODE_OF_CONDUCT.md) dosyasını inceleyin.
 
 ## 📄 Lisans
 
