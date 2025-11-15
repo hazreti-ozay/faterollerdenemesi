@@ -81,7 +81,6 @@ Projenin stabilizasyonu ve geleceği için planlanan sıradaki adımlar:
 * ✅ **"Anlık Onay" UX İyileştirmesi:** Oyuncunun, başvurusu onaylandığında/reddedildiğinde sayfayı yenilemeden bildirim alması ve yönlendirilmesi sağlandı.
 * ✅ **FATE Core Kural Entegrasyonu:** Dinamik Stres ve Consequence mekanikleri (Physique/Will'e dayalı) eklendi.
 * ✅ **Çoklu Karakter Desteği:** `localStorage` yapısı tek karakterden, çoklu karakter listesine (`fateCharacterList`) dönüştürüldü. Menü entegrasyonu tamamlandı.
-* ⏳ **Yeni FATE Kuralları:** Belirlenecek yeni kompleks kuralların (örn: detaylı çatışma/conflict mekanikleri) entegrasyonu.
 * ✨ **Gelecek Vizyonu:** Diğer (D&D dışı) FRP sistemleri için modüllerin eklenmesi.
 
 ## 🤝 Katkıda Bulunma (Contributing)
