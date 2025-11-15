@@ -65,6 +65,14 @@
                 <div class="character-card">
                     <h2 class="card-title">Karakter Bilgileri</h2>
 
+                    <div id="character-management-group" class="character-management-group">
+                        <select id="character-selector" title="Karakter Seç">
+                            </select>
+                        <button id="add-new-character-btn" class="btn btn-primary" title="Yeni Karakter Ekle">+</button>
+                        <button id="delete-character-btn" class="btn btn-danger" title="Aktif Karakteri Sil">Sil</button>
+                    </div>
+                    <div class="menu-divider" style="margin-top: 0;"></div>
+
                     <div id="campaign-status-display" 
                          style="margin-bottom: 15px; padding: 10px 15px; border-radius: 5px; background-color: var(--color-bg-med); color: var(--color-accent-magic); font-weight: 700;
                                 display: none; justify-content: space-between; align-items: center;">
@@ -324,6 +332,17 @@
                 </div>
 
                 <div class="character-card">
+                    <h2 class="card-title">GM Fate Puanı</h2>
+                    <div class="form-group fate-tracker" style="justify-content: center; margin-bottom: 0;">
+                        <label>Güncel Puan:</label>
+                        <div class="fate-point-controls">
+                            <button id="gm-minus-fate-point" class="btn btn-danger-outline btn-round" title="Fate Puanı Harca">−</button>
+                            <span id="gm-fate-points-display" class="fate-point-display">0</span>
+                            <button id="gm-plus-fate-point" class="btn btn-primary-outline btn-round" title="Fate Puanı Kazan">+</button>
+                        </div>
+                    </div>
+
+                <div class="character-card">
                     <h2 class="card-title">Başvuran Karakterler</h2>
                     <div id="gm-submitted-char-list">
                     </div>
@@ -369,7 +388,9 @@
             </section>
 
         </main>
-    </div> <div id="modal-overlay" class="modal-hidden">
+    </div> 
+    
+    <div id="modal-overlay" class="modal-hidden">
         <div id="modal-container">
             <h2 id="modal-title" class="card-title" style="margin-top: 0; margin-bottom: 15px;"></h2>
             <p id="modal-message"></p>
@@ -387,25 +408,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="app.js"></script>
-
-    <div id="modal-overlay" class="modal-hidden">
-        <div id="modal-container">
-            <h2 id="modal-title" class="card-title" style="margin-top: 0; margin-bottom: 15px;"></h2>
-            <p id="modal-message"></p>
-            
-            <div id="modal-input-group" class="form-group-vertical" style="display: none;">
-                <input type="text" id="modal-input" class="char-field">
-            </div>
-
-            <div class="modal-buttons">
-                <button id="modal-cancel-button" class="btn btn-secondary">İptal</button>
-                <button id="modal-confirm-button" class="btn btn-primary">Onayla</button>
-            </div>
-        </div>
+    <div id="save-toast-notification" class="toast-notification">
+        Kaydedildi!
     </div>
     </body>
-</html>
-</body>
 </html>

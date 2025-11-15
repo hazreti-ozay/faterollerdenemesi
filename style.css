@@ -1046,3 +1046,116 @@ body.menu-is-open .burger-toggle {
     flex-shrink: 0;
 }
 /* === BİTİŞ: STUNT/ASPEKT EKLEME GRUBU STİLİ === */
+/* === BAŞLANGIÇ: KARAKTER YÖNETİM GRUBU === */
+
+.character-management-group {
+    display: flex;
+    gap: 10px;
+    align-items: stretch; /* Yükseklikleri eşitler */
+    margin-bottom: 20px;
+}
+
+/* Dropdown menüyü .char-field gibi stillendirir */
+.character-management-group select {
+    flex-grow: 1; /* Mevcut alanın çoğunu kapla */
+    min-width: 150px;
+    
+    /* .char-field'dan kopyalanan stiller */
+    padding: 10px 12px;
+    font-size: 1rem;
+    font-weight: 700; /* Beceriler gibi kalın yaptık */
+    font-family: var(--font-main);
+    background-color: var(--color-bg-med);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.character-management-group select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--focus-shadow);
+}
+
+/* Butonların genişlemesini engelle */
+.character-management-group .btn {
+    flex-shrink: 0;
+}
+
+/* === BİTİŞ: KARAKTER YÖNETİM GRUBU === */
+/* === BAŞLANGIÇ: KAYDETME BİLDİRİMİ (TOAST) === */
+
+.toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--color-accent-magic); /* Turkuaz */
+    color: var(--color-bg-darkest); /* Koyu metin */
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0, 240, 208, 0.3);
+    z-index: 9999; /* Her şeyin üstünde */
+    
+    /* Başlangıçta gizli ve görünmez */
+    opacity: 0;
+    transform: translateY(-20px);
+    visibility: hidden;
+    
+    /* Animasyon (Hafifçe belirip kaybolma) */
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+/* JS tarafından eklendiğinde bunu görünür yap */
+.toast-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
+
+/* === BİTİŞ: KAYDETME BİLDİRİMİ (TOAST) === */
+/* === BAŞLANGIÇ: ZAR GEÇMİŞİ RENKLENDİRME === */
+
+/* .die-plus/minus'taki renkleri alır */
+.log-die-plus {
+    color: var(--color-die-plus);
+    font-weight: 700;
+}
+.log-die-minus {
+    color: var(--color-die-minus);
+    font-weight: 700;
+}
+.log-die-blank {
+    color: var(--color-die-blank);
+    font-weight: 700;
+    opacity: 0.8;
+}
+/* === BİTİŞ: ZAR GEÇMİŞİ RENKLENDİRME === */
+/* === BAŞLANGIÇ: ÖNERİ 3 - "KENARLIK SOLMASI" EFEKTİ (En İncesi) === */
+
+/* Kenarlık rengini yavaşça değiştirip geri getiren animasyon */
+@keyframes border-fade-live {
+  0% {
+    /* Başlangıç: Canlı turkuaz (tema rengi) */
+    border-top-color: var(--color-accent-magic);
+  }
+  50% {
+    /* Orta: Sönük (veya ana tema rengi) */
+    border-top-color: var(--color-primary); /* Ana mor renge döner */
+  }
+  100% {
+    /* Bitiş: Tekrar canlı turkuaz */
+    border-top-color: var(--color-accent-magic);
+  }
+}
+
+/* Animasyonu ID'ye ve 'display: flex' durumuna ata */
+#campaign-status-display[style*="display: flex"] {
+    /* Animasyonu uygulamak için bir kenarlık tanımla */
+    border-top: 3px solid var(--color-accent-magic);
+    
+    /* Animasyon: 3 saniyede bir gidip gelsin */
+    animation: border-fade-live 3s infinite ease-in-out;
+}
+/* === BİTİŞ: ÖNERİ 3 === */
