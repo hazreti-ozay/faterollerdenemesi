@@ -60,8 +60,10 @@ function getDefaultCharacter() {
         relationship: "", aspect1: "", aspect2: "",
         skills: defaultSkills,
         stunts: [],
-        stress: { physical: [false, false, false, false], mental: [false, false, false, false] },
-        consequences: { mild: "", moderate: "", severe: "" }
+        // DEĞİŞTİ: Temel stres 4 kutu oldu
+        stress: { physical: [false, false, false, false], mental: [false, false, false, false] }, 
+        // DEĞİŞTİ: mildExtra eklendi
+        consequences: { mild: "", moderate: "", severe: "", mildExtra: "" } 
     };
 }
 function getDefaultCampaign() {
@@ -377,8 +379,13 @@ async function checkActiveCampaignStatus() {
             // Önceki dinleyicileri temizle
             detachAllListeners();
 
-            // CANLI KARAKTERİ DİNLE
-            liveCharacterListener = playerRef.onSnapshot(liveDoc => {
+            // ... checkActiveCampaignStatus fonksiyonunun içindeyiz ...
+
+        // CANLI KARAKTERİ DİNLE
+        liveCharacterListener = playerRef.onSnapshot(async (liveDoc) => { // 'async' eklendi
+            // === BAŞLANGIÇ: GÖREV 1.2 DÜZELTMESİ (Oyundan Atılma) ===
+            if (liveDoc.exists) {
+                // Durum A: Oyuncu hala oyunda, veri güncellendi
                 console.log("CANLI VERİ GELDİ!");
                 
                 const parsedData = liveDoc.data();
@@ -389,16 +396,38 @@ async function checkActiveCampaignStatus() {
                     stress: { ...defaultData.stress, ...parsedData.stress },
                     consequences: { ...defaultData.consequences, ...parsedData.consequences },
                 };
-
+                
                 localStorage.setItem('fateCharacterData', JSON.stringify(characterData));
                 updateUIFromData(); 
-            }, async (error) => {
-                console.error("Canlı karakter dinlemesi başarısız:", error);
-                await showModalAlert({ title: "Bağlantı Hatası", message: "Hata: Oyuna olan canlı bağlantı koptu." });
-            });
-        } 
+            } else {
+                // Durum B: Doküman silindi (Oyuncu GM tarafından ATILDI)
+                console.log("CANLI VERİ SİLİNDİ! (Oyundan Atıldı)");
+                
+                // 1. Tüm dinleyicileri kapat
+                detachAllListeners();
+                
+                // 2. Durumu 'denied' olarak ayarla (atılma ile aynı)
+                localStorage.removeItem('fateActiveCampaignId');
+                localStorage.removeItem('fateActiveCharacterName');
+                localStorage.setItem('fateCampaignStatus', 'denied');
+                
+                // 3. Modal'ı göster (showCampaignStatus'un 'denied' durumu bunu yapacak)
+                await showCampaignStatus('denied');
+                
+                // 4. Lokal karakteri yeniden yükle
+                loadCharacter();
+                populateSkillManager();
+                populateSkillSelector();
+                updateUIFromData();
+            }
+            // === BİTİŞ: GÖREV 1.2 DÜZELTMESİ ===
+        }, async (error) => {
+            console.error("Canlı karakter dinlemesi başarısız:", error);
+            await showModalAlert({ title: "Bağlantı Hatası", message: "Hata: Oyuna olan canlı bağlantı koptu." });
+        });
+// ... fonksiyonun geri kalanı ...
         // DURUM 2: ONAYLANMAMIŞ (BEKLEMEDE VEYA REDDEDİLMİŞ)
-        else {
+        } else {
             // Önceki "onay bekleme" dinleyicisini temizle (varsa)
             if (liveSubmissionListener) liveSubmissionListener();
 
@@ -408,24 +437,49 @@ async function checkActiveCampaignStatus() {
                     // Başvuru hala oradaysa: Beklemede
                     localStorage.setItem('fateCampaignStatus', 'pending');
                     await showCampaignStatus('pending', campaignName);
-                } 
-                else {
-                    // Başvuru SİLİNDİ (GM onayladı VEYA reddetti)
-                    // Dinleyiciyi durdur
-                    detachAllListeners(); 
+                } else {
+                    // Başvuru silindi (GM onayladı veya reddetti)
+                    // Bu durumda "bekleme" dinleyicisini kapatıyoruz.
+                    if (liveSubmissionListener) {
+                        liveSubmissionListener();
+                        liveSubmissionListener = null;
+                    }
 
-                    await showModalAlert({ title: "Başvuru Durumu", message: "GM başvurunuzu inceledi. Durumunuz güncelleniyor..." });
-                    
-                    // --- HATA DÜZELTMESİ BURADA ---
-                    // Sadece loadCharacter() çağırmak yetmez.
-                    // Sayfa açılışındaki tüm sırayı yeniden çalıştırmalıyız.
-                    
-                    loadCharacter(); // 1. Veriyi (artık canlı) yükle
-                    populateSkillManager(); // 2. Beceri menülerini yeniden oluştur
-                    populateSkillSelector(); // 3. Zar atıcı menüsünü yeniden oluştur
-                    updateUIFromData(); // 4. UI'ı yeni veriyle güncelle
-                    // --- DÜZELTME SONU ---
+                    // Neden silindiğini kontrol et: Oyuncu onaylandı mı?
+                    const playerDoc = await playerRef.get();
+
+                    if (playerDoc.exists) {
+                        // Onaylandı: Canlı moda geçiş
+                        await showModalAlert({
+                            title: "Onaylandınız!",
+                            message: "GM başvurunuzu onayladı. Canlı mod'a geçiliyor!"
+                        });
+
+                        // Lokal veriyi yeniden yükle ve UI'ı güncelle
+                        loadCharacter();
+                        populateSkillManager();
+                        populateSkillSelector();
+                        updateUIFromData();
+                    } else {
+                        // Reddedildi: Lokal moda dön
+                        await showModalAlert({
+                            title: "Başvuru Reddedildi",
+                            message: "GM başvurunuzu reddetti. Lokal karakterinize dönüyorsunuz."
+                        });
+
+                        // Aktif kampanya bilgilerini temizle
+                        localStorage.removeItem('fateActiveCampaignId');
+                        localStorage.removeItem('fateActiveCharacterName');
+                        localStorage.setItem('fateCampaignStatus', 'offline');
+
+                        // Lokal veriyi yükle ve UI'ı güncelle
+                        loadCharacter();
+                        populateSkillManager();
+                        populateSkillSelector();
+                        updateUIFromData();
+                    }
                 }
+// ... onSnapshot dinleyicisinin ve fonksiyonun geri kalanı ...
             }, (error) => {
                  console.error("Başvuru dinlenirken hata:", error);
                  // (Hata olursa sessiz kal, oyuncu zaten lokal modda)
@@ -586,6 +640,27 @@ async function handleRemoveStunt(index) {
     renderStunts();
     updateRefreshAndStunts(); // Refresh ve Stunt limitlerini güncelle
 }
+// YENİ FONKSİYON: Kampanya oyuncu sayısı input'unu doğrulama
+function handleCampaignPlayerInputValidation() {
+    const min = 1;
+    const max = 10;
+    
+    // Değeri al ve tam sayıya çevirmeye çalış
+    let value = parseInt(newCampaignPlayersInput.value, 10);
+
+    if (isNaN(value) || value < min) {
+        // Eğer 'abc' gibi bir şey yazıldıysa VEYA 1'den küçükse
+        // Değeri 'min' (1) olarak ayarla
+        newCampaignPlayersInput.value = min;
+    } else if (value > max) {
+        // Eğer 10'dan büyükse
+        // Değeri 'max' (10) olarak ayarla
+        newCampaignPlayersInput.value = max;
+    } else {
+        // Değer 1-10 arasındaysa, (örn: "3.14" yazmışsa) tam sayı olduğundan emin ol
+        newCampaignPlayersInput.value = value; 
+    }
+}
 
 // === KAMPANYA YÖNETİMİ (FIREBASE) ===
 
@@ -598,6 +673,12 @@ async function handleCreateCampaign() {
     const players = parseInt(newCampaignPlayersInput.value) || 0;
     const desc = newCampaignDescInput.value.trim();
     const password = newCampaignPasswordInput.value.trim();
+    // === YENİ KONTROL BAŞLANGICI ===
+    if (players < 1 || players > 10) {
+        await showModalAlert({ title: "Geçersiz Oyuncu Sayısı", message: "Hata: Kişi sayısı en az 1, en fazla 10 olabilir." });
+        return; // Fonksiyonu durdur
+    }
+    // === YENİ KONTROL BİTİŞİ ===
 
     if (!name || !password || !desc || !setting || !gmName) {
        await showModalAlert({ title: "Eksik Bilgi", message: "Hata: Lütfen Oyun Adı, GM Adı, Sistem, Setting, Hikaye Kancası ve Yönetim Şifresi alanlarını doldurun." });
@@ -658,6 +739,12 @@ async function handleUpdateCampaign() {
     const players = parseInt(newCampaignPlayersInput.value) || 0;
     const desc = newCampaignDescInput.value.trim();
     const password = newCampaignPasswordInput.value.trim();
+    // === YENİ KONTROL BAŞLANGICI ===
+    if (players < 1 || players > 10) {
+        await showModalAlert({ title: "Geçersiz Oyuncu Sayısı", message: "Hata: Kişi sayısı en az 1, en fazla 10 olabilir." });
+        return; // Fonksiyonu durdur
+    }
+    // === YENİ KONTROL BİTİŞİ ===
 
     // 2. Doğrulama
     if (!name || !password || !desc || !setting || !gmName) {
@@ -817,6 +904,8 @@ async function handleSubmitToCampaign(campaignId, campaignName) {
         showCampaignStatus('pending', campaignName);
 
        await showModalAlert({ title: "Başvuru Alındı", message: "Başarılı! Karakteriniz GM'in onayına gönderildi." });
+       
+       checkActiveCampaignStatus();
         
     } catch (error) {
         console.error("Karakter gönderilirken hata:", error);
@@ -1081,7 +1170,7 @@ async function renderApprovedPlayers() {
                             <li><strong>Aspekt 1:</strong> ${char.aspect1 || '...'}</li>
                             <li><strong>Aspekt 2:</strong> ${char.aspect2 || '...'}</li>
                         </ul>
-                        <h3>Beceriler (0+ olanlar)</h3>
+                        <h3>Beceriler</h3>
                         ${skillsHtml}
                         <h3>Stunt'lar</h3>
                         ${stuntsHtml}
@@ -1405,35 +1494,108 @@ async function handleLeaveCampaign() {
         await showModalAlert({ title: "Hata", message: "Hata: Oyundan ayrılamadınız. Lütfen tekrar deneyin." });
     }
 }
+async function handleStressClick(trackName, index) {
+    // Kilitli bir kutuya tıklanıp tıklanmadığını kontrol et
+    // (Veri dizisinin uzunluğundan büyük bir indexe tıklanmışsa)
+    if (index >= characterData.stress[trackName].length) {
+        console.warn("Kilitli stres kutusuna tıklandı, işlem yok.");
+        return;
+    }
+    
+    characterData.stress[trackName][index] = !characterData.stress[trackName][index];
+    await saveCharacter();
+    
+    // UI'ı Güncelle
+    const trackContainer = (trackName === 'physical') ? physicalStressTrack : mentalStressTrack;
+    const box = trackContainer.children[index];
+    if (box) { // Kutunun var olduğundan emin ol
+        box.classList.toggle('checked', characterData.stress[trackName][index]);
+    }
+}
+// YENİ YARDIMCI FONKSİYON (Ekstra Consequence Slotu için)
+function renderExtraConsequences() {
+    const extraMildSlotGroup = document.getElementById('form-group-consequence-mild-extra');
+    const extraMildInput = document.getElementById('consequence-mild-extra');
+
+    if (!extraMildSlotGroup || !extraMildInput) return; // HTML bulunamazsa çık
+
+    const physique = characterData.skills['Physique'] || 0;
+    const will = characterData.skills['Will'] || 0;
+
+    // Kural: Physique VEYA Will +4 ise slotu göster
+    if (physique >= 4 || will >= 4) {
+        extraMildSlotGroup.style.display = 'block';
+        extraMildInput.value = characterData.consequences.mildExtra || "";
+    } else {
+        // Slotu gizle ve veriyi temizle
+        extraMildSlotGroup.style.display = 'none';
+        if (characterData.consequences.mildExtra) {
+            characterData.consequences.mildExtra = "";
+            // saveCharacter() burada çağrılabilir ama 'handleSkillChange' zaten çağıracak.
+        }
+    }
+}
 
 
 // === STRES YÖNETİMİ ===
-async function createStressTrack(container, trackName, size) { 
+async function createStressTrack(container, trackName) {
     container.innerHTML = "";
-    const stressSize = size || getDefaultCharacter().stress[trackName].length;
+    
+    // 1. İlgili beceriyi ve seviyesini belirle
+    const skillName = (trackName === 'physical') ? 'Physique' : 'Will';
+    const skillLevel = characterData.skills[skillName] || 0;
 
-    for (let i = 0; i < stressSize; i++) {
+    // 2. Kurala göre kaç kutunun açık olduğunu hesapla
+    const BASE_BOXES = 4;
+    let extraBoxes = 0;
+    if (skillLevel >= 1) extraBoxes = 1; // +1 = 5. kutu
+    if (skillLevel >= 2) extraBoxes = 2; // +2 = 6. kutu
+    if (skillLevel >= 3) extraBoxes = 3; // +3/+4 = 7. kutu
+
+    const unlockedBoxes = BASE_BOXES + extraBoxes;
+    const TOTAL_BOXES_VISIBLE = 7; // Toplamda 7 kutu (4 base + 3 extra)
+
+    // 3. Karakter verisindeki diziyi, toplam AÇIK kutu sayısına uydur
+    // (Beceriniz artarsa, [false, false, false, false] dizisine yeni 'false'lar ekler)
+    while (characterData.stress[trackName].length < unlockedBoxes) {
+        characterData.stress[trackName].push(false);
+    }
+    // (Beceriniz azalırsa, fazla kutuları (ve içindeki 'true' değerini) sondan siler)
+    while (characterData.stress[trackName].length > unlockedBoxes) {
+        characterData.stress[trackName].pop();
+    }
+
+    // 4. Görünür 7 kutuyu oluştur
+    for (let i = 0; i < TOTAL_BOXES_VISIBLE; i++) {
         const box = document.createElement('div');
         box.className = 'stress-box';
-        box.textContent = i + 1;
-        if (characterData.stress && characterData.stress[trackName] && characterData.stress[trackName][i]) {
-            box.classList.add('checked');
+        
+        // DEĞİŞTİ: Sayıları kaldırdık (box.textContent = i + 1; satırı silindi)
+
+        if (i < unlockedBoxes) {
+            // Kutu KİLİT DEĞİL (Açık)
+            const isChecked = characterData.stress[trackName][i] || false;
+            if (isChecked) {
+                box.classList.add('checked');
+            }
+            
+            // Dinleyiciyi sadece açık kutulara ekle
+            box.addEventListener('click', async () => {
+                // 'i' değerini (index) korumak için IIFE (fonk.) kullanıyoruz
+                (async (index) => {
+                    await handleStressClick(trackName, index);
+                })(i);
+            });
+
+        } else {
+            // Kutu KİLİTLİ (5, 6 veya 7. kutu)
+            box.classList.add('disabled');
+            box.title = `Bu kutuyu açmak için ${skillName} becerisi gerekli.`;
         }
-        box.addEventListener('click', async () => { 
-            await handleStressClick(trackName, i); 
-        });
+        
         container.appendChild(box);
     }
 }
-async function handleStressClick(trackName, index) { 
-    characterData.stress[trackName][index] = !characterData.stress[trackName][index];
-    await saveCharacter(); 
-    
-    const trackContainer = (trackName === 'physical') ? physicalStressTrack : mentalStressTrack;
-    const box = trackContainer.children[index];
-    box.classList.toggle('checked', characterData.stress[trackName][index]);
-}
-
 // === ARAYÜZ (UI) GÜNCELLEME ===
 function updateUIFromData() {
     if (!characterData) {
@@ -1441,6 +1603,7 @@ function updateUIFromData() {
         return; 
     }
     
+    // Veri modelini varsayılanla birleştir (eksik 'mildExtra' gibi alanlar için)
     const defaultData = getDefaultCharacter();
     characterData.skills = { ...defaultData.skills, ...characterData.skills };
     characterData.stress = { ...defaultData.stress, ...characterData.stress };
@@ -1465,11 +1628,17 @@ function updateUIFromData() {
     });
     
     renderStunts();
-    createStressTrack(physicalStressTrack, 'physical', characterData.stress.physical.length);
-    createStressTrack(mentalStressTrack, 'mental', characterData.stress.mental.length);
+    
+    // DEĞİŞTİ: Stres ve Consequence'ları yeni kurallara göre güncelle
+    createStressTrack(physicalStressTrack, 'physical');
+    createStressTrack(mentalStressTrack, 'mental');
+    renderExtraConsequences(); // Ekstra mild slotunu kontrol et
+    
     consequenceMildInput.value = characterData.consequences.mild;
     consequenceModerateInput.value = characterData.consequences.moderate;
     consequenceSevereInput.value = characterData.consequences.severe;
+    // (Ekstra mild slotu 'renderExtraConsequences' içinde dolduruluyor)
+
     updateRefreshAndStunts();
 }
 async function handleChangeFatePoints(amount) { 
@@ -1491,34 +1660,30 @@ async function handleChangeFatePoints(amount) {
     charFatePointsDisplay.textContent = characterData.currentFatePoints;
 }
 // GÜNCELLENDİ: handleCharacterInputChange (Refresh/Stunt kuralı eklendi)
-async function handleCharacterInputChange(event) { 
+async function handleCharacterInputChange(event) {
     const id = event.target.id;
     let value = event.target.type === 'number' ? parseInt(event.target.value) || 0 : event.target.value;
 
-    // === YENİ REFRESH/STUNT KONTROLÜ ===
+    // === REFRESH/STUNT KONTROLÜ (Bu kısım aynı kalıyor) ===
     if (id === 'char-refresh') {
         const oldValue = characterData.refresh;
         
-        // 1. Min/Max sınırlarını zorunlu kıl (min 1 stunt, max 5 stunt)
-        if (value > 5) value = 5; // Max 5 Refresh (çünkü min 1 Stunt)
-        if (value < 1) value = 1; // Min 1 Refresh
-        event.target.value = value; // UI'ı düzelt
+        if (value > 5) value = 5;
+        if (value < 1) value = 1;
+        event.target.value = value; 
 
         const newMaxStunts = 6 - value;
         const currentStunts = characterData.stunts.length;
 
-        // 2. Kuralı kontrol et: Mevcut stunt sayısı, yeni limitten fazla olamaz
         if (currentStunts > newMaxStunts) {
             await showModalAlert({
                 title: "Kural İhlali",
                 message: `Refresh'i ${value}'e düşüremezsiniz. Önce ${currentStunts - newMaxStunts} adet Stunt silmelisiniz.`
             });
-            // Değişikliği geri al
             event.target.value = oldValue;
-            return; // Fonksiyondan çık, kaydetme
+            return;
         }
         
-        // Geçerliyse:
         characterData.refresh = value;
         if (characterData.currentFatePoints > value) {
             characterData.currentFatePoints = value;
@@ -1534,25 +1699,30 @@ async function handleCharacterInputChange(event) {
         'consequence-mild': 'consequences.mild',
         'consequence-moderate': 'consequences.moderate',
         'consequence-severe': 'consequences.severe',
+        // DEĞİŞTİ: YENİ EKLENTİ
+        'consequence-mild-extra': 'consequences.mildExtra' 
     };
     const key = keyMap[id];
     if (key) {
         if (key.includes('.')) {
             const keys = key.split('.');
+            if (!characterData[keys[0]]) {
+                 characterData[keys[0]] = {};
+            }
             characterData[keys[0]][keys[1]] = value;
         } else {
             characterData[key] = value;
         }
     }
 
-    await saveCharacter(); 
+    await saveCharacter();
     
-    // Refresh değiştiyse UI'ı güncelle
     if (id === 'char-refresh') {
         charFatePointsDisplay.textContent = characterData.currentFatePoints;
-        updateRefreshAndStunts(); // Stunt sayacını güncelle
+        updateRefreshAndStunts();
     }
 }
+
 // YENİ: Beceri Piramidini doğrulayan yardımcı fonksiyon
 async function validateSkillPyramid(skills, changedSkill, newValue) {
     // Eğer 0'a çekiliyorsa her zaman izin ver
@@ -1626,22 +1796,36 @@ function populateSkillManager() {
 }
 
 // GÜNCELLENDİ: 'handleSkillInputChange' -> 'handleSkillChange' (Validasyon eklendi)
-async function handleSkillChange(skillName, event) { 
+async function handleSkillChange(skillName, event) {
     const newValue = parseInt(event.target.value);
     const oldValue = characterData.skills[skillName] || 0;
 
     // 1. Piramiti kontrol et
-    const isValid = validateSkillPyramid(characterData.skills, skillName, newValue);
+    const isValid = await validateSkillPyramid(characterData.skills, skillName, newValue);
 
     if (isValid) {
-        // 2. Geçerliyse, değeri güncelle ve kaydet
+        // 2. Geçerliyse, değeri güncelle
         characterData.skills[skillName] = newValue;
-        await saveCharacter(); 
         
-        // Zar atıcıdaki listeyi de güncelle
+        // DEĞİŞTİ: Stres/Consequence Güncellemesini tetikle
+        if (skillName === 'Physique') {
+            // Fiziksel stres kutularını ve ekstra sonucu yeniden çiz
+            createStressTrack(physicalStressTrack, 'physical');
+            renderExtraConsequences();
+        }
+        if (skillName === 'Will') {
+            // Zihinsel stres kutularını ve ekstra sonucu yeniden çiz
+            createStressTrack(mentalStressTrack, 'mental');
+            renderExtraConsequences();
+        }
+        
+        // 3. Kaydet
+        await saveCharacter();
+        
+        // 4. Zar atıcıdaki listeyi de güncelle
         populateSkillSelector(); 
     } else {
-        // 3. Geçerli değilse, değişikliği geri al
+        // 5. Geçerli değilse, değişikliği geri al
         event.target.value = oldValue;
     }
 }
@@ -1919,6 +2103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     importCharButton.addEventListener('click', handleImportClick);
     importFileInput.addEventListener('change', handleImportFile);
     resetCharButton.addEventListener('click', handleResetCharacter);
+    newCampaignPlayersInput.addEventListener('change', handleCampaignPlayerInputValidation);
     
     // --- CANLI ARKA PLAN HAREKETİ ---
     

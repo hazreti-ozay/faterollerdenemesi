@@ -146,6 +146,13 @@
                                 <label for="consequence-mild">Hafif (Mild -2):</label>
                                 <input type="text" id="consequence-mild" class="char-field">
                             </div>
+
+                            <div class="form-group-vertical" id="form-group-consequence-mild-extra" style="display: none;">
+                                <label for="consequence-mild-extra" style="color: var(--color-accent-magic);">
+                                    Ekstra Hafif (Mild -2):
+                                </label>
+                                <input type="text" id="consequence-mild-extra" class="char-field">
+                            </div>
                             <div class="form-group-vertical">
                                 <label for="consequence-moderate">Orta (Moderate -4):</label>
                                 <input type="text" id="consequence-moderate" class="char-field">
@@ -186,13 +193,18 @@
                         <div id="result-total" class="result-total">0</div>
                         <div id="result-descriptor" class="result-descriptor">...</div>
                         
-                        <div id="fate-spend-buttons" style="display: none; margin-top: 15px; display: flex; gap: 10px;">
-                            <button id="spend-fate-point-button" class="btn btn-accent" style="flex-grow: 1;">
-                                Fate Puanı Harca (+2)
+                        <div id="fate-spend-buttons" style="display: none; margin-top: 15px;">
+                            
+                            <button id="spend-fate-point-button" class="btn btn-accent">
+                                <span>SONUCA +2 EKLE</span>
+                                <span class="fate-cost-badge">-1 Fate Puanı</span>
                             </button>
-                            <button id="reroll-fate-button" class="btn btn-secondary" style="flex-grow: 1;">
-                                Yeniden At (1 Fate Puanı)
+                            
+                            <button id="reroll-fate-button" class="btn btn-secondary">
+                                <span>YENİDEN AT</span>
+                                <span class="fate-cost-badge">-1 Fate Puanı</span>
                             </button>
+
                         </div>
                     </div>
                 </div>
@@ -252,7 +264,7 @@
                     
                     <div class="form-group">
                         <label for="new-campaign-players">Kişi Sayısı:</label>
-                        <input type="number" id="new-campaign-players" class="char-field" value="3">
+                        <input type="number" id="new-campaign-players" class="char-field" value="3" min="1" max="10">
                     </div>
 
                     <div class="form-group">
@@ -295,7 +307,7 @@
                 </div>
 
                 <div class="character-card">
-                    <h2 class="card-title">Firebase Durum Aspektleri</h2>
+                    <h2 class="card-title">Durum Aspektleri</h2>
                     <div id="gm-situation-aspect-list" class="stunt-list">
                     </div>
                     <div class="stunt-adder-group">
