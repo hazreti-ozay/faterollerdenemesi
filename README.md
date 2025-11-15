@@ -11,7 +11,7 @@ FATE RYO sistemi için Firebase destekli web aracı; D&D dışı sistemler için
 
 ## ⚠️ Durum: Public Beta (Aktif Geliştirme)
 
-Bu proje şu anda **aktif geliştirme ve test (Beta)** aşamasındadır. Sistem canlı olarak test edilebilir durumdadır, ancak beklenmedik hatalarla (bug) karşılaşabilirsiniz veya veri kaybı yaşanabilir.
+Bu proje şu anda **aktif geliştirme ve test (Beta)** aşamasındadır. Sistem canlı olarak testilebilir durumdadır, ancak beklenmedik hatalarla (bug) karşılaşabilirsiniz veya veri kaybı yaşanabilir.
 
 Lütfen bulduğunuz hataları [Issues](https://github.com/hazreti-ozay/faterollerdenemesi/issues) sekmesinden raporlayın!
 
@@ -30,6 +30,7 @@ Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 ### 🧑‍⚖️ GM (Game Master) için:
 * **Kampanya Yönetimi:** Yeni FATE kampanyaları oluşturun (Setting, Lore, Kişi Sayısı [1-10 doğrulama dahil] vb. detaylarla), mevcut kampanyaları düzenleyin veya silin.
 * **GM Yönetim Paneli:** Şifre korumalı özel GM paneline erişim.
+* **GM Kader Puanı Takibi:** GM paneline, GM'in kendi Fate Puanlarını (+/-) takip etmesi ve kaydetmesi için sayaç eklendi.
 * **Başvuru Yönetimi:** Oyuncuların kampanyanıza gönderdiği karakter başvurularını inceleyin, "Onayla" veya "Reddet".
 * **Canlı Oyuncu Takibi:** Onaylanmış oyuncularınızın anlık **Stres** ve **Kader Puanı (Fate Point)** durumlarını canlı olarak izleyin.
 * **Detaylı Karakter İncelemesi:** Genişletilebilir (expandable) kartlar ile oyuncuların tüm karakter detaylarına (Aspektler, Beceriler, Stunt'lar) erişin.
@@ -37,13 +38,18 @@ Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 * **Canlı Durum Aspektleri:** GM panelinden eklediğiniz "Durum Aspektleri" anlık olarak oyuncunun zar atıcısına yansır.
 
 ### 🧙 Oyuncu için:
+* **Çoklu Karakter Yönetimi:** `localStorage`'da birden fazla karakter saklama. Karakterler arası geçiş (dropdown menü), yeni karakter ekleme (+) ve aktif karakteri silme özellikleri.
 * **Kampanya Lobisi:** Mevcut tüm kampanyaları "vitrin" kartları olarak listeleyin. Dolu kampanyalara başvuru kilitlenir.
 * **FATE Core Kural Uyumlu Karakter Yaratma:** `validateSkillPyramid` (Beceri Piramidi) doğrulaması, **Dinamik Stres Kutuları** (Physique/Will'e göre) ve **Dinamik Consequence Slotları** (+4 beceriye göre) dahil olmak üzere FATE Core kurallarına tam uyumlu karakter yaratma.
-* **Başvuru Sistemi:** Yarattığınız karakteri (tarayıcı hafızasından) bir kampanyaya gönderin.
+* **Başvuru Sistemi:** Listeden seçtiğiniz karakteri (tarayıcı hafızasından) bir kampanyaya gönderin.
+* **Gelişmiş İçe Aktarma (.json):** Karakter yüklerken "Mevcut karakterin üzerine yaz" veya "Listeye yeni olarak ekle" seçeneği sunan modal.
 * **"Canlı Mod" (Live Mode):** GM tarafından onaylandığınızda, karakter sayfanız otomatik olarak "Canlı Mod"a geçer.
-* **Anlık Onay Bildirimleri:** GM onayı, reddi veya oyundan atılma durumunda sayfayı yenilemeden anında bildirim alma ve duruma göre (Canlı Mod/Lokal Mod) yönlendirilme.
-* **Anlık Güncelleme:** "Canlı Mod"da yaptığınız tüm değişiklikler (Stres almak, Kader Puanı harcamak) anında Firebase'e yazılır ve GM panelinde görünür.
+* **Anlık Bildirimler ve Güncellemeler:**
+    * **Anlık Onay:** GM onayı, reddi veya oyundan atılma durumunda sayfayı yenilemeden anında bildirim alma.
+    * **Anlık Arayüz:** Stunt ekleme, Fate Puanı/Refresh değiştirme gibi eylemlerin arayüzde anında (sayfa yenilemesiz) görünmesi.
+    * **Anlık Kayıt:** "Canlı Mod"da yapılan tüm değişiklikler (Stres almak, Kader Puanı harcamak) anında Firebase'e yazılır.
 * **Entegre Zar Atıcı:** "Yeniden At (Reroll)" ve "+2 Ekle" mekaniklerini destekleyen, maliyet etiketli zar atıcı.
+* **QoL/UX İyileştirmeleri:** "Enter" tuşu ile modal onayı (örn: GM şifresi), "Canlı Mod" için zarif "Kenarlık Solması" (Border Fade) animasyonu.
 * **Oyundan Ayrılma:** Dilediğiniz zaman kampanyadan ayrılarak karakterinizi "Lokal Mod"a geri döndürün.
 
 ## 🛠️ Kullanılan Teknolojiler (Tech Stack)
@@ -74,7 +80,7 @@ Projenin stabilizasyonu ve geleceği için planlanan sıradaki adımlar:
 * ✅ **Modal Entegrasyonu:** Tüm yerel `alert/confirm` pencereleri özel modal sistemi ile değiştirildi.
 * ✅ **"Anlık Onay" UX İyileştirmesi:** Oyuncunun, başvurusu onaylandığında/reddedildiğinde sayfayı yenilemeden bildirim alması ve yönlendirilmesi sağlandı.
 * ✅ **FATE Core Kural Entegrasyonu:** Dinamik Stres ve Consequence mekanikleri (Physique/Will'e dayalı) eklendi.
-* ⏳ **Çoklu Karakter Desteği:** `localStorage` yapısının tek karakterden, çoklu karakter listesine (`fateCharacterList`) dönüştürülmesi.
+* ✅ **Çoklu Karakter Desteği:** `localStorage` yapısı tek karakterden, çoklu karakter listesine (`fateCharacterList`) dönüştürüldü. Menü entegrasyonu tamamlandı.
 * ⏳ **Yeni FATE Kuralları:** Belirlenecek yeni kompleks kuralların (örn: detaylı çatışma/conflict mekanikleri) entegrasyonu.
 * ✨ **Gelecek Vizyonu:** Diğer (D&D dışı) FRP sistemleri için modüllerin eklenmesi.
 
