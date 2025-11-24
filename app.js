@@ -17,7 +17,7 @@ const db = firebase.firestore();
 
 // === VERİ ===
 const FATE_SKILLS = [
-    "Athletics", "Burglary", "Contacts", "Crafts", "Deceive", "Drive",
+    "Academics", "Athletics", "Burglary", "Contacts", "Crafts", "Deceive", "Drive",
     "Empathy", "Fight", "Investigate", "Lore", "Notice", "Physique",
     "Provoke", "Rapport", "Resources", "Shoot", "Stealth", "Will"
 ];
@@ -2333,14 +2333,14 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- CANLI ARKA PLAN HAREKETİ ---
     
-    const moveFactor = 0.05;
+    const moveFactor = 0.04;
 
     function handleBackgroundMove(e) {
         document.body.classList.remove('bg-is-resetting');
         const xPercent = e.clientX / window.innerWidth;
         const yPercent = e.clientY / window.innerHeight;
-        const bgX = 50 + (xPercent - 0.5) * (moveFactor * 100);
-        const bgY = 50 + (yPercent - 0.5) * (moveFactor * 100);
+        const bgX = 50 + (xPercent - 0.1) * (moveFactor * 100);
+        const bgY = 50 + (yPercent - 0.1) * (moveFactor * 100);
         window.requestAnimationFrame(() => {
             document.body.style.setProperty('--mouse-x-percent', `${bgX}%`);
             document.body.style.setProperty('--mouse-y-percent', `${bgY}%`);
