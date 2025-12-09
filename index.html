@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FATE Aracı</title>
+    <title>FATE</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,24 +14,37 @@
 <body data-theme="dark">
 
     <aside id="burger-menu" class="burger-menu">
-        <h1 class="menu-title">FATE Aracı</h1>
+        <h1 class="menu-title">FATE</h1>
         
         <nav class="main-nav">
-            <button class="nav-button active" data-view="char">Karakter Sayfası</button>
-            <button class="nav-button" data-view="roller">Zar Atıcı</button>
-            <button class="nav-button" data-view="find-campaign">Kampanya Ara</button>
-            <button class="nav-button" data-view="campaign">Kampanya Paneli (GM)</button>
+            <button class="nav-button active" data-view="char" data-i18n="nav_char">Karakter Sayfası</button>
+            <button class="nav-button" data-view="roller" data-i18n="nav_roller">Zar Atıcı</button>
+            <button class="nav-button" data-view="find-campaign" data-i18n="nav_find_campaign">Kampanya Ara</button>
+            <button class="nav-button" data-view="campaign" data-i18n="nav_campaign">Kampanya Paneli (GM)</button>
         </nav>
         
         <div class="menu-divider"></div>
         <h2 class="menu-subtitle">Araçlar</h2>
         <nav class="main-nav">
-            <button class="nav-button" data-view="import-export">İçe / Dışa Aktar</button>
+            <button class="nav-button" data-view="import-export" data-i18n="nav_tools">İçe / Dışa Aktar</button>
+        </nav>
+        
+        <div class="menu-divider"></div>
+        <nav class="main-nav">
+            <button id="credits-button" class="nav-button" data-i18n="nav_credits">Emeği Geçenler</button>
         </nav>
         
         <nav class="main-nav" style="display: none;">
-             <button class="nav-button" data-view="gm-admin">GM Yönetim</button>
+             <button class="nav-button" data-view="gm-admin" data-i18n="nav_gm_admin">GM Yönetim</button>
         </nav>
+
+        <div class="language-group">
+            <label for="language-selector" style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 5px; display: block;">Dil / Language</label>
+            <select id="language-selector" class="language-dropdown">
+                <option value="tr">🇹🇷 Türkçe</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </div>
 
         <footer class="menu-footer">
             <div class="menu-links">
@@ -43,15 +56,16 @@
                     <svg viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
                 </a>
 
-                <a href="https://www.reddit.com/r/sizin-subreddit/" id="reddit-link" class="social-link" title="Reddit" target="_blank">
+                <a href="https://www.reddit.com/r/CemiyetiPerdaz/" id="reddit-link" class="social-link" title="Reddit" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                         <path fill="currentColor" d="M0 256C0 114.6 114.6 0 256 0S512 114.6 512 256 397.4 512 256 512L37.1 512c-13.7 0-20.5-16.5-10.9-26.2L75 437C28.7 390.7 0 326.7 0 256zM349.6 153.6c23.6 0 42.7-19.1 42.7-42.7s-19.1-42.7-42.7-42.7c-20.6 0-37.8 14.6-41.8 34-34.5 3.7-61.4 33-61.4 68.4l0 .2c-37.5 1.6-71.8 12.3-99 29.1-10.1-7.8-22.8-12.5-36.5-12.5-33 0-59.8 26.8-59.8 59.8 0 24 14.1 44.6 34.4 54.1 2 69.4 77.6 125.2 170.6 125.2s168.7-55.9 170.6-125.3c20.2-9.6 34.1-30.2 34.1-54 0-33-26.8-59.8-59.8-59.8-13.7 0-26.3 4.6-36.4 12.4-27.4-17-62.1-27.7-100-29.1l0-.2c0-25.4 18.9-46.5 43.4-49.9 4.4 18.8 21.3 32.8 41.5 32.8l.1 .2zM177.1 246.9c16.7 0 29.5 17.6 28.5 39.3s-13.5 29.6-30.3 29.6-31.4-8.8-30.4-30.5 15.4-38.3 32.1-38.3l.1-.1zm190.1 38.3c1 21.7-13.7 30.5-30.4 30.5s-29.3-7.9-30.3-29.6 11.8-39.3 28.5-39.3 31.2 16.6 32.1 38.3l.1 .1zm-48.1 56.7c-10.3 24.6-34.6 41.9-63 41.9s-52.7-17.3-63-41.9c-1.2-2.9 .8-6.2 3.9-6.5 18.4-1.9 38.3-2.9 59.1-2.9s40.7 1 59.1 2.9c3.1 .3 5.1 3.6 3.9 6.5z"/>
                     </svg>
                 </a>
-                </div>
-            <button id="theme-toggle-button" class="btn theme-toggle" title="Temayı Değiştir">
-                ☀️
-            </button>
+            </div>
+            
+            <div style="display: flex; gap: 5px; align-items: center;">
+                <button id="theme-toggle-button" class="btn theme-toggle" title="Temayı Değiştir">☀️</button>
+            </div>
         </footer>
     </aside>
 
@@ -63,13 +77,13 @@
             <section id="char-view" class="tab-content active">
                 
                 <div class="character-card">
-                    <h2 class="card-title">Karakter Bilgileri</h2>
+                    <h2 class="card-title" data-i18n="card_char_info">Karakter Bilgileri</h2>
 
                     <div id="character-management-group" class="character-management-group">
                         <select id="character-selector" title="Karakter Seç">
-                            </select>
+                        </select>
                         <button id="add-new-character-btn" class="btn btn-primary" title="Yeni Karakter Ekle">+</button>
-                        <button id="delete-character-btn" class="btn btn-danger" title="Aktif Karakteri Sil">Sil</button>
+                        <button id="delete-character-btn" class="btn btn-danger" title="Aktif Karakteri Sil" data-i18n="btn_delete">Sil</button>
                     </div>
                     <div class="menu-divider" style="margin-top: 0;"></div>
 
@@ -77,25 +91,25 @@
                          style="margin-bottom: 15px; padding: 10px 15px; border-radius: 5px; background-color: var(--color-bg-med); color: var(--color-accent-magic); font-weight: 700;
                                 display: none; justify-content: space-between; align-items: center;">
                         <span id="campaign-status-text"></span>
-                        <button id="leave-campaign-button" class="btn btn-danger-outline" style="display: none;">Oyundan Ayrıl</button>
+                        <button id="leave-campaign-button" class="btn btn-danger-outline" style="display: none;" data-i18n="btn_leave_campaign">Oyundan Ayrıl</button>
                     </div>
 
                     <div class="form-group">
-                        <label for="char-name">İsim:</label>
+                        <label for="char-name" data-i18n="label_name">İsim:</label>
                         <input type="text" id="char-name" class="char-field">
                     </div>
                     <div class="form-group">
-                        <label for="char-desc">Açıklama:</label>
-                        <input type="text" id="char-desc" class="char-field" placeholder="Karakterinizin kısa tanımı...">
+                        <label for="char-desc" data-i18n="label_desc">Açıklama:</label>
+                        <input type="text" id="char-desc" class="char-field" data-i18n-placeholder="placeholder_char_desc" placeholder="Karakterinizin kısa tanımı...">
                     </div>
                     
                     <div class="stats-grid">
                         <div class="form-group">
-                            <label for="char-refresh">Refresh:</label>
+                            <label for="char-refresh" data-i18n="label_refresh">Refresh:</label>
                             <input type="number" id="char-refresh" class="char-field" value="3" min="1" max="5">
                         </div>
                         <div class="form-group fate-tracker">
-                            <label>Fate Puanı:</label>
+                            <label data-i18n="label_fate_points">Fate Puanı:</label>
                             <div class="fate-point-controls">
                                 <button id="minus-fate-point" class="btn btn-danger-outline btn-round" title="Fate Puanı Harca">−</button>
                                 <span id="char-fate-points" class="fate-point-display">3</span>
@@ -106,74 +120,74 @@
                 </div>
 
                 <div class="character-card">
-                    <h2 class="card-title">Aspektler (Aspects)</h2>
+                    <h2 class="card-title" data-i18n="card_aspects">Aspektler (Aspects)</h2>
                     <div class="form-group">
-                        <label for="char-high-concept">High Concept:</label>
-                        <input type="text" id="char-high-concept" class="char-field" placeholder="Örn: 'Sihir Güçlü Kılıç Ustası'">
+                        <label for="char-high-concept" data-i18n="label_high_concept">High Concept:</label>
+                        <input type="text" id="char-high-concept" class="char-field" data-i18n-placeholder="placeholder_high_concept" placeholder="Örn: 'Sihir Güçlü Kılıç Ustası'">
                     </div>
                     <div class="form-group">
-                        <label for="char-trouble">Trouble:</label>
-                        <input type="text" id="char-trouble" class="char-field" placeholder="Örn: 'Altına Olan Zafiyeti'">
+                        <label for="char-trouble" data-i18n="label_trouble">Trouble:</label>
+                        <input type="text" id="char-trouble" class="char-field" data-i18n-placeholder="placeholder_trouble" placeholder="Örn: 'Altına Olan Zafiyeti'">
                     </div>
                     <div class="form-group">
-                        <label for="char-relationship">Relationship:</label>
-                        <input type="text" id="char-relationship" class="char-field" placeholder="Örn: 'Eski Ustama Borçluyum'">
+                        <label for="char-relationship" data-i18n="label_relationship">Relationship:</label>
+                        <input type="text" id="char-relationship" class="char-field" data-i18n-placeholder="placeholder_relationship" placeholder="Örn: 'Eski Ustama Borçluyum'">
                     </div>
                     <div class="form-group">
-                        <label for="char-aspect-1">Serbest Aspekt 1:</label>
-                        <input type="text" id="char-aspect-1" class="char-field" placeholder="İlk serbest aspektiniz...">
+                        <label for="char-aspect-1" data-i18n="label_aspect1">Serbest Aspekt 1:</label>
+                        <input type="text" id="char-aspect-1" class="char-field" data-i18n-placeholder="placeholder_aspect" placeholder="...">
                     </div>
                     <div class="form-group">
-                        <label for="char-aspect-2">Serbest Aspekt 2:</label>
-                        <input type="text" id="char-aspect-2" class="char-field" placeholder="İkinci serbest aspektiniz...">
+                        <label for="char-aspect-2" data-i18n="label_aspect2">Serbest Aspekt 2:</label>
+                        <input type="text" id="char-aspect-2" class="char-field" data-i18n-placeholder="placeholder_aspect" placeholder="...">
                     </div>
                 </div>
 
                 <div class="character-card">
-                    <h2 class="card-title">Beceriler (Skills)</h2>
+                    <h2 class="card-title" data-i18n="card_skills">Beceriler (Skills)</h2>
                     <div id="skill-list" class="skill-list"></div>
                 </div>
                 <div class="character-card">
-                    <h2 class="card-title">Yetenekler (Stunts)</h2>
+                    <h2 class="card-title" data-i18n="card_stunts">Yetenekler (Stunts)</h2>
                     
                     <div id="stunt-counter" class="stunt-counter">
-                    <span>Toplam Stunt Hakkı: <strong id="stunt-limit-display">3</strong></span>
-                    <span>Kullanılan: <strong id="stunt-current-display">0</strong></span>
+                    <span><span data-i18n="label_limit">Limit:</span> <strong id="stunt-limit-display">3</strong></span>
+                    <span><span data-i18n="label_used">Kullanılan:</span> <strong id="stunt-current-display">0</strong></span>
                 </div>
                     <div id="stunt-list-ul" class="stunt-list"></div>
                     <div class="stunt-adder-group">
-                        <input type="text" id="stunt-input" placeholder="Yeni Stunt açıklaması...">
-                        <button id="add-stunt-button" class="btn btn-primary">+</button>
+                        <input type="text" id="stunt-input" data-i18n-placeholder="placeholder_stunt" placeholder="Yeni Stunt açıklaması...">
+                        <button id="add-stunt-button" class="btn btn-primary" data-i18n="btn_add">+</button>
                     </div>
                 </div>
                 <div class="character-card">
-                    <h2 class="card-title">Stres (Stress) & Sonuçlar (Consequences)</h2>
+                    <h2 class="card-title" data-i18n="card_stress">Stres & Sonuçlar</h2>
                     <div class="stress-consequences-grid">
                         <div class="stress-column">
-                            <h3>Fiziksel Stres</h3>
+                            <h3 data-i18n="header_phys_stress">Fiziksel Stres</h3>
                             <div id="physical-stress-track" class="stress-track"></div>
-                            <h3>Zihinsel Stres</h3>
+                            <h3 data-i18n="header_ment_stress">Zihinsel Stres</h3>
                             <div id="mental-stress-track" class="stress-track"></div>
                         </div>
                         <div class="consequences-column">
-                            <h3>Sonuçlar</h3>
+                            <h3 data-i18n="header_consequences">Sonuçlar</h3>
                             <div class="form-group-vertical">
-                                <label for="consequence-mild">Hafif (Mild -2):</label>
+                                <label for="consequence-mild" data-i18n="label_mild">Hafif (Mild -2):</label>
                                 <input type="text" id="consequence-mild" class="char-field">
                             </div>
 
                             <div class="form-group-vertical" id="form-group-consequence-mild-extra" style="display: none;">
-                                <label for="consequence-mild-extra" style="color: var(--color-accent-magic);">
+                                <label for="consequence-mild-extra" style="color: var(--color-accent-magic);" data-i18n="label_mild_extra">
                                     Ekstra Hafif (Mild -2):
                                 </label>
                                 <input type="text" id="consequence-mild-extra" class="char-field">
                             </div>
                             <div class="form-group-vertical">
-                                <label for="consequence-moderate">Orta (Moderate -4):</label>
+                                <label for="consequence-moderate" data-i18n="label_moderate">Orta (Moderate -4):</label>
                                 <input type="text" id="consequence-moderate" class="char-field">
                             </div>
                             <div class="form-group-vertical">
-                                <label for="consequence-severe">Şiddetli (Severe -6):</label>
+                                <label for="consequence-severe" data-i18n="label_severe">Şiddetli (Severe -6):</label>
                                 <input type="text" id="consequence-severe" class="char-field">
                             </div>
                         </div>
@@ -184,13 +198,13 @@
             <section id="roller-view" class="tab-content roller-grid">
                 
                 <div class="character-card">
-                    <h2 class="card-title">FATE ZAR ATICI</h2>
+                    <h2 class="card-title" data-i18n="card_roller_title">FATE ZAR ATICI</h2>
                     <div class="roller-action-row">
                         <div class="skill-selector-group">
-                            <label for="skill-selector">Beceri:</label>
+                            <label for="skill-selector" data-i18n="label_roll_skill">Beceri:</label>
                             <select id="skill-selector"></select>
                         </div>
-                        <button id="roll-button" class="btn btn-primary">ZAR AT</button>
+                        <button id="roll-button" class="btn btn-primary" data-i18n="btn_roll">ZAR AT</button>
                     </div>
                     <div id="dice-container" class="dice-container">
                         <div class="die">?</div>
@@ -201,8 +215,8 @@
                     
                     <div class="result-area">
                         <div class="result-detail">
-                            <span id="result-dice">Zar: 0</span>
-                            <span id="result-skill">Beceri: +0</span>
+                            <span id="result-dice" data-i18n="log_roll_dice">Zar: 0</span>
+                            <span id="result-skill" data-i18n="log_roll_skill">Beceri: +0</span>
                         </div>
                         <hr class="result-divider">
                         <div id="result-total" class="result-total">0</div>
@@ -211,13 +225,13 @@
                         <div id="fate-spend-buttons" style="display: none; margin-top: 15px;">
                             
                             <button id="spend-fate-point-button" class="btn btn-accent">
-                                <span>SONUCA +2 EKLE</span>
-                                <span class="fate-cost-badge">-1 Fate Puanı</span>
+                                <span data-i18n="btn_add_result">SONUCA +2 EKLE</span>
+                               <span class="fate-cost-badge" data-i18n="lbl_fate_cost">-1 Fate Puanı</span>
                             </button>
                             
                             <button id="reroll-fate-button" class="btn btn-secondary">
-                                <span>YENİDEN AT</span>
-                                <span class="fate-cost-badge">-1 Fate Puanı</span>
+                                <span data-i18n="btn_reroll">YENİDEN AT</span>
+                                <span class="fate-cost-badge" data-i18n="lbl_fate_cost">-1 Fate Puanı</span>
                             </button>
 
                         </div>
@@ -225,7 +239,7 @@
                 </div>
 
                 <div class="character-card">
-                    <h2 class="card-title">Zar Geçmişi</h2>
+                    <h2 class="card-title" data-i18n="card_roll_history">Zar Geçmişi</h2>
                     <ul id="roll-log-list" class="roll-log-list">
                         <li class="roll-log-item muted">Henüz zar atılmadı.</li>
                     </ul>
@@ -233,7 +247,7 @@
 
                 <div id="live-situation-aspects-card" class="character-card" 
                      style="grid-column: 1 / -1; display: none;">
-                    <h2 class="card-title">Canlı Durum Aspektleri (GM)</h2>
+                    <h2 class="card-title" data-i18n="card_live_aspects">Canlı Durum Aspektleri (GM)</h2>
                     <div id="live-situation-aspect-list" class="stunt-list">
                     </div>
                 </div>
@@ -242,8 +256,8 @@
             
             <section id="find-campaign-view" class="tab-content">
                 <div class="character-card">
-                    <h2 class="card-title">Genel Kampanyalar</h2>
-                    <p class="card-description">
+                    <h2 class="card-title" data-i18n="card_public_campaigns">Genel Kampanyalar</h2>
+                    <p class="card-description" data-i18n="desc_public_campaigns">
                         Mevcut oyunları arayın ve karakterinizi gönderin. Bir GM iseniz, "Yönet" butonuna basıp şifrenizi girin.
                     </p>
                     <div id="public-campaign-list">
@@ -254,44 +268,45 @@
 
             <section id="campaign-view" class="tab-content">
                 <div class="character-card">
-                    <h2 class="card-title">Yeni Kampanya Oluştur (GM)</h2>
-                    <p class="card-description">
+                    <h2 class="card-title" data-i18n="card_new_campaign">Yeni Kampanya Oluştur (GM)</h2>
+                    <p class="card-description" data-i18n="desc_new_campaign">
                         Oyuncuların lobi ekranında göreceği bilgileri doldurun.
                     </p>
                     
                     <div class="form-group">
-                        <label for="new-campaign-name">Oyun Adı:</label>
-                        <input type="text" id="new-campaign-name" class="char-field" placeholder="Örn: 'Kayıp Kader Kristali'">
+                        <label for="new-campaign-name" data-i18n="label_camp_name">Oyun Adı:</label>
+                        <input type="text" id="new-campaign-name" class="char-field" data-i18n-placeholder="placeholder_camp_name" placeholder="Örn: 'Kayıp Kader Kristali'">
                     </div>
                     <div class="form-group">
-                        <label for="new-campaign-gm-name">GM Adı:</label>
-                        <input type="text" id="new-campaign-gm-name" class="char-field" placeholder="Görünmesini istediğiniz isim...">
+                        <label for="new-campaign-gm-name" data-i18n="label_camp_gm">GM Adı:</label>
+                        <input type="text" id="new-campaign-gm-name" class="char-field" data-i18n-placeholder="placeholder_camp_gm" placeholder="Görünmesini istediğiniz isim...">
                     </div>
                     <div class="form-group">
-                        <label for="new-campaign-system">Sistem:</label>
+                        <label for="new-campaign-system" data-i18n="label_camp_system">Sistem:</label>
                         <input type="text" id="new-campaign-system" class="char-field" value="FATE">
                     </div>
 
                     <div class="form-group">
-                        <label for="new-campaign-setting">Setting / Dünya:</label>
-                        <input type="text" id="new-campaign-setting" class="char-field" placeholder="Örn: 'Ev Yapımı Fantastik, Cyberpunk'">
+                        <label for="new-campaign-setting" data-i18n="label_camp_setting">Setting / Dünya:</label>
+                        <input type="text" id="new-campaign-setting" class="char-field" data-i18n-placeholder="placeholder_camp_setting" placeholder="Örn: 'Ev Yapımı Fantastik, Cyberpunk'">
                     </div>
                     
                     <div class="form-group">
-                        <label for="new-campaign-players">Kişi Sayısı:</label>
+                        <label for="new-campaign-players" data-i18n="label_camp_players">Kişi Sayısı:</label>
                         <input type="number" id="new-campaign-players" class="char-field" value="3" min="1" max="10">
                     </div>
 
                     <div class="form-group">
-                        <label for="new-campaign-desc">Hikaye Kancası:</label>
-                        <input type="text" id="new-campaign-desc" class="char-field" placeholder="Oyuncular için kısa bir macera kancası...">
+                        <label for="new-campaign-desc" data-i18n="label_camp_desc">Hikaye Kancası:</label>
+                        <input type="text" id="new-campaign-desc" class="char-field" data-i18n-placeholder="placeholder_camp_desc" placeholder="Oyuncular için kısa bir macera kancası...">
                     </div>
 
                     <div class="form-group-vertical">
-                        <label for="new-campaign-lore" style="font-weight: 700; color: var(--color-text-muted);">
+                        <label for="new-campaign-lore" style="font-weight: 700; color: var(--color-text-muted);" data-i18n="label_camp_lore">
                             Detaylar / Lore (Opsiyonel):
                         </label>
                         <textarea id="new-campaign-lore" class="char-field" rows="5" 
+                                  data-i18n-placeholder="placeholder_camp_lore"
                                   placeholder="Ev kuralları, önemli NPC'ler, dünya bilgisi..."
                                   style="resize: vertical;"></textarea>
                     </div>
@@ -300,90 +315,94 @@
                     <div class="menu-divider"></div>
                     
                     <div class="form-group">
-                        <label for="new-campaign-password">Yönetim Şifresi:</label>
-                        <input type="password" id="new-campaign-password" class="char-field" placeholder="Unutmayacağınız bir şifre girin">
+                        <label for="new-campaign-password" data-i18n="label_camp_password">Yönetim Şifresi:</label>
+                        <input type="password" id="new-campaign-password" class="char-field" data-i18n-placeholder="placeholder_camp_password" placeholder="Unutmayacağınız bir şifre girin">
                     </div>
                     
-                    <button id="create-campaign-button" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+                    <button id="create-campaign-button" class="btn btn-primary" style="width: 100%; margin-top: 10px;" data-i18n="btn_create_campaign">
                         Kampanyayı Lobiye Ekle
                     </button>
-                    <button id="update-campaign-button" class="btn btn-accent" style="width: 100%; margin-top: 10px; display: none;">
+                    <button id="update-campaign-button" class="btn btn-accent" style="width: 100%; margin-top: 10px; display: none;" data-i18n="btn_update_campaign">
                         Kampanya Bilgilerini Güncelle
+                    </button>
                 </div>
             </section>
             
             <section id="gm-admin-view" class="tab-content">
                 
                 <div class="character-card">
-                    <h2 id="gm-admin-title" class="card-title">Kampanya Yönetimi</h2>
-                    <p class="card-description">
+                    <h2 id="gm-admin-title" class="card-title" data-i18n="card_gm_admin">Kampanya Yönetimi</h2>
+                    <p class="card-description" data-i18n="desc_gm_admin">
                         Bu sayfayı sadece kampanya GM'i görebilir.
                     </p>
                 </div>
 
                 <div class="character-card">
-                    <h2 class="card-title">Durum Aspektleri</h2>
+                    <h2 class="card-title" data-i18n="card_situation_aspects">Durum Aspektleri</h2>
                     <div id="gm-situation-aspect-list" class="stunt-list">
                     </div>
                     <div class="stunt-adder-group">
-                        <input type="text" id="gm-situation-aspect-input" placeholder="Yeni durum aspekti...">
-                        <button id="gm-add-situation-aspect-button" class="btn btn-primary">+</button>
+                        <input type="text" id="gm-situation-aspect-input" data-i18n-placeholder="placeholder_gm_aspect" placeholder="Yeni durum aspekti...">
+                        <button id="gm-add-situation-aspect-button" class="btn btn-primary" data-i18n="btn_add">+</button>
                     </div>
                 </div>
 
                 <div class="character-card">
-                    <h2 class="card-title">GM Fate Puanı</h2>
+                    <h2 class="card-title" data-i18n="card_gm_fate">GM Fate Puanı</h2>
                     <div class="form-group fate-tracker" style="justify-content: center; margin-bottom: 0;">
-                        <label>Güncel Puan:</label>
+                        <label data-i18n="label_current_points">Güncel Puan:</label>
                         <div class="fate-point-controls">
                             <button id="gm-minus-fate-point" class="btn btn-danger-outline btn-round" title="Fate Puanı Harca">−</button>
                             <span id="gm-fate-points-display" class="fate-point-display">0</span>
                             <button id="gm-plus-fate-point" class="btn btn-primary-outline btn-round" title="Fate Puanı Kazan">+</button>
                         </div>
                     </div>
+                </div>
 
                 <div class="character-card">
-                    <h2 class="card-title">Başvuran Karakterler</h2>
+                    <h2 class="card-title" data-i18n="card_submitted_chars">Başvuran Karakterler</h2>
                     <div id="gm-submitted-char-list">
                     </div>
                 </div>
 
                 <div class="character-card">
-                    <h2 class="card-title">Onaylanmış Oyuncular</h2>
+                    <h2 class="card-title" data-i18n="card_approved_players">Onaylanmış Oyuncular</h2>
                     <div id="gm-approved-players-list">
                     </div>
-                    </div> <div class="character-card danger-zone">
-                    <h2 class="card-title">Tehlikeli Bölge</h2>
-                    <p class="card-description">
+                </div> 
+                
+                <div class="character-card danger-zone">
+                    <h2 class="card-title" data-i18n="card_danger_zone">Tehlikeli Bölge</h2>
+                    <p class="card-description" data-i18n="desc_danger_zone_camp">
                         Bu işlem geri alınamaz. Kampanyayı, içindeki tüm oyuncuları ve başvuruları kalıcı olarak siler.
                     </p>
-                    <button id="edit-campaign-button" class="btn btn-secondary" style="margin-bottom: 10px; width: 100%;">Kampanya Bilgilerini Düzenle</button>
+                    <button id="edit-campaign-button" class="btn btn-secondary" style="margin-bottom: 10px; width: 100%;" data-i18n="btn_update_campaign">Kampanya Bilgilerini Düzenle</button>
 
-                    <button id="delete-campaign-button" class="btn btn-danger">Kampanyayı Kalıcı Olarak Sil</button>
+                    <button id="delete-campaign-button" class="btn btn-danger" data-i18n="btn_delete_campaign">Kampanyayı Kalıcı Olarak Sil</button>
                 </div>
-                </div>
+                
             </section>
 
 
             <section id="import-export-view" class="tab-content">
                 <div class="character-card">
-                    <h2 class="card-title">Karakter Verisi</h2>
-                    <p class="card-description">
+                    <h2 class="card-title" data-i18n="card_char_data">Karakter Verisi</h2>
+                    <p class="card-description" data-i18n="desc_char_data">
                         Karakterinizi bir `.json` dosyası olarak kaydedebilir veya daha önce kaydettiğiniz bir dosyayı yükleyebilirsiniz. Bu, karakterinizi paylaşmanın en iyi yoludur.
                     </p>
                     <div class="import-export-buttons">
-                        <button id="export-char-button" class="btn btn-primary">Karakteri Dışa Aktar (Export)</button>
+                        <button id="export-char-button" class="btn btn-primary" data-i18n="btn_export">Karakteri Dışa Aktar (Export)</button>
                         <input type="file" id="import-file-input" accept=".json" style="display: none;">
-                        <button id="import-char-button" class="btn btn-secondary">Karakteri İçe Aktar (Import)</button>
+                        <button id="import-char-button" class="btn btn-secondary" data-i18n="btn_import">Karakteri İçe Aktar (Import)</button>
                     </div>
                 </div>
 
                 <div class="character-card danger-zone">
-                    <h2 class="card-title">Tehlikeli Bölge</h2>
-                    <p class="card-description">
+                    <h2 class="card-title" data-i18n="card_danger_zone">Tehlikeli Bölge</h2>
+                    <p class="card-description" data-i18n="desc_danger_zone_char">
                         Bu işlem geri alınamaz. Mevcut karakterinizdeki tüm verileri (aspektler, beceriler, stunt'lar) sıfırlar.
                     </p>
-                    <button id="reset-char-button" class="btn btn-danger">Karakteri Sıfırla</button>
+                    <button id="reset-char-button" class="btn btn-danger" data-i18n="btn_reset">Karakteri Sıfırla</button>
                 </div>
             </section>
 
@@ -400,16 +419,49 @@
             </div>
 
             <div class="modal-buttons">
-                <button id="modal-cancel-button" class="btn btn-secondary">İptal</button>
-                <button id="modal-confirm-button" class="btn btn-primary">Onayla</button>
+                <button id="modal-cancel-button" class="btn btn-secondary" data-i18n="btn_cancel">İptal</button>
+                <button id="modal-confirm-button" class="btn btn-primary" data-i18n="btn_confirm">Onayla</button>
             </div>
         </div>
     </div>
+    
+    <div id="credits-overlay" class="modal-hidden">
+        <div id="credits-card" class="character-card credits-box">
+            <h2 class="credits-title" data-i18n="credits_title">Emeği Geçenler</h2>
+            
+            <div class="credits-section">
+                <h3 data-i18n="credits_dev">Geliştirici & Kodlama</h3>
+                <p class="credits-name highlight">Hazretiozay</p>
+            </div>
+
+            <div class="credits-section">
+                <h3 data-i18n="credits_design">Tasarım & Fikirler</h3>
+                <p class="credits-name">Unknown1</p>
+                <p class="credits-name">Unknown2</p>
+            </div>
+
+            <div class="credits-section">
+                <h3 data-i18n="credits_translation">Çeviri Ekibi</h3>
+                <div class="credits-grid">
+                    <span>🇬🇧 İngilizce: <strong>Unknown4</strong></span>
+                    <span>🇩🇪 Almanca: <strong>Unknown3</strong></span>
+                </div>
+            </div>
+
+            <div class="credits-footer">
+                <button id="close-credits-button" class="btn btn-accent credits-close-btn" data-i18n="btn_close">Kapat</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
+    <script src="lang.js"></script>
+    
     <script src="app.js"></script>
-    <div id="save-toast-notification" class="toast-notification">
+    <div id="save-toast-notification" class="toast-notification" data-i18n="msg_saved">
         Kaydedildi!
     </div>
-    </body>
+</body>
 </html>

@@ -68,11 +68,11 @@ body {
     /* GÜNCELLENDİ: Kozmik Arka Plan - MERKEZ GLOW GERİ GELDİ */
     background-image: 
         /* Mor Glow (Sol Üst) */
-        radial-gradient(circle 700px at 20% 30%, var(--color-primary) 0%, transparent 50%),
+        radial-gradient(circle 900px at 20% 30%, var(--color-primary) 0%, transparent 50%),
         /* Turkuaz Glow (Sağ Alt) */
-        radial-gradient(circle 600px at 80% 70%, var(--color-accent-magic) 0%, transparent 50%),
+        radial-gradient(circle 700px at 80% 70%, var(--color-accent-magic) 0%, transparent 50%),
         /* MERKEZ GLOW (Geri Eklendi) */
-        radial-gradient(circle 800px at 50% 50%, var(--color-text) 0%, transparent 60%);
+        radial-gradient(circle 800px at 50% 50%, var(--color-text) 0%, transparent 65%);
     
     background-size: 200% 200%;
     background-repeat: no-repeat;
@@ -933,7 +933,7 @@ body.menu-is-open .burger-toggle {
 .fate-cost-badge {
     font-size: 0.85rem;
     font-weight: 500;
-    background-color: rgba(0, 0, 0, 0.15); 
+    background-color: rgba(29, 29, 29, 0.15); 
     padding: 2px 6px;
     border-radius: 4px;
     opacity: 0.9;
@@ -1159,3 +1159,149 @@ body.menu-is-open .burger-toggle {
     animation: border-fade-live 3s infinite ease-in-out;
 }
 /* === BİTİŞ: ÖNERİ 3 === */
+/* === EMEĞİ GEÇENLER (CREDITS) ÖZEL TASARIMI === */
+
+/* 1. Arka Plan Katmanı (Overlay) */
+#credits-overlay {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    /* Arkaplanı iyice karartıyoruz */
+    background-color: rgba(10, 10, 15, 0.9);
+    /* Arkadaki siteyi bulanıklaştır (Blur Efekti) - Modern Tarayıcılar için */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 2005; /* Her şeyin üstünde */
+    
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    
+    /* Başlangıç animasyon durumu */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+/* Modal Görünür Olduğunda */
+#credits-overlay:not(.modal-hidden) {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 2. Kartın Kendisi (Kutu) */
+.credits-box {
+    width: 90%;
+    max-width: 450px;
+    max-height: 80vh; /* Kutunun boyu ekranın %80'ini geçmesin */
+    overflow-y: auto; /* Eğer içerik sığmazsa kenarda kaydırma çubuğu çıksın */
+    background-color: var(--color-bg-dark);
+    /* NEON PARLAMA EFEKTİ */
+    border: 2px solid var(--color-accent-magic);
+    box-shadow: 0 0 25px rgba(0, 240, 208, 0.3), inset 0 0 20px rgba(0, 240, 208, 0.1);
+    
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    
+    /* Animasyonlu Açılış (Küçükten büyüyerek gelme) */
+    transform: scale(0.8) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Yaylanma efekti */
+}
+
+/* Overlay görünür olduğunda kutuyu normal boyuta getir */
+#credits-overlay:not(.modal-hidden) .credits-box {
+    transform: scale(1) translateY(0);
+}
+
+/* 3. İçerik Tasarımı */
+.credits-title {
+    font-size: 2rem;
+    color: var(--color-accent-magic);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px var(--color-accent-magic);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 15px;
+}
+
+.credits-section {
+    margin-bottom: 20px;
+}
+
+.credits-section h3 {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    border: none; /* Varsayılan h3 çizgisini kaldır */
+}
+
+.credits-name {
+    font-size: 1.1rem;
+    color: var(--color-text);
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Geliştirici ismini vurgulamak için */
+.credits-name.highlight {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-primary); /* Mor renk */
+    text-shadow: 0 0 8px rgba(155, 128, 235, 0.4);
+}
+
+.credits-grid {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    font-size: 0.95rem;
+    color: var(--color-text);
+}
+
+.credits-footer {
+    margin-top: 30px;
+}
+
+.credits-close-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+/* === DİL SEÇİCİ DROPDOWN === */
+.language-group {
+    padding: 0 5px; /* Kenarlardan biraz boşluk */
+    margin-top: auto; /* Footer'a yapışması için */
+    margin-bottom: 10px;
+}
+
+.language-dropdown {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: var(--font-main);
+    color: var(--color-text);
+    background-color: var(--color-bg-med);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.language-dropdown:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.language-dropdown option {
+    background-color: var(--color-bg-dark); /* Açılan listenin arka planı */
+    color: var(--color-text);
+}
