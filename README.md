@@ -1,11 +1,26 @@
-# FATE RYO Test Aracı (faterollerdenemesi)
+# 🎲 FATE RYO Test Aracı (faterollerdenemesi) v0.2
 
-[![Durum: Public Beta](https://img.shields.io/badge/status-public_beta-yellow.svg)](https://hazreti-ozay.github.io/faterollerdenemesi/)
-[![Katkı: Açık](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/hazreti-ozay/faterollerdenemesi/blob/main/CONTRIBUTING.md)
+> **FATE RYO sistemi için Firebase destekli web aracı; D&D dışı sistemler için modern, açık kaynaklı bir platformun ilk adımı.** (Public Beta!)
 
-FATE RYO sistemi için Firebase destekli web aracı; D&D dışı sistemler için modern, açık kaynaklı bir platformun ilk adımı. (Public Beta!)
+[![Status](https://img.shields.io/badge/Status-Public%20Beta%20v0.2-orange)](https://hazreti-ozay.github.io/faterollerdenemesi/)
+[![Tech](https://img.shields.io/badge/Tech-JS%20%7C%20Firebase%20%7C%20HTML5-blue)]()
+[![License](https://img.shields.io/badge/License-Open%20Source-green)]()
 
-**🇬🇧 English:** A Firebase-powered web tool for the FATE RPG system; the first step in a modern, open-source platform for non-D&D systems. (Public Beta!)
+🇬🇧 **English:** A Firebase-powered web tool for the FATE RPG system; the first step in a modern, open-source platform for non-D&D systems. (Public Beta!)
+
+🔗 **CANLI TEST LİNKİ:** [https://hazreti-ozay.github.io/faterollerdenemesi/](https://hazreti-ozay.github.io/faterollerdenemesi/)
+
+---
+
+## 🔥 v0.2 İle Gelen Yenilikler (Yeni!)
+
+Bu güncelleme ile platform sadece bir karakter kağıdı olmaktan çıkıp, yaşayan bir oyun masasına dönüştü.
+
+* 🎮 **Oyun Modu (Game Mode):** Karakter yaratma ekranı bitti mi? **Gamepad ikonuna** tıklayın ve sadece oyun sırasında ihtiyacınız olan (Zar, Stres, Aspect) kompakt ızgara (grid) görünümüne geçin.
+* 🌍 **Çoklu Dil Desteği:** Platform artık **Türkçe** ve **İngilizce** seçeneklerine sahip.
+* 🔗 **Gelişmiş Kampanya Sistemi:** GM'ler artık kampanyalarına özel **Yetenek (Skill) Listeleri** oluşturabilir. Oyuncular kampanyaya bağlandığında karakter kağıtları otomatik olarak o oyunun kurallarına göre güncellenir.
+* ⚡ **Firebase Optimizasyonu:** Canlı modda veri işleme mantığı yeniden yazıldı. Artık sunucu şişmesi veya lag olmadan anlık değişiklik yapabilirsiniz.
+* 📝 **Hızlı Notlar:** Oyun sırasında siteyi terk etmeden alabileceğiniz, kalıcı stick-note (yapışkan not) sistemi eklendi.
 
 ---
 
@@ -13,22 +28,25 @@ FATE RYO sistemi için Firebase destekli web aracı; D&D dışı sistemler için
 
 Bu proje şu anda **aktif geliştirme ve test (Beta)** aşamasındadır. Sistem canlı olarak testilebilir durumdadır, ancak beklenmedik hatalarla (bug) karşılaşabilirsiniz veya veri kaybı yaşanabilir.
 
-Lütfen bulduğunuz hataları [Issues](https://github.com/hazreti-ozay/faterollerdenemesi/issues) sekmesinden raporlayın!
+> **Önemli:** Verilerinizi kaybetmemek için düzenli olarak **"Araçlar > Dışa Aktar"** seçeneğini kullanın.
+> Lütfen bulduğunuz hataları [Issues](https://github.com/hazreti-ozay/faterollerdenemesi/issues) sekmesinden raporlayın!
 
-🔗 **CANLI TEST LİNKİ:** [**https://hazreti-ozay.github.io/faterollerdenemesi/**](https://hazreti-ozay.github.io/faterollerdenemesi/)
+---
 
 ## 🎯 Projenin Amacı ve Vizyonu
 
-Bu projenin nihai vizyonu, **D&D Beyond'un Dungeons & Dragons için sunduğu entegre ve modern deneyimi, FATE gibi (D&D harici) diğer harika FRP sistemleri için de sağlayabilmektir.**
-
+Bu projenin nihai vizyonu, **D&D Beyond**'un Dungeons & Dragons için sunduğu entegre ve modern deneyimi, FATE gibi (D&D harici) diğer harika FRP sistemleri için de sağlayabilmektir.
 Bu araç, o vizyonun ilk adımıdır ve FATE sistemi üzerine odaklanmıştır.
 
-## 🔥 Temel Özellikler (Mevcut Sürüm)
+---
+
+## 🚀 Temel Özellikler (Mevcut Sürüm)
 
 Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 
 ### 🧑‍⚖️ GM (Game Master) için:
-* **Kampanya Yönetimi:** Yeni FATE kampanyaları oluşturun (Setting, Lore, Kişi Sayısı [1-10 doğrulama dahil] vb. detaylarla), mevcut kampanyaları düzenleyin veya silin.
+
+* **Gelişmiş Kampanya Yönetimi:** Yeni FATE kampanyaları oluşturun (Setting, Lore, Kişi Sayısı). **YENİ:** Kampanyanıza özel **Skill Set (Yetenek Listesi)** tanımlayın ve oyuncularınızı bu kurallara göre oynatın.
 * **GM Yönetim Paneli:** Şifre korumalı özel GM paneline erişim.
 * **GM Kader Puanı Takibi:** GM paneline, GM'in kendi Fate Puanlarını (+/-) takip etmesi ve kaydetmesi için sayaç eklendi.
 * **Başvuru Yönetimi:** Oyuncuların kampanyanıza gönderdiği karakter başvurularını inceleyin, "Onayla" veya "Reddet".
@@ -38,25 +56,25 @@ Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 * **Canlı Durum Aspektleri:** GM panelinden eklediğiniz "Durum Aspektleri" anlık olarak oyuncunun zar atıcısına yansır.
 
 ### 🧙 Oyuncu için:
+
+* **Oyun Modu (Game Mode):** Kampanyaya bağlandıktan sonra (veya bağımsız olarak) **Gamepad** ikonuna tıklayarak dikkatinizi dağıtmayan kompakt görünüme geçin.
+* **Entegre Zar Atıcı:** Oyun modunda karakter kağıdının altına sabitlenen panel ile sayfa değiştirmeden zar atın. ("Yeniden At" ve "+2 Ekle" destekli).
+* **Dinamik Skill Yönetimi:** Bir kampanyaya bağlandığınızda karakteriniz otomatik olarak GM'in belirlediği skill listesine güncellenir.
 * **Çoklu Karakter Yönetimi:** `localStorage`'da birden fazla karakter saklama. Karakterler arası geçiş (dropdown menü), yeni karakter ekleme (+) ve aktif karakteri silme özellikleri.
-* **Kampanya Lobisi:** Mevcut tüm kampanyaları "vitrin" kartları olarak listeleyin. Dolu kampanyalara başvuru kilitlenir.
-* **FATE Core Kural Uyumlu Karakter Yaratma:** `validateSkillPyramid` (Beceri Piramidi) doğrulaması, **Dinamik Stres Kutuları** (Physique/Will'e göre) ve **Dinamik Consequence Slotları** (+4 beceriye göre) dahil olmak üzere FATE Core kurallarına tam uyumlu karakter yaratma.
-* **Başvuru Sistemi:** Listeden seçtiğiniz karakteri (tarayıcı hafızasından) bir kampanyaya gönderin.
-* **Gelişmiş İçe Aktarma (.json):** Karakter yüklerken "Mevcut karakterin üzerine yaz" veya "Listeye yeni olarak ekle" seçeneği sunan modal.
-* **"Canlı Mod" (Live Mode):** GM tarafından onaylandığınızda, karakter sayfanız otomatik olarak "Canlı Mod"a geçer.
-* **Anlık Bildirimler ve Güncellemeler:**
-    * **Anlık Onay:** GM onayı, reddi veya oyundan atılma durumunda sayfayı yenilemeden anında bildirim alma.
-    * **Anlık Arayüz:** Stunt ekleme, Fate Puanı/Refresh değiştirme gibi eylemlerin arayüzde anında (sayfa yenilemesiz) görünmesi.
-    * **Anlık Kayıt:** "Canlı Mod"da yapılan tüm değişiklikler (Stres almak, Kader Puanı harcamak) anında Firebase'e yazılır.
-* **Entegre Zar Atıcı:** "Yeniden At (Reroll)" ve "+2 Ekle" mekaniklerini destekleyen, maliyet etiketli zar atıcı.
-* **QoL/UX İyileştirmeleri:** "Enter" tuşu ile modal onayı (örn: GM şifresi), "Canlı Mod" için zarif "Kenarlık Solması" (Border Fade) animasyonu.
-* **Oyundan Ayrılma:** Dilediğiniz zaman kampanyadan ayrılarak karakterinizi "Lokal Mod"a geri döndürün.
+* **FATE Core Kural Uyumlu Karakter Yaratma:** `validateSkillPyramid` (Beceri Piramidi) doğrulaması, Dinamik Stres Kutuları (Physique/Will'e göre) ve Dinamik Consequence Slotları (+4 beceriye göre).
+* **Canlı Mod (Live Mode):** GM tarafından onaylandığınızda, karakter sayfanız otomatik olarak senkronize olur. Yaptığınız değişiklikler (Stres, Fate Puanı) anında GM ekranına düşer.
+* **Anlık Bildirimler:** GM onayı, reddi veya oyundan atılma durumunda sayfayı yenilemeden bildirim alma.
+* **Notlar:** Oyun içi notlarınızı alabileceğiniz kalıcı not alanı.
+
+---
 
 ## 🛠️ Kullanılan Teknolojiler (Tech Stack)
 
 * **Frontend:** HTML5, CSS3, Vanilla JavaScript (ES6+)
 * **Backend & Database:** Firebase (Firestore) - (Anlık veri akışı için `onSnapshot` aktif olarak kullanılmaktadır)
 * **Deployment:** GitHub Pages
+
+---
 
 ## 🚀 Kurulum (Yerel (Local) Geliştirme İçin)
 
@@ -70,27 +88,36 @@ Projeyi kendi bilgisayarınızda çalıştırmak ve geliştirmek için:
     ```bash
     cd faterollerdenemesi
     ```
-3.  `app.js` (veya ilgili config) dosyasını açın ve kendi Firebase proje bilgilerinizi (apiKey, authDomain, vb.) içeren `firebaseConfig` nesnesini güncelleyin.
+3.  `app.js` (veya ilgili config) dosyasını açın ve kendi Firebase proje bilgilerinizi (`apiKey`, `authDomain`, vb.) içeren `firebaseConfig` nesnesini güncelleyin.
 4.  `index.html` dosyasını tarayıcınızda açın.
+
+---
 
 ## 🗺️ Yol Haritası (Roadmap)
 
 Projenin stabilizasyonu ve geleceği için planlanan sıradaki adımlar:
 
 * ✅ **Modal Entegrasyonu:** Tüm yerel `alert/confirm` pencereleri özel modal sistemi ile değiştirildi.
-* ✅ **"Anlık Onay" UX İyileştirmesi:** Oyuncunun, başvurusu onaylandığında/reddedildiğinde sayfayı yenilemeden bildirim alması ve yönlendirilmesi sağlandı.
-* ✅ **FATE Core Kural Entegrasyonu:** Dinamik Stres ve Consequence mekanikleri (Physique/Will'e dayalı) eklendi.
-* ✅ **Çoklu Karakter Desteği:** `localStorage` yapısı tek karakterden, çoklu karakter listesine (`fateCharacterList`) dönüştürüldü. Menü entegrasyonu tamamlandı.
-* ✨ **Gelecek Vizyonu:** Diğer (D&D dışı) FRP sistemleri için modüllerin eklenmesi.
+* ✅ **FATE Core Kural Entegrasyonu:** Dinamik Stres ve Consequence mekanikleri eklendi.
+* ✅ **Çoklu Karakter Desteği:** `localStorage` yapısı çoklu karakter listesine dönüştürüldü.
+* ✅ **v0.2 Güncellemesi:** Kampanya Skill Yönetimi, Oyun Modu Arayüzü ve Dil Desteği eklendi.
+* ✨ **Gelecek Vizyonu:** Karakter görselleri (Avatar) yükleme desteği ve diğer (D&D dışı) FRP sistemleri için modüller.
+
+---
 
 ## 🤝 Katkıda Bulunma (Contributing)
 
 Bu proje topluluk odaklıdır ve her türlü katkıya açıktır!
 
 * **Hata Raporlama:** Lütfen [Issues](https://github.com/hazreti-ozay/faterollerdenemesi/issues) sekmesini kullanın.
-* **Kod Katkısı:** Projenin kod tabanına (codebase) aktif olarak katkı sağlamak isterseniz, lütfen öncelikle [**CONTRIBUTING.md**](https://github.com/hazreti-ozay/faterollerdenemesi/blob/main/CONTRIBUTING.md) dosyasını okuyun ve benimle (veya proje sahibiyle) iletişime geçin.
-* **Davranış Kuralları:** Lütfen [**CODE_OF_CONDUCT.md**](https://github.com/hazreti-ozay/faterollerdenemesi/blob/main/CODE_OF_CONDUCT.md) dosyasını inceleyin.
+* **Kod Katkısı:** Projenin kod tabanına (codebase) aktif olarak katkı sağlamak isterseniz, lütfen öncelikle `CONTRIBUTING.md` dosyasını okuyun ve benimle iletişime geçin.
+* **Davranış Kuralları:** Lütfen `CODE_OF_CONDUCT.md` dosyasını inceleyin.
+
+---
 
 ## 📄 Lisans
 
 Proje şu anda aktif geliştirme ve test aşamasındadır. Stabil sürüme geçildiğinde bir açık kaynak lisansı (örn: MIT) eklenecektir.
+
+---
+*Developed with ❤️ by Ozi for Cemiyet-i Perdaz.*
