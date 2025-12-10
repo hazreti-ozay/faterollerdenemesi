@@ -58,14 +58,26 @@ function applyTranslations() {
         el.title = t(el.getAttribute('data-i18n-title'));
     });
     document.documentElement.lang = currentLang;
+    // === OYUN MODU BAŞLIKLARINI GÜNCELLE ===
+    // Kartların üzerine 'data-title' özelliği ekliyoruz, CSS buradan okuyacak.
+    const cardAspects = document.getElementById('card-aspects');
+    if (cardAspects) cardAspects.setAttribute('data-title', t('card_aspects')); // "Aspektler"
+
+    const cardSkills = document.getElementById('card-skills');
+    if (cardSkills) cardSkills.setAttribute('data-title', t('card_skills'));   // "Beceriler"
+
+    const cardStunts = document.getElementById('card-stunts');
+    if (cardStunts) cardStunts.setAttribute('data-title', t('card_stunts'));   // "Yetenekler"
 }
 
 // === VERİ ===
-const FATE_SKILLS = [
+const DEFAULT_FATE_SKILLS = [
     "Academics", "Athletics", "Burglary", "Contacts", "Crafts", "Deceive", "Drive",
     "Empathy", "Fight", "Investigate", "Lore", "Notice", "Physique",
     "Provoke", "Rapport", "Resources", "Shoot", "Stealth", "Will"
 ];
+let FATE_SKILLS = [...DEFAULT_FATE_SKILLS]; // Değiştirilebilir aktif liste
+let tempCampaignSkills = [...DEFAULT_FATE_SKILLS]; // Kampanya oluştururken kullanılan geçici liste
 // YENİ: Beceri Piramidi Limitleri
 const SKILL_PYRAMID_LIMITS = {
     4: 1, // 1 adet +4
@@ -119,6 +131,71 @@ function getDefaultCampaign() {
         gmFatePoints: 1,
         situationAspects: []
     };
+}
+// === BECERİ YÖNETİM SİSTEMİ ===
+
+// 1. Küresel Beceri Listesini Güncelle (Oyuncu Bağlanınca)
+function updateSkillList(newSkillsArray) {
+    if (newSkillsArray && Array.isArray(newSkillsArray) && newSkillsArray.length > 0) {
+        FATE_SKILLS = [...newSkillsArray];
+    } else {
+        FATE_SKILLS = [...DEFAULT_FATE_SKILLS];
+    }
+    // Arayüzü yenile
+    populateSkillManager();
+    populateSkillSelector();
+    renderRollLog(); 
+}
+
+// 2. GM Beceri Editörünü Ekrana Çiz
+function renderCampaignSkillEditor() {
+    campaignSkillChipsContainer.innerHTML = "";
+    
+    tempCampaignSkills.forEach((skill, index) => {
+        const chip = document.createElement('div');
+        chip.className = 'skill-chip';
+        
+        // Beceri ismi (Çeviri varsa çevir, yoksa olduğu gibi yaz)
+        let displayName = t(`skill_${skill.toLowerCase()}`);
+        if (displayName === `skill_${skill.toLowerCase()}`) displayName = skill;
+        
+        chip.innerHTML = `<span>${displayName}</span>`;
+        
+        // Silme Butonu (X)
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'skill-chip-remove';
+        removeBtn.innerHTML = '&times;';
+        removeBtn.onclick = () => { removeSkillFromEditor(index); };
+        
+        chip.appendChild(removeBtn);
+        campaignSkillChipsContainer.appendChild(chip);
+    });
+}
+
+function addSkillToEditor() {
+    const val = campaignSkillAddInput.value.trim();
+    if (!val) return;
+    
+    const exists = tempCampaignSkills.some(s => s.toLowerCase() === val.toLowerCase());
+    if (exists) {
+        showModalAlert({ title: "msg_warning", message: "msg_duplicate_skill" });
+        return;
+    }
+    
+    tempCampaignSkills.push(val);
+    tempCampaignSkills.sort((a, b) => a.localeCompare(b));
+    renderCampaignSkillEditor();
+    campaignSkillAddInput.value = "";
+}
+
+function removeSkillFromEditor(index) {
+    tempCampaignSkills.splice(index, 1);
+    renderCampaignSkillEditor();
+}
+
+function resetSkillEditorToDefault() {
+    tempCampaignSkills = [...DEFAULT_FATE_SKILLS];
+    renderCampaignSkillEditor();
 }
 
 
@@ -184,6 +261,10 @@ const newCampaignLoreInput = document.getElementById('new-campaign-lore');
 const newCampaignPlayersInput = document.getElementById('new-campaign-players');
 const newCampaignDescInput = document.getElementById('new-campaign-desc');
 const newCampaignPasswordInput = document.getElementById('new-campaign-password');
+const campaignSkillChipsContainer = document.getElementById('campaign-skill-chips');
+const campaignSkillAddInput = document.getElementById('campaign-skill-add-input');
+const campaignSkillAddBtn = document.getElementById('campaign-skill-add-btn');
+const campaignSkillResetBtn = document.getElementById('campaign-skill-reset-btn');
 const createCampaignButton = document.getElementById('create-campaign-button');
 
 const exportCharButton = document.getElementById('export-char-button');
@@ -217,6 +298,9 @@ const modalConfirmButton = document.getElementById('modal-confirm-button');
 const modalCancelButton = document.getElementById('modal-cancel-button');
 // YENİ TOAST ELEMENTİ
 const saveToastNotification = document.getElementById('save-toast-notification');
+const gameModeToggleBtn = document.getElementById('game-mode-toggle-btn');
+const gameModeIcon = document.getElementById('game-mode-icon');
+const charViewSection = document.getElementById('char-view');
 
 
 let animationInterval = null;
@@ -593,7 +677,18 @@ async function checkActiveCampaignStatus() {
 
     try {
         const campaignDoc = await campaignRef.get();
-        const campaignName = campaignDoc.exists ? campaignDoc.data().name : t("nav_campaign"); // Varsayılan isim
+       let campaignName = t("nav_campaign");
+        if (campaignDoc.exists) {
+            const cData = campaignDoc.data();
+            campaignName = cData.name;
+            
+            // Özel Becerileri Yükle
+            if (cData.customSkills && cData.customSkills.length > 0) {
+                updateSkillList(cData.customSkills);
+            } else {
+                updateSkillList(null); // Varsayılana dön
+            }
+        }
 
         const playerDoc = await playerRef.get();
 
@@ -720,6 +815,7 @@ function switchView(viewName) {
             createCampaignButton.style.display = 'block';
             updateCampaignButton.style.display = 'none';
             newCampaignNameInput.value = "";
+            resetSkillEditorToDefault(); // Editörü sıfırla
             newCampaignGmNameInput.value = "";
             newCampaignSystemInput.value = "FATE";
             newCampaignSettingInput.value = "";
@@ -728,6 +824,14 @@ function switchView(viewName) {
             newCampaignDescInput.value = "";
             newCampaignPasswordInput.value = "";
         }
+    }
+    // === DÜZELTME: Kampanya sayfasına girerken editörü çiz ===
+    if (viewName === 'campaign') {
+        // Eğer liste boşsa (ilk açılışsa) varsayılanları yükle
+        if (tempCampaignSkills.length === 0) {
+            tempCampaignSkills = [...DEFAULT_FATE_SKILLS];
+        }
+        renderCampaignSkillEditor();
     }
     allViews.forEach(view => view.classList.remove('active'));
     navButtons.forEach(button => button.classList.remove('active'));
@@ -757,6 +861,34 @@ function switchView(viewName) {
 
     if (window.innerWidth <= 900 && document.body.classList.contains('menu-is-open')) {
         toggleBurgerMenu();
+    }
+}
+// === MODÜL 4: OYUN MODU ===
+let isGameMode = false;
+
+function toggleGameMode() {
+    isGameMode = !isGameMode;
+    
+    if (isGameMode) {
+        // Oyun Modunu Aç
+        document.body.classList.add('game-mode-on'); // TÜM VÜCUDA EKLE (Menü kontrolü için)
+        charViewSection.classList.add('game-mode-active');
+        
+        gameModeToggleBtn.classList.remove('btn-secondary');
+        gameModeToggleBtn.classList.add('btn-accent'); 
+        gameModeIcon.textContent = "🎮"; 
+        gameModeToggleBtn.title = t("lbl_game_mode_active");
+        
+        showSaveIndicator(); 
+    } else {
+        // Düzenleme Moduna Dön
+        document.body.classList.remove('game-mode-on'); // SINIFI KALDIR
+        charViewSection.classList.remove('game-mode-active');
+        
+        gameModeToggleBtn.classList.add('btn-secondary');
+        gameModeToggleBtn.classList.remove('btn-accent');
+        gameModeIcon.textContent = "✏️"; 
+        gameModeToggleBtn.title = t("btn_edit_mode");
     }
 }
 
@@ -895,10 +1027,20 @@ async function handleCreateCampaign() {
     createCampaignButton.textContent = t("btn_creating");
 
     try {
+        // Beceri Editöründen Veriyi Al
+    let customSkills = null;
+    // Eğer liste varsayılan değilse, özel listeyi al
+    const isDefault = (tempCampaignSkills.length === DEFAULT_FATE_SKILLS.length) && 
+                      tempCampaignSkills.every((val, index) => val === DEFAULT_FATE_SKILLS[index]);
+    
+    if (!isDefault) {
+        customSkills = [...tempCampaignSkills];
+    }
         const newCampaign = {
             name: name, gmName: gmName, system: system, setting: setting,
             lore: lore, maxPlayers: players, currentPlayerCount: 0, 
             description: desc, password: password,
+            customSkills: customSkills,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             situationAspects: []
         };
@@ -958,11 +1100,20 @@ async function handleUpdateCampaign() {
     
     updateCampaignButton.disabled = true;
     updateCampaignButton.textContent = t("btn_updating");
+    // === DÜZELTME: Editördeki listeyi güncelleme verisine hazırla ===
+    let customSkills = null;
+    const isDefault = (tempCampaignSkills.length === DEFAULT_FATE_SKILLS.length) && 
+                      tempCampaignSkills.every((val, index) => val === DEFAULT_FATE_SKILLS[index]);
+    
+    if (!isDefault) {
+        customSkills = [...tempCampaignSkills];
+    }
 
     try {
         const updatedCampaignData = {
             name: name, gmName: gmName, system: system, setting: setting,
             lore: lore, maxPlayers: players, description: desc, password: password,
+            customSkills: customSkills // <--- BU SATIRI EKLE
         };
         await db.collection("publicCampaigns").doc(currentManagedCampaignId).update(updatedCampaignData);
 
@@ -1516,7 +1667,7 @@ async function handleDeleteCampaign() {
     
     const isSure = await showModalConfirm({
         title: "msg_warning",
-        message: t("txt_last_char_warning") // t() parantezine aldık.
+        message: t("txt_delete_campaign_confirm") // DOĞRUSU: Kampanya silme onayı
     });
     if (!isSure) return;
 
@@ -1536,7 +1687,7 @@ async function handleDeleteCampaign() {
 
     try {
         await db.collection("publicCampaigns").doc(currentManagedCampaignId).delete();
-        await showModalAlert({ title: "msg_success", message: "txt_campaign_deleted" });
+        await showModalAlert({ title: "msg_success", message: t("txt_campaign_deleted") });
         currentManagedCampaignId = null; 
         switchView('find-campaign'); 
     } catch (error) {
@@ -1562,7 +1713,14 @@ async function handleEditCampaignClick() {
         newCampaignPlayersInput.value = data.maxPlayers || 3;
         newCampaignDescInput.value = data.description || "";
         newCampaignLoreInput.value = data.lore || "";
-        newCampaignPasswordInput.value = data.password || ""; 
+        newCampaignPasswordInput.value = data.password || "";
+        // === DÜZELTME: Mevcut becerileri editöre yükle ===
+        if (data.customSkills && Array.isArray(data.customSkills) && data.customSkills.length > 0) {
+            tempCampaignSkills = [...data.customSkills];
+        } else {
+            tempCampaignSkills = [...DEFAULT_FATE_SKILLS];
+        }
+        renderCampaignSkillEditor(); 
 
         createCampaignButton.style.display = 'none';
         updateCampaignButton.style.display = 'block';
@@ -1700,8 +1858,8 @@ async function handleLeaveCampaign() {
     
     if (!activeCampaignId || !activeCharacterName) return;
     
-    // Mesaj sabit, "approved" veya "pending" fark etmez "Oyundan ayrılmak istiyor musunuz?" yeterli
-    const isSure = await showModalConfirm({ title: "msg_confirmation", message: "txt_leave_game_confirm" });
+    // Mesaj sabit, "approved" veya "pending" fark etmez...
+    const isSure = await showModalConfirm({ title: "msg_confirmation", message: t("txt_leave_game_confirm") });
     if (!isSure) return;
 
     try {
@@ -1720,8 +1878,9 @@ async function handleLeaveCampaign() {
         localStorage.removeItem('fateActiveCharacterName');
         localStorage.setItem('fateCampaignStatus', 'offline');
         
-        await showModalAlert({ title: "msg_success", message: "txt_leave_success" });
-        
+        await showModalAlert({ title: "msg_success", message: t("txt_leave_success") });
+
+        updateSkillList(null); // Varsayılan becerilere dön
         loadCharacter();
         updateUIFromData();
 
@@ -1848,10 +2007,23 @@ function updateUIFromData() {
     // Becerileri 'populateSkillManager' oluşturdu, biz sadece değerleri güncelliyoruz
     if (characterData.skills) {
         FATE_SKILLS.forEach(skill => {
-            const skillId = `skill-${skill.toLowerCase()}`;
+            // ID oluşturma mantığı populateSkillManager ile aynı
+            const safeId = skill.toLowerCase().replace(/[^a-z0-9]/g, '-');
+            const skillId = `skill-${safeId}`;
             const inputElement = document.getElementById(skillId);
             if (inputElement) {
-                inputElement.value = characterData.skills[skill] || 0;
+                const val = characterData.skills[skill] || 0;
+                inputElement.value = val;
+                
+                // === DÜZELTME: Yükleme sırasında metin değerlerini de güncelle ===
+                // inputElement'in yanındaki span'ı bul
+                const parentDiv = inputElement.closest('.skill-entry');
+                if (parentDiv) {
+                    const displaySpan = parentDiv.querySelector('.skill-val-display');
+                    if (displaySpan) {
+                        displaySpan.textContent = (val > 0) ? `+${val}` : val;
+                    }
+                }
             }
         });
     }
@@ -1997,29 +2169,34 @@ async function validateSkillPyramid(skills, changedSkill, newValue) {
 function populateSkillManager() {
     skillListContainer.innerHTML = "";
     const skillLevels = [
-        { text: "+4", value: 4 },
-        { text: "+3", value: 3 },
-        { text: "+2", value: 2 },
-        { text: "+1", value: 1 },
-        { text: " 0", value: 0 }
+        { text: "+4", value: 4 }, { text: "+3", value: 3 },
+        { text: "+2", value: 2 }, { text: "+1", value: 1 }, { text: " 0", value: 0 }
     ];
-
     const currentSkills = characterData.skills || {};
 
+    // GÜNCELLENDİ: Sıralama ve Çeviri Kontrolü
     const sortedSkills = [...FATE_SKILLS].sort((a, b) => {
-        const nameA = t(`skill_${a.toLowerCase()}`);
-        const nameB = t(`skill_${b.toLowerCase()}`);
+        let nameA = t(`skill_${a.toLowerCase()}`);
+        if (nameA === `skill_${a.toLowerCase()}`) nameA = a; 
+        let nameB = t(`skill_${b.toLowerCase()}`);
+        if (nameB === `skill_${b.toLowerCase()}`) nameB = b;
         return nameA.localeCompare(nameB);
     });
 
     sortedSkills.forEach(skill => {
         const entry = document.createElement('div');
         entry.className = 'skill-entry';
-        const skillId = `skill-${skill.toLowerCase()}`;
+        
+        const safeId = skill.toLowerCase().replace(/[^a-z0-9]/g, '-');
+        const skillId = `skill-${safeId}`;
         
         const label = document.createElement('label');
         label.setAttribute('for', skillId);
-        label.textContent = t(`skill_${skill.toLowerCase()}`);
+
+        let localizedName = t(`skill_${skill.toLowerCase()}`);
+        if (localizedName === `skill_${skill.toLowerCase()}`) localizedName = skill;
+        
+        label.textContent = localizedName;
         
         const select = document.createElement('select');
         select.id = skillId;
@@ -2031,11 +2208,24 @@ function populateSkillManager() {
             select.appendChild(option);
         });
 
-        select.value = currentSkills[skill] || 0;
-        select.addEventListener('change', (event) => handleSkillChange(skill, event));
+        const currentVal = currentSkills[skill] || 0;
+        select.value = currentVal;
         
+        select.addEventListener('change', (event) => {
+            handleSkillChange(skill, event);
+        });
+        
+        // === YENİ: Oyun Modu İçin Salt Okunur Değer ===
+        const readOnlyDisplay = document.createElement('span');
+        readOnlyDisplay.className = 'skill-val-display';
+        // Eğer + pozitifse başına + koy, 0 ise olduğu gibi yaz
+        readOnlyDisplay.textContent = (currentVal > 0) ? `+${currentVal}` : currentVal;
+        // ===============================================
+
         entry.appendChild(label);
-        entry.appendChild(select);
+        entry.appendChild(select);     // Düzenleme modunda bu görünür
+        entry.appendChild(readOnlyDisplay); // Oyun modunda bu görünür
+        
         skillListContainer.appendChild(entry);
     });
 }
@@ -2067,19 +2257,35 @@ async function handleSkillChange(skillName, event) {
     } else {
         event.target.value = oldValue;
     }
+    // === DÜZELTME: Doğrulama bittikten sonra metin (span) değerini güncelle ===
+    // (İster kabul edilsin ister reddedilsin, son durumdaki değeri ekrana yaz)
+    const finalValue = parseInt(event.target.value);
+    const entryDiv = event.target.closest('.skill-entry');
+    if (entryDiv) {
+        const displaySpan = entryDiv.querySelector('.skill-val-display');
+        if (displaySpan) {
+            displaySpan.textContent = (finalValue > 0) ? `+${finalValue}` : finalValue;
+        }
+    }
 }
 function populateSkillSelector() {
     skillSelector.innerHTML = "";
     const sortedSkills = [...FATE_SKILLS].sort((a, b) => {
-        const nameA = t(`skill_${a.toLowerCase()}`);
-        const nameB = t(`skill_${b.toLowerCase()}`);
+        let nameA = t(`skill_${a.toLowerCase()}`);
+        if (nameA === `skill_${a.toLowerCase()}`) nameA = a;
+        let nameB = t(`skill_${b.toLowerCase()}`);
+        if (nameB === `skill_${b.toLowerCase()}`) nameB = b;
         return nameA.localeCompare(nameB);
     });
 
     sortedSkills.forEach(skill => {
         const option = document.createElement('option');
         option.value = skill;
-        option.textContent = t(`skill_${skill.toLowerCase()}`);
+        
+        let localizedName = t(`skill_${skill.toLowerCase()}`);
+        if (localizedName === `skill_${skill.toLowerCase()}`) localizedName = skill;
+        
+        option.textContent = localizedName;
         skillSelector.appendChild(option);
     });
 }
@@ -2470,6 +2676,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    if (gameModeToggleBtn) {
+        gameModeToggleBtn.addEventListener('click', toggleGameMode);
+    }
     // === EMEĞİ GEÇENLER MODALI ===
     const creditsBtn = document.getElementById('credits-button');
     const creditsOverlay = document.getElementById('credits-overlay');
@@ -2574,6 +2783,46 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Kampanya Kişi Sayısı doğrulaması
     newCampaignPlayersInput.addEventListener('change', handleCampaignPlayerInputValidation);
+    // === REHBER / KULLANIM KILAVUZU MANTIĞI ===
+    const guideOverlay = document.getElementById('guide-overlay');
+    const guideButton = document.getElementById('guide-button');
+    const closeGuideButton = document.getElementById('close-guide-button');
+
+    // 1. Rehberi Gösteren Fonksiyon
+    function showGuide() {
+        if (guideOverlay) {
+            guideOverlay.classList.remove('modal-hidden');
+            // Menüyü mobilde kapat (eğer açıksa)
+            document.body.classList.remove('menu-is-open');
+        }
+    }
+
+    // 2. Rehberi Kapatan Fonksiyon
+    function closeGuide() {
+        if (guideOverlay) {
+            guideOverlay.classList.add('modal-hidden');
+            // Kullanıcının rehberi gördüğünü kaydet
+            localStorage.setItem('fateGuideSeen', 'true');
+        }
+    }
+
+    // 3. Menü butonuna tıklayınca aç
+    if (guideButton) {
+        guideButton.addEventListener('click', showGuide);
+    }
+
+    // 4. "Okudum, Anladım" butonuna tıklayınca kapat
+    if (closeGuideButton) {
+        closeGuideButton.addEventListener('click', closeGuide);
+    }
+
+    // 5. Sayfa Yüklendiğinde Otomatik Kontrol
+    // Eğer kullanıcı daha önce "Okudum" demediyse rehberi aç
+    const hasSeenGuide = localStorage.getItem('fateGuideSeen');
+    if (!hasSeenGuide) {
+        // Biraz gecikmeli açalım ki sayfa tam otursun
+        setTimeout(showGuide, 500);
+    }
     
     
     // --- CANLI ARKA PLAN HAREKETİ ---
@@ -2602,7 +2851,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('mousemove', handleBackgroundMove);
     document.addEventListener('mouseleave', resetBackground);
+    // === MODÜL 2: SLIDING DRAWER NOT SİSTEMİ ===
+    const notesDrawer = document.getElementById('notes-drawer');
+    const notesToggleBtn = document.getElementById('notes-toggle-btn');
+    const playerNotesArea = document.getElementById('player-notes-area');
+    const notesStatusMsg = document.getElementById('notes-status-msg');
 
+    if (notesDrawer && notesToggleBtn && playerNotesArea) {
+        
+        // 1. Çekmeceyi Aç/Kapa
+        notesToggleBtn.addEventListener('click', () => {
+            notesDrawer.classList.toggle('open');
+        });
+
+        // 2. Sayfa Yüklendiğinde Kayıtlı Notları Getir
+        const savedNotes = localStorage.getItem('fatePlayerNotes');
+        if (savedNotes) {
+            playerNotesArea.value = savedNotes;
+        }
+
+        // 3. Not Yazıldıkça Kaydet (Otomatik Kayıt)
+        playerNotesArea.addEventListener('input', () => {
+            const currentNote = playerNotesArea.value;
+            localStorage.setItem('fatePlayerNotes', currentNote);
+            
+            // Ufak bir "Kaydedildi" bildirimi (Opsiyonel UX dokunuşu)
+            notesStatusMsg.textContent = t('txt_notes_saved') + "...";
+            setTimeout(() => {
+                notesStatusMsg.textContent = "";
+            }, 1000);
+        });
+    }
+// Beceri Editörü Eventleri
+    if (campaignSkillAddBtn) {
+        campaignSkillAddBtn.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            addSkillToEditor();
+        });
+    }
+    if (campaignSkillResetBtn) {
+        campaignSkillResetBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            resetSkillEditorToDefault();
+        });
+    }
+    if (campaignSkillAddInput) {
+        campaignSkillAddInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addSkillToEditor();
+            }
+        });
+    }
     // ------------------------------------
     
     switchView('char');

@@ -191,12 +191,18 @@ body.menu-is-open .burger-menu {
     text-shadow: 0 0 5px rgba(255,255,255,0.5);
 }
 .menu-footer {
-    margin-top: auto;
-    padding-top: 20px;
+    margin-top: auto;        /* En alta it */
+    padding-top: 15px;
+    padding-bottom: 20px;    /* Alttan mesafe bırak */
     border-top: 1px solid var(--color-border);
+    
+    /* Flexbox Ayarları (Çakışmayı Önler) */
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;  /* Alt alta diz */
+    gap: 15px;               /* Elemanlar arasına MİNİMUM 15px zorunlu boşluk koy */
+    align-items: flex-start;
+    width: 100%;             /* Genişliği garantile */
+    background-color: var(--color-bg-dark); /* Arka planı garantiye al */
 }
 .menu-links {
     display: flex;
@@ -1304,4 +1310,734 @@ body.menu-is-open .burger-toggle {
 .language-dropdown option {
     background-color: var(--color-bg-dark); /* Açılan listenin arka planı */
     color: var(--color-text);
+}
+/* === NOTLAR ÇEKMECESİ STİLLERİ (GÜNCELLENDİ) === */
+.notes-drawer {
+    position: fixed;
+    top: 100px;
+    right: 0;
+    width: 320px;
+    height: 60vh;
+    
+    /* GÜNCELLEME: Temanın kart rengini kullan */
+    background-color: var(--color-bg-dark); 
+    
+    border: 2px solid var(--color-primary);
+    border-right: none;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    box-shadow: -5px 5px 15px rgba(0,0,0,0.5);
+    z-index: 9999;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Çekmece Açıkken */
+.notes-drawer.open {
+    transform: translateX(0);
+}
+
+/* Kulakçık (Toggle Button) */
+.notes-toggle-btn {
+    position: absolute;
+    left: -40px;
+    top: 20px;
+    width: 40px;
+    height: 120px;
+    
+    /* GÜNCELLEME: Temanın kart rengini kullan (Çekmeceyle bütünleşir) */
+    background-color: var(--color-bg-dark);
+    
+    /* Kenarlıklar */
+    border: 2px solid var(--color-primary);
+    border-right: none; 
+    
+    color: var(--color-text); /* Temanın metin rengi */
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: -2px 2px 5px rgba(0,0,0,0.3);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+/* Kulakçık Yazısı */
+.notes-toggle-btn span {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #ffffff; /* Yazı parlak görünsün diye beyaz */
+    
+    /* GÜNCELLEME: Glow efekti (Değişken kullandık) */
+    text-shadow: 
+        0 0 5px var(--color-primary), 
+        0 0 10px var(--color-primary), 
+        0 0 20px var(--color-primary);
+}
+
+/* İçerik Alanı */
+.notes-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.notes-content h3 {
+    margin-top: 0;
+    color: var(--color-text);
+    border-bottom: 2px solid var(--color-primary); /* Başlık altı çizgi */
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px var(--color-primary); /* Hafif başlık parlaması */
+}
+
+.notes-content textarea {
+    flex-grow: 1;
+    width: 100%;
+    
+    /* GÜNCELLEME: Temanın input rengini kullan (#4a4052) */
+    background-color: var(--color-bg-med);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    box-sizing: border-box; /* Padding taşmasını engeller */
+}
+
+.notes-content textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 8px var(--focus-shadow);
+}
+/* === MODÜL 3: KAMPANYA BECERİ EDİTÖRÜ (CHIPS) === */
+.skill-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px;
+    background-color: var(--color-bg-med);
+    border: 1px solid var(--color-border);
+    border-radius: 5px;
+    min-height: 60px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.skill-chip {
+    background-color: var(--color-bg-darkest);
+    border: 1px solid var(--color-primary);
+    color: var(--color-text);
+    padding: 4px 10px;
+    border-radius: 15px; /* Yuvarlak köşeler */
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: fadeIn 0.3s ease;
+}
+
+.skill-chip span {
+    pointer-events: none;
+}
+
+.skill-chip-remove {
+    background: transparent;
+    border: none;
+    color: var(--color-danger);
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+.skill-chip-remove:hover {
+    color: var(--color-danger-hover);
+    transform: scale(1.2);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+/* === MODÜL 4: OYUN MODU (TEMEL) === */
+
+/* Oyun Modu Aktifken Gizlenecekler */
+.game-mode-active .character-management-group select,
+.game-mode-active .character-management-group #add-new-character-btn,
+.game-mode-active .character-management-group #delete-character-btn,
+.game-mode-active .stunt-adder-group, /* Stunt Ekleme Kısmı */
+.game-mode-active .skill-entry select, /* Beceri Dropdown'ları */
+.game-mode-active #leave-campaign-button, /* Oyundan Çık butonu */
+.game-mode-active .btn-danger-outline:not(.btn-round), /* Yuvarlak (-) butonu HARİÇ diğer silme butonlarını gizle */
+.game-mode-active .card-description /* Açıklama metinleri */
+{
+    display: none !important;
+}
+
+/* Oyun Modu Aktifken Inputlar Sadece Yazı Gibi Görünsün */
+.game-mode-active input.char-field,
+.game-mode-active textarea.char-field {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    font-weight: 700;
+    color: var(--color-accent-magic); /* Okunurluk için renk */
+    pointer-events: none; /* Tıklanmasın (Salt okunur hissi) */
+    resize: none;
+}
+
+/* Beceri Değerlerini Göster (Dropdown gizlendiği için alternatif lazım olacak - Sonraki Adım) */
+/* === MODÜL 4: BECERİ GÖRÜNÜRLÜĞÜ === */
+
+/* Varsayılan (Düzenleme Modu): Metin değeri gizli */
+.skill-val-display {
+    display: none;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--color-accent-magic); /* Değeri vurgula */
+    text-align: center;
+    min-width: 40px;
+}
+
+/* Oyun Modu Aktifken: */
+.game-mode-active .skill-entry select {
+    display: none !important; /* Dropdown'ı gizle */
+}
+
+.game-mode-active .skill-val-display {
+    display: inline-block; /* Metin değerini göster */
+}
+
+/* Oyun modunda beceri satırını biraz sıkılaştır */
+.game-mode-active .skill-entry {
+    padding: 5px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+/* ==========================================================================
+   MODÜL 4: OYUN MODU (GAME MODE) - V9 (CİLALI & HATASIZ)
+   ========================================================================== */
+
+/* Sadece Zar Atıcı ve Karakter Sayfası kalsın, diğerlerini gizle */
+body.game-mode-on .nav-button:not([data-view="char"]):not([data-view="roller"]),
+body.game-mode-on .menu-subtitle, 
+body.game-mode-on .menu-divider 
+{
+    display: none !important;
+}
+   /* --- 1. TEMEL GİZLEME (HER EKRAN İÇİN) --- */
+.game-mode-active .character-management-group select,
+.game-mode-active .character-management-group #add-new-character-btn,
+.game-mode-active .character-management-group #delete-character-btn,
+/* NOT: Oyun Modu butonu gizlenmemeli, o yüzden .character-management-group içindeki her şeyi değil, seçerek gizledik */
+.game-mode-active #campaign-status-display,
+.game-mode-active .stunt-adder-group,
+.game-mode-active #leave-campaign-button,
+.game-mode-active .card-description,
+.game-mode-active .skill-entry select,
+.game-mode-active .btn-danger-outline:not(.btn-round),
+.game-mode-active label[for="char-refresh"], 
+.game-mode-active #char-refresh,
+.game-mode-active h2.card-title,
+.game-mode-active #card-identity label 
+{
+    display: none !important;
+}
+
+/* Oyun Modu Butonunu Header'a Taşıma Hilesi */
+.game-mode-active .character-management-group {
+    /* Fixed yerine Absolute yaparak Header'a göre konumlanmasını sağlıyoruz */
+    position: absolute !important; 
+    top: 50%; /* Kartın ortasına hizala */
+    right: 20px; /* En sağa yasla (Fate puanının yanına) */
+    left: auto; /* Sol ayarını iptal et */
+    transform: translateY(-50%); /* Dikeyde tam ortala */
+    z-index: 100;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Header kartına relative özelliği verelim ki buton ona göre dursun */
+.game-mode-active #card-identity {
+    position: relative; 
+    /* Buton için sağ taraftan biraz boşluk bırakalım ki üst üste binmesin */
+    padding-right: 150px !important; 
+}
+
+/* Inputları "Yazı" gibi göster */
+.game-mode-active input.char-field,
+.game-mode-active textarea.char-field {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #fff !important; 
+    font-weight: 700;
+    pointer-events: none;
+    resize: none;
+    box-shadow: none !important;
+    width: 100%;
+}
+
+/* Beceri Puanını Göster */
+.skill-val-display { display: none; }
+.game-mode-active .skill-val-display {
+    display: block !important;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-accent-magic);
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+/* --- 2. ANA YERLEŞİM (MASAÜSTÜ) --- */
+@media (min-width: 1024px) {
+    
+    #char-view.game-mode-active {
+        display: grid;
+        grid-template-columns: 280px 1fr 300px; /* Sol ve Sağ sabit, Orta esnek */
+        grid-template-areas:
+            "header header header"
+            "left   mid    right";
+        gap: 12px;
+        height: calc(100vh - 100px); 
+        overflow: hidden; 
+        padding: 8px;
+        box-sizing: border-box;
+    }
+
+    /* === HEADER (İSİM & FATE) === */
+    .game-mode-active #card-identity {
+        grid-area: header;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--color-bg-darkest);
+        border: 2px solid var(--color-primary);
+        border-radius: 12px;
+        padding: 10px 25px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    }
+
+    /* İsim Alanı */
+    .game-mode-active #card-identity .form-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+        margin-left: 50px; /* Buton için yer aç */
+    }
+    
+    .game-mode-active #card-identity #char-name {
+        font-size: 1.25rem; color: var(--color-accent-magic) !important;
+        text-transform: uppercase; letter-spacing: 1px;
+    }
+    .game-mode-active #card-identity #char-desc {
+        font-size: 0.8rem; color: var(--color-text-muted) !important; font-style: italic;
+    }
+
+    /* Fate Puanı (Düzeltilmiş: Tek Satır & FP Yazılı) */
+.game-mode-active .fate-tracker {
+    flex: 0 0 auto;
+    display: flex !important;
+    flex-direction: row !important; /* Yan yana dizilmeyi ZORLA */
+    flex-wrap: nowrap !important;   /* İçerik sıkışsa bile alt satıra ASLA inmesin */
+    align-items: center; 
+    gap: 8px; 
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 4px 15px; /* Dikeyde ince, yatayda geniş */
+    border-radius: 50px;
+    border: 1px solid var(--color-accent-magic);
+    margin: 0 !important;
+    white-space: nowrap; /* Metinlerin de kaymasını engeller */
+}
+
+/* Soluna FP yazısı ekle */
+.game-mode-active .fate-tracker::before {
+    content: "FP";
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--color-accent-magic);
+    margin-right: 5px; /* Sayı ile arasına biraz mesafe */
+    line-height: 1;
+}
+
+/* Diğer ayarlar (Aynen kalıyor) */
+.game-mode-active .fate-tracker label { display: none; }
+.game-mode-active .fate-point-controls { display: flex !important; align-items: center; gap: 10px; }
+.game-mode-active .fate-point-display { font-size: 2rem; font-weight: 800; color: var(--color-accent-magic); margin: 0; line-height: 1; }
+
+
+    /* === SOL PANEL (ASPEKTLER) === */
+    .game-mode-active #card-aspects {
+        grid-area: left;
+        background-color: rgba(26, 24, 31, 0.9);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        padding: 12px 5px 12px 15px !important;
+        overflow-y: auto;
+        display: flex; flex-direction: column;
+        gap: 5px !important; /* Her maddenin arasında sabit 8px boşluk olsun */
+    }
+
+    /* Başlık */
+    .game-mode-active #card-aspects::before {
+        content: attr(data-title);
+        color: var(--color-primary); font-weight: 700; text-align: center;
+        border-bottom: 1px solid var(--color-secondary); margin-bottom: 5px;
+    }
+    .game-mode-active #card-aspects .form-group {
+        margin-bottom: 12px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        /* --- EKLENECEK SATIR --- */
+    padding-bottom: 10px; /* Çizgiyi metinden 8px aşağı iter, yapışmayı önler */
+    }
+    .game-mode-active #card-aspects textarea {
+        font-size: 0.75rem; white-space: normal; line-height: 1.3;
+        pointer-events: auto !important; 
+        
+        /* 2. DÜZENLEME HİSSİNİ KAPATMAK İÇİN İMLECİ GİZLİYORUZ */
+        caret-color: transparent !important; /* Yanıp sönen | işaretini gizler */
+        cursor: default !important; /* Mouse üzerine gelince yazı imleci çıkmaz */
+        
+        /* 3. SEÇİMİ ENGELLEMEK İÇİN (OPSİYONEL) */
+        /* Kullanıcı metni seçemesin, sadece okusun ve scroll yapsın */
+        user-select: none !important;
+    }
+    /* --- CHROME/EDGE İÇİN TEXTAREA İÇİ SCROLLBAR --- */
+    .game-mode-active #card-aspects textarea::-webkit-scrollbar {
+        width: 6px; /* İnce ama tutulabilir */
+    }
+    .game-mode-active #card-aspects textarea::-webkit-scrollbar-track {
+        background: rgba(0,0,0,0.2); /* Hafif koyu bir yol */
+        border-radius: 4px;
+    }
+    .game-mode-active #card-aspects textarea::-webkit-scrollbar-thumb {
+        background-color: var(--color-primary); /* Mor renk */
+        border-radius: 4px;
+        border: 1px solid var(--color-bg-darkest); /* Etrafında ince boşluk */
+    }
+    .game-mode-active #card-aspects textarea::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-primary-hover);
+    }
+    
+
+
+    /* === ORTA PANEL (BECERİLER) === */
+    .game-mode-active #card-skills {
+        grid-area: mid;
+        background-color: rgba(26, 24, 31, 0.9);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        padding: 10px;
+        overflow: hidden;
+        display: flex; flex-direction: column;
+    }
+    .game-mode-active #card-skills::before {
+        content: attr(data-title);
+        color: var(--color-primary); font-weight: 600; text-align: center; margin-bottom: 10px;
+    }
+    /* 3 Sütunlu Izgara */
+    .game-mode-active .skill-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;;
+        gap: 3px;
+        align-content: start; height: 100%; overflow-y: auto;
+    }
+    .game-mode-active .skill-entry {
+        background-color: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 6px;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
+        padding: 5px; min-height: 60px;
+    }
+    .game-mode-active .skill-entry label {
+        font-size: 0.7rem; text-transform: uppercase; color: var(--color-text-muted);
+        text-align: center; white-space: normal; line-height: 1.1;
+    }
+
+
+    /* === SAĞ PANEL (STRES & STUNT) - DÜZELTİLDİ === */
+    /* Sağ panelde 2 kart var, grid-area yerine Flex Column ile hizalayacağız */
+    /* Bu ikisini Grid hilesiyle aynı sütuna koyuyoruz */
+    /* HTML'de kardeşler ve kapsayıcıları #char-view */
+    
+    /* Sağ Sütunu Sanal Olarak Bölüyoruz (Grid Row Hilesi) */
+    /* Sol ve Orta tek parça, Sağ 2 parça */
+    #char-view.game-mode-active {
+        /* Tekrar tanımlıyoruz, sağda 2 satır olacak şekilde */
+        grid-template-areas:
+            "header header header"
+            "left   mid    stress"  /* Üst Yarı: Stress */
+            "left   mid    stunts"; /* Alt Yarı: Stunts */
+        /* Satır yüksekliklerini ayarla: Header - Stress(%40) - Stunt(%60) */
+        grid-template-rows: 90px 40% 1fr;
+    }
+    
+    /* Stres Kartı (Üst Sağ) */
+    .game-mode-active #card-stress {
+        grid-area: stress;
+        background-color: rgba(26, 24, 31, 0.9);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        padding: 10px;
+        overflow: hidden; /* Taşmasın */
+        display: flex; flex-direction: column;
+    }
+    /* Stres Kutularını Küçült ve Sıkıştır */
+    .game-mode-active .stress-consequences-grid {
+        display: flex; flex-direction: column; gap: 5px;
+    }
+    .game-mode-active .stress-track {
+        justify-content: center; gap: 3px; margin-bottom: 5px;
+    }
+    .game-mode-active .stress-box {
+        width: 24px; height: 24px; font-size: 0.7rem; /* Minik kutular */
+        border-width: 1px;
+    }
+    .game-mode-active .stress-column h3 { font-size: 0.7rem; margin: 2px 0; text-align: center; }
+    
+    /* Sonuçlar (Consequences) */
+    .game-mode-active .consequences-column { margin-top: 5px; }
+    .game-mode-active .consequences-column h3 { display: none; } /* Başlığı gizle yer kalsın */
+    .game-mode-active .consequences-column label { font-size: 0.65rem; color: var(--color-danger); }
+    .game-mode-active .consequences-column input { 
+        font-size: 0.8rem !important; 
+        padding: 2px 0 !important;
+        border-bottom: 1px dashed rgba(255,255,255,0.1) !important;
+    }
+
+    /* Stunt Kartı (Alt Sağ) */
+    .game-mode-active #card-stunts {
+        grid-area: stunts;
+        background-color: rgba(26, 24, 31, 0.9);
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        padding: 10px 5px 10px 10px !important;
+        overflow-y: auto; /* Scroll serbest */
+        margin-top: 1px; /* Stres ile ara ver */
+    }
+    /* --- STUNT İÇİN MODERN SCROLLBAR TASARIMI (Webkit) --- */
+    
+    /* 1. Çubuk Genişliği */
+    .game-mode-active #card-stunts::-webkit-scrollbar {
+        width: 4px; /* Çok ince */
+    }
+
+    /* 2. Arka Yol (Görünmez) */
+    .game-mode-active #card-stunts::-webkit-scrollbar-track {
+        background: transparent;
+        margin-top: 30px; /* Başlığın hizasından başlasın diye pay bıraktık */
+        margin-bottom: 5px;
+    }
+
+    /* 3. Hareketli Çubuk (Mor) */
+    .game-mode-active #card-stunts::-webkit-scrollbar-thumb {
+        background-color: var(--color-primary);
+        border-radius: 10px;
+    }
+
+    /* 4. Hover Efekti */
+    .game-mode-active #card-stunts::-webkit-scrollbar-thumb:hover {
+        background-color: var(--color-primary-hover);
+    }
+    .game-mode-active #card-stunts::before {
+        content: attr(data-title);
+        display: block; text-align: center; color: var(--color-primary); font-weight: 700; margin-bottom: 5px;
+    }
+    .game-mode-active .stunt-list-item {
+        padding: 4px 8px;
+        margin-bottom: 4px;
+        font-size: 0.8rem;
+        background-color: rgba(255,255,255,0.05);
+        border-left: 3px solid var(--color-accent-magic);
+    }
+}
+/* ==========================================================================
+   OYUN MODU HEADER DÜZELTMESİ (GRID AUTO HEIGHT)
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+    
+    /* 1. Grid Satır Yüksekliğini Esnek Yap */
+    #char-view.game-mode-active {
+        /* ESKİ: grid-template-rows: 90px 40% 1fr; 
+           YENİ: İlk satır "minmax(90px, auto)" oldu. 
+           Böylece içerik 90px'i geçerse satır aşağıya doğru genişler.
+        */
+        grid-template-rows: minmax(90px, auto) 40% 1fr !important;
+        
+    }
+
+    /* 2. Header Kapsayıcısının Yüksekliğini Serbest Bırak */
+    .game-mode-active #card-identity {
+        height: auto !important; /* Sabit yükseklik varsa iptal et */
+        min-height: 90px;        /* Orijinal tasarımın minimum yüksekliğini koru */
+        align-items: center;     /* İçeriği dikeyde ortala */
+    }
+
+    /* 3. İsim Alanı (Textarea) için Otomatik Genişleme */
+    .game-mode-active #card-identity #char-name {
+        /* Textarea'nın içindeki metne göre kutuyu büyütmesi için */
+        field-sizing: content;   /* Modern Tarayıcılar (Chrome 123+) */
+        height: auto;            /* Fallback */
+        min-height: 1.5em;       
+        overflow: hidden;        /* Scrollbar çıkmasın, kutu büyüsün */
+        white-space: pre-wrap;   /* Satır sonlarını koru */
+    }
+
+    /* 4. Mod Butonunun Ortalanmasını Koru */
+    /* Header uzadığında butonun yukarı kaymasını engellemek için */
+    .game-mode-active .character-management-group {
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
+}
+/* ==========================================================================
+   OYUN MODU: LIGHT/DARK MODE UYUMU (RENK DÜZELTMESİ)
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+
+    /* 1. Tüm Panellerin Arka Planını Değişkene Bağla */
+    /* Eskiden: rgba(26, 24, 31, 0.9) idi. */
+    .game-mode-active #card-aspects,
+    .game-mode-active #card-skills,
+    .game-mode-active #card-stress,
+    .game-mode-active #card-stunts {
+        background-color: var(--color-bg-dark) !important; /* Temaya göre değişir */
+        border-color: var(--color-border) !important;      /* Çerçeve rengi */
+        box-shadow: 0 4px 10px var(--shadow-color) !important;
+    }
+
+    /* 2. Header (Üst Kısım) Arka Planı */
+    .game-mode-active #card-identity {
+        background-color: var(--color-bg-dark) !important;
+    }
+
+    /* 3. Yazı Renkleri (Input ve Textarea) */
+    /* Eskiden: color: #fff !important; diyorduk. Bu yüzden Light Mode'da beyaz kağıda beyaz yazı oluyordu. */
+    .game-mode-active input.char-field,
+    .game-mode-active textarea.char-field {
+        color: var(--color-text) !important; /* Temadaki ana metin rengini alır */
+    }
+
+    /* 4. Beceri Kutucukları */
+    .game-mode-active .skill-entry {
+        background-color: var(--color-bg-med) !important; /* Kutucuk arka planı */
+        border-color: var(--color-border) !important;
+    }
+    
+    /* 5. Beceri Etiketleri (Label) */
+    .game-mode-active .skill-entry label {
+        color: var(--color-text-muted) !important;
+    }
+
+    /* 6. Stunt Listesi Satırları */
+    .game-mode-active .stunt-list-item {
+        background-color: var(--color-bg-med) !important;
+        color: var(--color-text) !important;
+    }
+    
+    /* 7. İsim (Header) Rengi */
+    /* Light Mode'da turkuaz çok parlayıp okunmazsa diye, ana renk ile değiştirebiliriz.
+       Ama şimdilik temanın "accent" rengine bağlı bırakalım. */
+    .game-mode-active #card-identity #char-name {
+        color: var(--color-primary) !important; /* Mor renk (Light mode'da daha okunaklı) */
+    }
+}
+/* === REHBER (GUIDE) MODALI - GÜNCELLENMİŞ === */
+#guide-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 3000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1; visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+#guide-overlay.modal-hidden {
+    opacity: 0; visibility: hidden;
+}
+
+#guide-container {
+    background-color: var(--color-bg-dark);
+    padding: 30px; /* İç boşluğu artırdım */
+    border-radius: 12px;
+    border: 2px solid var(--color-accent-magic);
+    box-shadow: 0 0 40px rgba(0, 240, 208, 0.25);
+    
+    /* === BÜYÜTME AYARLARI === */
+    width: 90%;
+    max-width: 800px; /* 600px -> 800px yaptık, daha geniş */
+    max-height: 85vh; /* Ekran boyunun %85'ini kaplasın */
+    display: flex;
+    flex-direction: column;
+}
+
+/* İçerik Alanı (Scroll Buraya Geliyor) */
+.guide-content {
+    overflow-y: auto; 
+    padding-right: 15px; 
+    text-align: left; 
+    font-size: 1rem; /* Yazı boyutu biraz büyüdü */
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+/* === ÖZEL SCROLLBAR (MOR TASARIM) === */
+
+/* Krom/Edge/Safari */
+.guide-content::-webkit-scrollbar {
+    width: 8px; /* Biraz daha belirgin olsun diye 8px */
+}
+
+.guide-content::-webkit-scrollbar-track {
+    background: transparent; /* Şeffaf zemin */
+    margin: 10px 0;
+}
+
+.guide-content::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary); /* Mor renk */
+    border-radius: 10px; /* Yuvarlak hatlar */
+    border: 2px solid var(--color-bg-dark); /* Kenarlardan ayrılması için */
+}
+
+.guide-content::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary-hover);
+}
+
+/* Firefox */
+.guide-content {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) transparent;
+}
+
+/* Liste maddeleri */
+.guide-content ul li {
+    margin-bottom: 8px;
+    color: var(--color-text-muted);
 }

@@ -31,6 +31,7 @@
         
         <div class="menu-divider"></div>
         <nav class="main-nav">
+            <button id="guide-button" class="nav-button" data-i18n="nav_guide">Nasıl Kullanılır?</button>
             <button id="credits-button" class="nav-button" data-i18n="nav_credits">Emeği Geçenler</button>
         </nav>
         
@@ -38,33 +39,38 @@
              <button class="nav-button" data-view="gm-admin" data-i18n="nav_gm_admin">GM Yönetim</button>
         </nav>
 
-        <div class="language-group">
-            <label for="language-selector" style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 5px; display: block;">Dil / Language</label>
-            <select id="language-selector" class="language-dropdown">
-                <option value="tr">🇹🇷 Türkçe</option>
-                <option value="en">🇬🇧 English</option>
-            </select>
-        </div>
-
         <footer class="menu-footer">
-            <div class="menu-links">
-                <a href="https://discord.gg/2cxXsrVw" id="discord-link" class="social-link" title="Discord Sunucusu" target="_blank">
-                    <svg viewBox="0 0 245 240"><path fill="currentColor" d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zM140.9 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z"></path><path fill="currentColor" d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.6 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.9 1-27.9-1.2-4.1-.7-8.1-1.4-11.9-2.1-16.5-3.6-22.1-3.6-22.1-3.6s4.6 8.3 17.5 12.1c-3 3.8-6.7 8.3-6.7 8.3-22.1 0-28.5-22.1-28.5-22.1 0-32.6 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.1-1.5 6-3.6c13.1-6.4 23.7-7.4 30.8-7.7 2.1-.1 4.2 0 6.1.1 13.9 1.1 24.6 3.3 35.1 7.4 2.3.9 4.1 1.8 5.7 2.7 0 0-8.3-7.9-26.3-13.1l.9-1.2s13.7-.3 28.1 10.5c0 0 14.4 25.7 14.4 58.3 0 0-6.4 22.1-28.5 22.1z"></path></svg>
-                </a>
-                
-                <a href="https://github.com/hazreti-ozay" id="github-link" class="social-link" title="GitHub" target="_blank">
-                    <svg viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
-                </a>
-
-                <a href="https://www.reddit.com/r/CemiyetiPerdaz/" id="reddit-link" class="social-link" title="Reddit" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                        <path fill="currentColor" d="M0 256C0 114.6 114.6 0 256 0S512 114.6 512 256 397.4 512 256 512L37.1 512c-13.7 0-20.5-16.5-10.9-26.2L75 437C28.7 390.7 0 326.7 0 256zM349.6 153.6c23.6 0 42.7-19.1 42.7-42.7s-19.1-42.7-42.7-42.7c-20.6 0-37.8 14.6-41.8 34-34.5 3.7-61.4 33-61.4 68.4l0 .2c-37.5 1.6-71.8 12.3-99 29.1-10.1-7.8-22.8-12.5-36.5-12.5-33 0-59.8 26.8-59.8 59.8 0 24 14.1 44.6 34.4 54.1 2 69.4 77.6 125.2 170.6 125.2s168.7-55.9 170.6-125.3c20.2-9.6 34.1-30.2 34.1-54 0-33-26.8-59.8-59.8-59.8-13.7 0-26.3 4.6-36.4 12.4-27.4-17-62.1-27.7-100-29.1l0-.2c0-25.4 18.9-46.5 43.4-49.9 4.4 18.8 21.3 32.8 41.5 32.8l.1 .2zM177.1 246.9c16.7 0 29.5 17.6 28.5 39.3s-13.5 29.6-30.3 29.6-31.4-8.8-30.4-30.5 15.4-38.3 32.1-38.3l.1-.1zm190.1 38.3c1 21.7-13.7 30.5-30.4 30.5s-29.3-7.9-30.3-29.6 11.8-39.3 28.5-39.3 31.2 16.6 32.1 38.3l.1 .1zm-48.1 56.7c-10.3 24.6-34.6 41.9-63 41.9s-52.7-17.3-63-41.9c-1.2-2.9 .8-6.2 3.9-6.5 18.4-1.9 38.3-2.9 59.1-2.9s40.7 1 59.1 2.9c3.1 .3 5.1 3.6 3.9 6.5z"/>
-                    </svg>
-                </a>
+            <div class="language-group" style="width: 100%; margin: 0; padding: 0;">
+                <label for="language-selector" style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 5px; display: block;">Dil / Language</label>
+                <select id="language-selector" class="language-dropdown">
+                    <option value="tr">🇹🇷 Türkçe</option>
+                    <option value="en">🇬🇧 English</option>
+                </select>
             </div>
-            
-            <div style="display: flex; gap: 5px; align-items: center;">
-                <button id="theme-toggle-button" class="btn theme-toggle" title="Temayı Değiştir">☀️</button>
+
+            <div class="menu-divider" style="width: 100%; margin: 15px 0;"></div>
+
+            <div class="footer-bottom-row" style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                
+                <div class="menu-links">
+                    <a href="https://discord.gg/2cxXsrVw" id="discord-link" class="social-link" title="Discord Sunucusu" target="_blank">
+                        <svg viewBox="0 0 245 240"><path fill="currentColor" d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zM140.9 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z"></path><path fill="currentColor" d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.6 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.9 1-27.9-1.2-4.1-.7-8.1-1.4-11.9-2.1-16.5-3.6-22.1-3.6-22.1-3.6s4.6 8.3 17.5 12.1c-3 3.8-6.7 8.3-6.7 8.3-22.1 0-28.5-22.1-28.5-22.1 0-32.6 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.1-1.5 6-3.6c13.1-6.4 23.7-7.4 30.8-7.7 2.1-.1 4.2 0 6.1.1 13.9 1.1 24.6 3.3 35.1 7.4 2.3.9 4.1 1.8 5.7 2.7 0 0-8.3-7.9-26.3-13.1l.9-1.2s13.7-.3 28.1 10.5c0 0 14.4 25.7 14.4 58.3 0 0-6.4 22.1-28.5 22.1z"></path></svg>
+                    </a>
+                    
+                    <a href="https://github.com/hazreti-ozay" id="github-link" class="social-link" title="GitHub" target="_blank">
+                        <svg viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+                    </a>
+
+                    <a href="https://www.reddit.com/r/CemiyetiPerdaz/" id="reddit-link" class="social-link" title="Reddit" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path fill="currentColor" d="M0 256C0 114.6 114.6 0 256 0S512 114.6 512 256 397.4 512 256 512L37.1 512c-13.7 0-20.5-16.5-10.9-26.2L75 437C28.7 390.7 0 326.7 0 256zM349.6 153.6c23.6 0 42.7-19.1 42.7-42.7s-19.1-42.7-42.7-42.7c-20.6 0-37.8 14.6-41.8 34-34.5 3.7-61.4 33-61.4 68.4l0 .2c-37.5 1.6-71.8 12.3-99 29.1-10.1-7.8-22.8-12.5-36.5-12.5-33 0-59.8 26.8-59.8 59.8 0 24 14.1 44.6 34.4 54.1 2 69.4 77.6 125.2 170.6 125.2s168.7-55.9 170.6-125.3c20.2-9.6 34.1-30.2 34.1-54 0-33-26.8-59.8-59.8-59.8-13.7 0-26.3 4.6-36.4 12.4-27.4-17-62.1-27.7-100-29.1l0-.2c0-25.4 18.9-46.5 43.4-49.9 4.4 18.8 21.3 32.8 41.5 32.8l.1 .2zM177.1 246.9c16.7 0 29.5 17.6 28.5 39.3s-13.5 29.6-30.3 29.6-31.4-8.8-30.4-30.5 15.4-38.3 32.1-38.3l.1-.1zm190.1 38.3c1 21.7-13.7 30.5-30.4 30.5s-29.3-7.9-30.3-29.6 11.8-39.3 28.5-39.3 31.2 16.6 32.1 38.3l.1 .1zm-48.1 56.7c-10.3 24.6-34.6 41.9-63 41.9s-52.7-17.3-63-41.9c-1.2-2.9 .8-6.2 3.9-6.5 18.4-1.9 38.3-2.9 59.1-2.9s40.7 1 59.1 2.9c3.1 .3 5.1 3.6 3.9 6.5z"/>
+                        </svg>
+                    </a>
+                </div>
+                
+                <div style="display: flex; gap: 5px; align-items: center;">
+                    <button id="theme-toggle-button" class="btn theme-toggle" title="Temayı Değiştir">☀️</button>
+                </div>
             </div>
         </footer>
     </aside>
@@ -76,10 +82,13 @@
 
             <section id="char-view" class="tab-content active">
                 
-                <div class="character-card">
+                <div id="card-identity" class="character-card">
                     <h2 class="card-title" data-i18n="card_char_info">Karakter Bilgileri</h2>
 
                     <div id="character-management-group" class="character-management-group">
+                        <button id="game-mode-toggle-btn" class="btn btn-secondary" title="Modu Değiştir" style="margin-right: 5px;">
+                            <span id="game-mode-icon">✏️</span>
+                        </button>
                         <select id="character-selector" title="Karakter Seç">
                         </select>
                         <button id="add-new-character-btn" class="btn btn-primary" title="Yeni Karakter Ekle">+</button>
@@ -87,7 +96,7 @@
                     </div>
                     <div class="menu-divider" style="margin-top: 0;"></div>
 
-                    <div id="campaign-status-display" 
+                    <div id="campaign-status-display"
                          style="margin-bottom: 15px; padding: 10px 15px; border-radius: 5px; background-color: var(--color-bg-med); color: var(--color-accent-magic); font-weight: 700;
                                 display: none; justify-content: space-between; align-items: center;">
                         <span id="campaign-status-text"></span>
@@ -95,13 +104,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="char-name" data-i18n="label_name">İsim:</label>
-                        <input type="text" id="char-name" class="char-field">
-                    </div>
+    <label for="char-name" data-i18n="label_name">İsim:</label>
+    <textarea id="char-name" class="char-field" rows="1" style="resize: none; overflow: hidden;"></textarea>
+</div>
                     <div class="form-group">
-                        <label for="char-desc" data-i18n="label_desc">Açıklama:</label>
-                        <input type="text" id="char-desc" class="char-field" data-i18n-placeholder="placeholder_char_desc" placeholder="Karakterinizin kısa tanımı...">
-                    </div>
+    <label for="char-desc" data-i18n="label_desc">Açıklama:</label>
+    <textarea id="char-desc" class="char-field" rows="3"style="resize: none; data-i18n-placeholder="placeholder_char_desc" placeholder="Karakterinizin kısa tanımı..."></textarea>
+</div>
                     
                     <div class="stats-grid">
                         <div class="form-group">
@@ -119,35 +128,35 @@
                     </div>
                 </div>
 
-                <div class="character-card">
+                <div id="card-aspects" class="character-card">
                     <h2 class="card-title" data-i18n="card_aspects">Aspektler (Aspects)</h2>
                     <div class="form-group">
-                        <label for="char-high-concept" data-i18n="label_high_concept">High Concept:</label>
-                        <input type="text" id="char-high-concept" class="char-field" data-i18n-placeholder="placeholder_high_concept" placeholder="Örn: 'Sihir Güçlü Kılıç Ustası'">
-                    </div>
-                    <div class="form-group">
-                        <label for="char-trouble" data-i18n="label_trouble">Trouble:</label>
-                        <input type="text" id="char-trouble" class="char-field" data-i18n-placeholder="placeholder_trouble" placeholder="Örn: 'Altına Olan Zafiyeti'">
-                    </div>
-                    <div class="form-group">
-                        <label for="char-relationship" data-i18n="label_relationship">Relationship:</label>
-                        <input type="text" id="char-relationship" class="char-field" data-i18n-placeholder="placeholder_relationship" placeholder="Örn: 'Eski Ustama Borçluyum'">
-                    </div>
-                    <div class="form-group">
-                        <label for="char-aspect-1" data-i18n="label_aspect1">Serbest Aspekt 1:</label>
-                        <input type="text" id="char-aspect-1" class="char-field" data-i18n-placeholder="placeholder_aspect" placeholder="...">
-                    </div>
-                    <div class="form-group">
-                        <label for="char-aspect-2" data-i18n="label_aspect2">Serbest Aspekt 2:</label>
-                        <input type="text" id="char-aspect-2" class="char-field" data-i18n-placeholder="placeholder_aspect" placeholder="...">
-                    </div>
+    <label for="char-high-concept" data-i18n="label_high_concept">High Concept:</label>
+    <textarea id="char-high-concept" class="char-field" rows="4"style="resize: none; data-i18n-placeholder="placeholder_high_concept" placeholder="Örn: 'Sihir Güçlü Kılıç Ustası'"></textarea>
+</div>
+<div class="form-group">
+    <label for="char-trouble" data-i18n="label_trouble">Trouble:</label>
+    <textarea id="char-trouble" class="char-field" rows="4"style="resize: none; data-i18n-placeholder="placeholder_trouble" placeholder="Örn: 'Altına Olan Zafiyeti'"></textarea>
+</div>
+<div class="form-group">
+    <label for="char-relationship" data-i18n="label_relationship">Relationship:</label>
+    <textarea id="char-relationship" class="char-field" rows="4"style="resize: none; data-i18n-placeholder="placeholder_relationship" placeholder="Örn: 'Eski Ustama Borçluyum'"></textarea>
+</div>
+<div class="form-group">
+    <label for="char-aspect-1" data-i18n="label_aspect1">Serbest Aspekt 1:</label>
+    <textarea id="char-aspect-1" class="char-field" rows="4"style="resize: none; data-i18n-placeholder="placeholder_aspect" placeholder="..."></textarea>
+</div>
+<div class="form-group">
+    <label for="char-aspect-2" data-i18n="label_aspect2">Serbest Aspekt 2:</label>
+    <textarea id="char-aspect-2" class="char-field" rows="4"style="resize: none; data-i18n-placeholder="placeholder_aspect" placeholder="..."></textarea>
+</div>
                 </div>
 
-                <div class="character-card">
+                <div id="card-skills" class="character-card">
                     <h2 class="card-title" data-i18n="card_skills">Beceriler (Skills)</h2>
                     <div id="skill-list" class="skill-list"></div>
                 </div>
-                <div class="character-card">
+                <div id="card-stunts" class="character-card">
                     <h2 class="card-title" data-i18n="card_stunts">Yetenekler (Stunts)</h2>
                     
                     <div id="stunt-counter" class="stunt-counter">
@@ -160,7 +169,7 @@
                         <button id="add-stunt-button" class="btn btn-primary" data-i18n="btn_add">+</button>
                     </div>
                 </div>
-                <div class="character-card">
+                <div id="card-stress" class="character-card">
                     <h2 class="card-title" data-i18n="card_stress">Stres & Sonuçlar</h2>
                     <div class="stress-consequences-grid">
                         <div class="stress-column">
@@ -300,6 +309,26 @@
                         <label for="new-campaign-desc" data-i18n="label_camp_desc">Hikaye Kancası:</label>
                         <input type="text" id="new-campaign-desc" class="char-field" data-i18n-placeholder="placeholder_camp_desc" placeholder="Oyuncular için kısa bir macera kancası...">
                     </div>
+                    <div class="form-group-vertical" style="margin-top: 15px;">
+                        <label style="font-weight: 700; color: var(--color-accent-magic);" data-i18n="label_camp_skills">
+                            Kampanya Becerileri:
+                        </label>
+                        <p class="card-description" style="font-size: 0.85rem; margin-bottom: 5px;" data-i18n="desc_camp_skills">
+                            İstemediklerinizi çıkarın, yenilerini ekleyin.
+                        </p>
+                        
+                        <div id="campaign-skill-chips" class="skill-chips-container">
+                            </div>
+
+                        <div class="stunt-adder-group" style="margin-top: 10px;">
+                            <input type="text" id="campaign-skill-add-input" data-i18n-placeholder="placeholder_add_skill" placeholder="Yeni beceri adı..." class="char-field">
+                            <button id="campaign-skill-add-btn" class="btn btn-primary">+</button>
+                        </div>
+                        
+                        <button id="campaign-skill-reset-btn" class="btn btn-secondary" style="margin-top: 5px; font-size: 0.8rem; padding: 5px 10px;" data-i18n="btn_reset_skills">
+                            Varsayılan Listeye Dön
+                        </button>
+                    </div>
 
                     <div class="form-group-vertical">
                         <label for="new-campaign-lore" style="font-weight: 700; color: var(--color-text-muted);" data-i18n="label_camp_lore">
@@ -436,15 +465,15 @@
 
             <div class="credits-section">
                 <h3 data-i18n="credits_design">Tasarım & Fikirler</h3>
-                <p class="credits-name">Unknown1</p>
-                <p class="credits-name">Unknown2</p>
+                <p class="credits-name"> </p>
+                <p class="credits-name"> </p>
             </div>
 
             <div class="credits-section">
                 <h3 data-i18n="credits_translation">Çeviri Ekibi</h3>
                 <div class="credits-grid">
-                    <span>🇬🇧 İngilizce: <strong>Unknown4</strong></span>
-                    <span>🇩🇪 Almanca: <strong>Unknown3</strong></span>
+                    <span> <strong> </strong></span>
+                    <span> <strong> </strong></span>
                 </div>
             </div>
 
@@ -463,5 +492,55 @@
     <div id="save-toast-notification" class="toast-notification" data-i18n="msg_saved">
         Kaydedildi!
     </div>
+    <div id="notes-drawer" class="notes-drawer">
+    <button id="notes-toggle-btn" class="notes-toggle-btn">
+        <span id="notes-toggle-text" data-i18n="btn_notes_toggle">Notlar</span>
+    </button>
+    <div class="notes-content">
+        <h3 data-i18n="title_notes">Notlar</h3>
+        <textarea id="player-notes-area" data-i18n-placeholder="placeholder_notes"></textarea>
+        <div class="notes-footer">
+            <small id="notes-status-msg" style="color: #888; font-size: 0.8rem;"></small>
+        </div>
+    </div>
+</div>
+<div id="guide-overlay" class="modal-hidden">
+    <div id="guide-container">
+        <h2 class="card-title" style="text-align: center; color: var(--color-accent-magic); margin-top: 0;" data-i18n="guide_title">Hoş Geldiniz</h2>
+        
+        <div class="guide-content">
+            
+            <p data-i18n="guide_welcome" style="margin-bottom: 20px; font-size: 1.1rem;">FATE RPG Karakter Kağıdı uygulamasına hoş geldiniz!</p>
+
+            <h3 data-i18n="guide_header_features" style="color: var(--color-primary); font-size: 1.1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 5px; margin-top: 20px;"></h3>
+            <ul style="list-style: disc; padding-left: 20px; margin-bottom: 15px;">
+                <li data-i18n="guide_feat_1">Karakter Yaratma & Düzenleme</li>
+                <li data-i18n="guide_feat_2">Zar Atıcı (Dice Roller)</li>
+                <li data-i18n="guide_feat_3">Kampanya Oluşturma & Beceri Özelleştirme (GM)</li>
+                <li data-i18n="guide_feat_4">Kampanyalara Katılma (Canlı Oyun)</li>
+            </ul>
+
+            <h3 data-i18n="guide_header_warnings" style="color: var(--color-danger); font-size: 1.1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 5px; margin-top: 20px;"></h3>
+            <p data-i18n="guide_warn_backup">Sistem geliştirme aşamasındadır. Verilerinizi kaybetmemek için...</p>
+            <p data-i18n="guide_warn_bugs">Hata bulursanız...</p>
+
+            <h3 data-i18n="guide_header_steps" style="color: var(--color-accent-magic); font-size: 1.1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 5px; margin-top: 20px;"></h3>
+            
+            <p style="margin-top: 15px;"><strong>1. <span data-i18n="guide_step_skill_title">Becerileri Kontrol Edin:</span></strong></p>
+            <p data-i18n="guide_step_skill_desc" style="font-size: 0.95rem; color: var(--color-text-muted);">...</p>
+
+            <p style="margin-top: 15px;"><strong>2. <span data-i18n="guide_step_multi_title">Çoklu Karakter & Temiz Oyun:</span></strong></p>
+            <p data-i18n="guide_step_multi_desc" style="font-size: 0.95rem; color: var(--color-text-muted);">...</p>
+
+            <p style="margin-top: 15px;"><strong>3. <span data-i18n="guide_step_mode_title">Oyun Modu & Zar Atıcı:</span></strong></p>
+            <p data-i18n="guide_step_mode_desc" style="font-size: 0.95rem; color: var(--color-text-muted);">...</p>
+
+        </div>
+
+        <div class="modal-buttons" style="margin-top: 25px;">
+            <button id="close-guide-button" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1.1rem;" data-i18n="btn_got_it">Okudum, Anladım</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
