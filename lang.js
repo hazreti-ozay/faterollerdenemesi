@@ -7,15 +7,16 @@ const TRANSLATIONS = {
         "nav_campaign": "Kampanya Paneli (GM)",
         "nav_tools": "İçe / Dışa Aktar",
         "nav_gm_admin": "GM Yönetim",
-        "nav_credits": "Emeği Geçenler", 
-        
+        "nav_credits": "Emeği Geçenler",
+        "nav_guide": "Nasıl Kullanılır?",
+
         // --- Karakter Kartı ---
         "card_char_info": "Karakter Bilgileri",
         "card_aspects": "Aspektler",
         "card_skills": "Beceriler",
         "card_stunts": "Yetenekler",
         "card_stress": "Stres & Sonuçlar",
-        
+
         // --- Form Etiketleri ---
         "label_name": "İsim:",
         "label_desc": "Açıklama:",
@@ -26,7 +27,9 @@ const TRANSLATIONS = {
         "label_relationship": "Relationship:",
         "label_aspect1": "Serbest Aspekt 1:",
         "label_aspect2": "Serbest Aspekt 2:",
-        
+        "label_limit": "Limit:",
+        "label_used": "Kullanılan:",
+
         // --- Stres & Sonuçlar ---
         "header_phys_stress": "Fiziksel Stres",
         "header_ment_stress": "Zihinsel Stres",
@@ -45,7 +48,8 @@ const TRANSLATIONS = {
         "log_roll_skill": "Beceri",
         "log_roll_total": "Toplam",
         "log_fate_spent": "Fate Puanı harcandı!",
-        
+        "lbl_fate_cost": "-1 Fate Puanı",
+
         // --- Ladder (Zar Sonuçları) ---
         "ladder_8": "Efsanevi!",
         "ladder_7": "İnanılmaz!",
@@ -95,6 +99,7 @@ const TRANSLATIONS = {
         "btn_confirm": "Onayla",
         "btn_ok": "Tamam",
         "btn_close": "Kapat",
+        "btn_got_it": "Okudum, Anladım",
         "btn_submit_char": "Karakterimi Gönder",
         "btn_manage": "Yönet",
         "btn_update_campaign": "Kampanya Bilgilerini Güncelle",
@@ -105,11 +110,16 @@ const TRANSLATIONS = {
         "btn_leave_campaign": "Oyundan Ayrıl",
         "btn_add_result": "SONUCA +2 EKLE",
         "btn_reroll": "YENİDEN AT",
-        
+        "btn_game_mode": "🎮 Oyun Modu",
+        "btn_edit_mode": "✏️ Düzenleme Modu",
+        "btn_notes_toggle": "Notlar",
+        "btn_reset_skills": "Varsayılan Listeye Dön",
+
         // --- Durum Bildirimleri ---
         "btn_creating": "Oluşturuluyor...",
         "btn_updating": "Güncelleniyor...",
-        
+        "lbl_game_mode_active": "Oyun Modu Aktif",
+
         // --- Kampanya ---
         "card_public_campaigns": "Genel Kampanyalar",
         "desc_public_campaigns": "Mevcut oyunları arayın ve karakterinizi gönderin. Bir GM iseniz, 'Yönet' butonuna basıp şifrenizi girin.",
@@ -123,7 +133,9 @@ const TRANSLATIONS = {
         "label_camp_desc": "Hikaye Kancası:",
         "label_camp_lore": "Detaylar / Lore (Opsiyonel):",
         "label_camp_password": "Yönetim Şifresi:",
-        
+        "label_camp_skills": "Kampanya Becerileri:",
+        "desc_camp_skills": "İstemediklerinizi (X) ile çıkarın, aşağıdan yeni ekleyin.",
+
         "card_gm_admin": "Kampanya Yönetimi",
         "desc_gm_admin": "Bu sayfayı sadece kampanya GM'i görebilir.",
         "card_situation_aspects": "Durum Aspektleri",
@@ -134,14 +146,15 @@ const TRANSLATIONS = {
         "card_danger_zone": "Tehlikeli Bölge",
         "desc_danger_zone_camp": "Bu işlem geri alınamaz. Kampanyayı, içindeki tüm oyuncuları ve başvuruları kalıcı olarak siler.",
         "btn_delete_campaign": "Kampanyayı Kalıcı Olarak Sil",
-        
+        "card_live_aspects": "Canlı Durum Aspektleri (GM)",
+
         // --- Import / Export ---
         "card_char_data": "Karakter Verisi",
         "desc_char_data": "Karakterinizi bir .json dosyası olarak kaydedebilir veya daha önce kaydettiğiniz bir dosyayı yükleyebilirsiniz. Bu, karakterinizi paylaşmanın en iyi yoludur.",
         "desc_danger_zone_char": "Bu işlem geri alınamaz. Mevcut karakterinizdeki tüm verileri (aspektler, beceriler, stunt'lar) sıfırlar.",
 
         "msg_saved": "Kaydedildi!",
-        
+
         // --- Placeholder (Silik Yazılar) ---
         "placeholder_stunt": "Yeni Stunt açıklaması...",
         "placeholder_char_desc": "Karakterinizin kısa tanımı...",
@@ -156,10 +169,29 @@ const TRANSLATIONS = {
         "placeholder_trouble": "Örn: 'Altına Olan Zafiyeti'",
         "placeholder_relationship": "Örn: 'Eski Ustama Borçluyum'",
         "placeholder_aspect": "Serbest aspektiniz...",
-        
-        "card_live_aspects": "Canlı Durum Aspektleri (GM)",
+        "placeholder_notes": "Buraya macera notlarını alabilirsin...",
+        "placeholder_add_skill": "Yeni beceri adı...",
 
-        // === MODAL MESAJLARI (EKSİKSİZ) ===
+        // --- Rehber / Kullanım Kılavuzu ---
+        "guide_title": "Hoş Geldiniz & Kullanım Kılavuzu",
+        "guide_welcome": "FATE RPG Karakter Kağıdı uygulamasına hoş geldiniz! Bu araç, oyunlarınızı hızlandırmak ve kolaylaştırmak için tasarlandı.",
+        "guide_header_features": "🌟 Temel Özellikler",
+        "guide_header_warnings": "⚠️ Önemli Uyarılar",
+        "guide_header_steps": "🚀 Nasıl Oynanır? (Kritik Adımlar)",
+        "guide_feat_1": "Karakter Yaratma & Düzenleme",
+        "guide_feat_2": "Zar Atıcı (Dice Roller)",
+        "guide_feat_3": "Kampanya Oluşturma & Beceri Özelleştirme (GM)",
+        "guide_feat_4": "Kampanyalara Katılma (Canlı Oyun)",
+        "guide_warn_backup": "Sistem geliştirme aşamasındadır (BETA). Verilerinizi kaybetmemek için Araçlar menüsünden 'Dışa Aktar' (Export) yaparak düzenli yedek almanız önerilir.",
+        "guide_warn_bugs": "Hata bulursanız veya öneriniz varsa, menüdeki sosyal medya ikonlarından (Discord/Reddit) geliştiriciye ulaşabilirsiniz.",
+        "guide_step_skill_title": "Becerileri Kontrol Edin",
+        "guide_step_skill_desc": "Karakterinizi yaratıp bir Kampanyaya bağlandıktan sonra mutlaka 'Beceriler' sekmesini kontrol edin. GM, kampanya için özel beceriler eklemiş veya çıkarmış olabilir. Bağlantı koptuğunda beceriler normale döner, tekrar bağlandığınızda kampanya ayarları geri gelir.",
+        "guide_step_multi_title": "Çoklu Karakter & Temiz Oyun",
+        "guide_step_multi_desc": "Birden fazla karakteriniz varsa; sadece oyun gecesi, ilgili karakterle kampanyaya bağlanın. Oyun bitiminde mutlaka 'Oyundan Ayrıl' butonunu kullanın, sonra diğer karaktere geçin. Bu, veri karışıklığını önler.",
+        "guide_step_mode_title": "Oyun Modu & Zar Atıcı",
+        "guide_step_mode_desc": "Önce Kampanyaya bağlanın, sonra 'Oyun Modu' (Gamepad İkonu) butonuna basın. Zarları görmek için menüden 'Zar Atıcı' sekmesine tıklarsanız, zar paneli karakter kağıdının altına otomatik yerleşir.",
+
+        // === MODAL MESAJLARI VE UYARILAR ===
         "msg_error": "Hata",
         "msg_success": "Başarılı",
         "msg_warning": "Uyarı",
@@ -170,7 +202,8 @@ const TRANSLATIONS = {
         "msg_rule_violation": "Kural İhlali",
         "msg_login_error": "Giriş Hatası",
         "msg_capacity_full": "Kapasite Dolu",
-        
+        "msg_duplicate_skill": "Bu beceri zaten listede var!",
+
         "txt_blocked_live": "Bir kampanyaya bağlıyken bu işlemi yapamazsınız. Lütfen önce oyundan ayrılın.",
         "txt_last_char_warning": "Bu son karakteriniz. Son karakteri silemezsiniz. (Bunun yerine 'Karakteri Sıfırla' butonunu kullanın.)",
         "txt_delete_char_confirm": "{name} adlı karakteri kalıcı olarak silmek istediğinizden emin misiniz?",
@@ -178,11 +211,14 @@ const TRANSLATIONS = {
         "txt_stunt_limit": "Stunt limitine ulaştınız. Refresh puanınızı düşürmelisiniz.",
         "txt_refresh_limit": "Refresh'i {value} değerine düşüremezsiniz. Önce Stunt silmelisiniz.",
         "txt_skill_pyramid": "Sadece {limit} adet '+{value}' beceriye sahip olabilirsiniz.",
+        "txt_fate_gt_refresh": "Fate Puanı, Refresh değerinden yüksek olamaz.",
         "txt_fate_point_limit": "Harcanacak Fate Puanın yok!",
         "txt_import_success": "Karakter başarıyla içe aktarıldı.",
         "txt_import_overwrite": "{new} karakterini yüklüyorsunuz.\n'Onayla': {current} üzerine yaz.\n'İptal': Yeni olarak ekle.",
         "txt_char_updated": "Karakter başarıyla güncellendi.",
         "txt_char_added": "Karakter başarıyla listeye eklendi.",
+        "txt_char_deleted_success": "Karakter başarıyla silindi.",
+        "txt_char_reset_success": "Aktif karakter başarıyla sıfırlandı.",
         "txt_invalid_file": "Geçersiz karakter dosyası.",
         "txt_leave_game_confirm": "Şu an bağlı olduğunuz oyundan ayrılmak istediğinize emin misiniz?",
         "txt_leave_success": "Oyundan başarıyla ayrıldınız.",
@@ -207,58 +243,16 @@ const TRANSLATIONS = {
         "txt_application_status": "Başvurunuz reddedildi veya oyundan çıkarıldınız.",
         "txt_player_count_error": "Kişi sayısı 1-10 arasında olmalı.",
         "txt_firebase_error": "Veritabanı (Firebase) hatası oluştu.",
-        
+        "txt_notes_saved": "Kaydedildi",
+        "txt_unnamed_char": "İsimsiz Karakter",
+        "txt_empty_stunt": "(Boş)",
+
         // --- Durum Çubuğu Mesajları ---
         "txt_status_live": "CANLI MOD: \"{campaign}\" oyununa bağlısınız.",
         "txt_status_pending": "ONAY BEKLENİYOR: \"{campaign}\" oyunu için başvurunuz alındı.",
-        // lang.js İÇİNDEKİ 'tr' BÖLÜMÜNE EKLE:
-        "txt_fate_gt_refresh": "Fate Puanı, Refresh değerinden yüksek olamaz.",
-        "label_limit": "Limit:",
-        "label_used": "Kullanılan:",
-        "txt_empty_stunt": "(Boş)",
-        // TR Bölümü içine:
-"lbl_fate_cost": "-1 Fate Puanı",
-// TR Bölümü:
-"txt_unnamed_char": "İsimsiz Karakter",
-"txt_char_deleted_success": "Karakter başarıyla silindi.",
-        "txt_char_reset_success": "Aktif karakter başarıyla sıfırlandı.",
-        "title_notes": "Kişisel Notlar",
-        "placeholder_notes": "Buraya macera notlarını alabilirsin...",
-        "txt_notes_saved": "Kaydedildi",
-        "btn_notes_toggle": "Notlar",
-        "label_camp_skills": "Kampanya Becerileri:",
-        "desc_camp_skills": "İstemediklerinizi (X) ile çıkarın, aşağıdan yeni ekleyin.",
-        "placeholder_add_skill": "Yeni beceri adı...",
-        "btn_reset_skills": "Varsayılan Listeye Dön",
-        "msg_duplicate_skill": "Bu beceri zaten listede var!",
-        "btn_game_mode": "🎮 Oyun Modu",
-        "btn_edit_mode": "✏️ Düzenleme Modu",
-        "lbl_game_mode_active": "Oyun Modu Aktif",
-        // --- Rehber / Guide ---
-        "nav_guide": "Nasıl Kullanılır?",
-        "guide_title": "Hoş Geldiniz & Kullanım Kılavuzu",
-        "guide_welcome": "FATE RPG Karakter Kağıdı uygulamasına hoş geldiniz! Bu araç, oyunlarınızı hızlandırmak ve kolaylaştırmak için tasarlandı.",
-        "guide_feat_1": "Karakter Yaratma & Düzenleme",
-        "guide_feat_2": "Zar Atıcı (Dice Roller)",
-        "guide_feat_3": "Kampanya Oluşturma & Beceri Özelleştirme (GM)",
-        "guide_feat_4": "Kampanyalara Katılma (Canlı Oyun)",
-        "guide_warn_backup": "Sistem geliştirme aşamasındadır (BETA). Verilerinizi kaybetmemek için Araçlar menüsünden 'Dışa Aktar' (Export) yaparak düzenli yedek almanız önerilir.",
-        "guide_warn_bugs": "Hata bulursanız veya öneriniz varsa, menüdeki sosyal medya ikonlarından (Discord/Reddit) geliştiriciye ulaşabilirsiniz.",
-        "guide_step_skill_title": "Becerileri Kontrol Edin",
-        "guide_step_skill_desc": "Karakterinizi yaratıp bir Kampanyaya bağlandıktan sonra mutlaka 'Beceriler' sekmesini kontrol edin. GM, kampanya için özel beceriler eklemiş veya çıkarmış olabilir. Bağlantı koptuğunda beceriler normale döner, tekrar bağlandığınızda kampanya ayarları geri gelir.",
-        "guide_step_multi_title": "Çoklu Karakter & Temiz Oyun",
-        "guide_step_multi_desc": "Birden fazla karakteriniz varsa; sadece oyun gecesi, ilgili karakterle kampanyaya bağlanın. Oyun bitiminde mutlaka 'Oyundan Ayrıl' butonunu kullanın, sonra diğer karaktere geçin. Bu, veri karışıklığını önler.",
-        "guide_step_mode_title": "Oyun Modu & Zar Atıcı",
-        "guide_step_mode_desc": "Önce Kampanyaya bağlanın, sonra 'Oyun Modu' (Gamepad İkonu) butonuna basın. Zarları görmek için menüden 'Zar Atıcı' sekmesine tıklarsanız, zar paneli karakter kağıdının altına otomatik yerleşir.",
-        "btn_got_it": "Okudum, Anladım",
-        // --- Rehber Başlıkları (EKSİKLER EKLENDİ) ---
-        "guide_header_features": "🌟 Temel Özellikler",
-        "guide_header_warnings": "⚠️ Önemli Uyarılar",
-        "guide_header_steps": "🚀 Nasıl Oynanır? (Kritik Adımlar)",
-        // (btn_got_it zaten vardı, yoksa ekle)
-        "btn_got_it": "Okudum, Anladım",
+        "title_notes": "Kişisel Notlar"
     },
-    
+
     en: {
         // --- Navigation ---
         "nav_char": "Character Sheet",
@@ -268,6 +262,7 @@ const TRANSLATIONS = {
         "nav_tools": "Import / Export",
         "nav_gm_admin": "GM Admin",
         "nav_credits": "Credits",
+        "nav_guide": "How to Use?",
 
         // --- Card Headers ---
         "card_char_info": "Character Info",
@@ -275,7 +270,7 @@ const TRANSLATIONS = {
         "card_skills": "Skills",
         "card_stunts": "Stunts",
         "card_stress": "Stress & Consequences",
-        
+
         // --- Labels ---
         "label_name": "Name:",
         "label_desc": "Description:",
@@ -286,7 +281,9 @@ const TRANSLATIONS = {
         "label_relationship": "Relationship:",
         "label_aspect1": "Free Aspect 1:",
         "label_aspect2": "Free Aspect 2:",
-        
+        "label_limit": "Limit:",
+        "label_used": "Used:",
+
         // --- Stress ---
         "header_phys_stress": "Physical Stress",
         "header_ment_stress": "Mental Stress",
@@ -305,7 +302,8 @@ const TRANSLATIONS = {
         "log_roll_skill": "Skill",
         "log_roll_total": "Total",
         "log_fate_spent": "Fate Point spent!",
-        
+        "lbl_fate_cost": "-1 Fate Point",
+
         // --- Ladder ---
         "ladder_8": "Legendary!",
         "ladder_7": "Epic!",
@@ -355,6 +353,7 @@ const TRANSLATIONS = {
         "btn_confirm": "Confirm",
         "btn_ok": "OK",
         "btn_close": "Close",
+        "btn_got_it": "Read & Understood",
         "btn_submit_char": "Submit Character",
         "btn_manage": "Manage",
         "btn_update_campaign": "Update Campaign Info",
@@ -365,11 +364,16 @@ const TRANSLATIONS = {
         "btn_leave_campaign": "Leave Campaign",
         "btn_add_result": "ADD +2 TO RESULT",
         "btn_reroll": "REROLL",
-        
+        "btn_game_mode": "🎮 Game Mode",
+        "btn_edit_mode": "✏️ Edit Mode",
+        "btn_notes_toggle": "Notes",
+        "btn_reset_skills": "Reset to Default List",
+
         // --- Status Buttons ---
         "btn_creating": "Creating...",
         "btn_updating": "Updating...",
-        
+        "lbl_game_mode_active": "Game Mode Active",
+
         // --- Campaign ---
         "card_public_campaigns": "Public Campaigns",
         "desc_public_campaigns": "Search for existing games and submit your character. If you are a GM, click 'Manage' and enter your password.",
@@ -383,7 +387,9 @@ const TRANSLATIONS = {
         "label_camp_desc": "Story Hook:",
         "label_camp_lore": "Details / Lore (Optional):",
         "label_camp_password": "Admin Password:",
-        
+        "label_camp_skills": "Campaign Skills:",
+        "desc_camp_skills": "Remove unwanted skills with (X), add new ones below.",
+
         "card_gm_admin": "Campaign Management",
         "desc_gm_admin": "Only the campaign GM can see this page.",
         "card_situation_aspects": "Situation Aspects",
@@ -394,14 +400,15 @@ const TRANSLATIONS = {
         "card_danger_zone": "Danger Zone",
         "desc_danger_zone_camp": "This action cannot be undone. Permanently deletes the campaign, all players, and submissions within it.",
         "btn_delete_campaign": "Permanently Delete Campaign",
-        
+        "card_live_aspects": "Live Situation Aspects (GM)",
+
         // --- Import / Export ---
         "card_char_data": "Character Data",
         "desc_char_data": "You can save your character as a .json file or load a previously saved file. This is the best way to share your character.",
         "desc_danger_zone_char": "This action cannot be undone. Resets all data (aspects, skills, stunts) in your current character.",
 
         "msg_saved": "Saved!",
-        
+
         // --- Placeholders ---
         "placeholder_stunt": "New Stunt description...",
         "placeholder_char_desc": "Short description of your character...",
@@ -416,10 +423,29 @@ const TRANSLATIONS = {
         "placeholder_trouble": "e.g., 'Sucker for a Pretty Face'",
         "placeholder_relationship": "e.g., 'I owe my old master'",
         "placeholder_aspect": "Your free aspect...",
-        
-        "card_live_aspects": "Live Situation Aspects (GM)",
+        "placeholder_notes": "Take notes for your adventure here...",
+        "placeholder_add_skill": "New skill name...",
 
-        // === NEW: MODAL MESSAGES ===
+        // --- Guide ---
+        "guide_title": "Welcome & User Guide",
+        "guide_welcome": "Welcome to the FATE RPG Character Sheet app! This tool is designed to speed up and simplify your games.",
+        "guide_header_features": "🌟 Basic Features",
+        "guide_header_warnings": "⚠️ Important Warnings",
+        "guide_header_steps": "🚀 How to Play? (Critical Steps)",
+        "guide_feat_1": "Character Creation & Editing",
+        "guide_feat_2": "Dice Roller",
+        "guide_feat_3": "Campaign Creation & Custom Skills (GM)",
+        "guide_feat_4": "Joining Campaigns (Live Play)",
+        "guide_warn_backup": "System is in development (BETA). It is recommended to take regular backups using 'Export' from the Tools menu to avoid data loss.",
+        "guide_warn_bugs": "If you find bugs or have suggestions, you can reach the developer via the social media icons (Discord/Reddit) in the menu.",
+        "guide_step_skill_title": "Check Skills",
+        "guide_step_skill_desc": "After joining a Campaign, always check the 'Skills' tab. The GM may have added or removed custom skills. Skills revert to normal when disconnected and return when reconnected.",
+        "guide_step_multi_title": "Multi-Character & Clean Play",
+        "guide_step_multi_desc": "If you have multiple characters; connect to the campaign only on game night with the relevant character. Always use the 'Leave Campaign' button when the game ends, then switch characters. This prevents data mix-ups.",
+        "guide_step_mode_title": "Game Mode & Dice Roller",
+        "guide_step_mode_desc": "First Connect to Campaign, then toggle 'Game Mode' (Gamepad Icon). To see dice, click the 'Dice Roller' tab from the menu; it will dock automatically below the character sheet.",
+
+        // === MESSAGES ===
         "msg_error": "Error",
         "msg_success": "Success",
         "msg_warning": "Warning",
@@ -430,7 +456,8 @@ const TRANSLATIONS = {
         "msg_rule_violation": "Rule Violation",
         "msg_login_error": "Login Error",
         "msg_capacity_full": "Capacity Full",
-        
+        "msg_duplicate_skill": "This skill is already in the list!",
+
         "txt_blocked_live": "You cannot perform this action while connected to a campaign. Please leave the game first.",
         "txt_last_char_warning": "This is your last character. You cannot delete the last character. (Use 'Reset Character' instead.)",
         "txt_delete_char_confirm": "Are you sure you want to permanently delete {name}?",
@@ -438,11 +465,14 @@ const TRANSLATIONS = {
         "txt_stunt_limit": "Stunt limit reached. You must lower your Refresh.",
         "txt_refresh_limit": "You cannot lower Refresh to {value}. Delete stunts first.",
         "txt_skill_pyramid": "You can only have {limit} skill(s) at +{value}.",
+        "txt_fate_gt_refresh": "Fate Points cannot exceed Refresh value.",
         "txt_fate_point_limit": "You have no Fate Points to spend!",
         "txt_import_success": "Character imported successfully.",
         "txt_import_overwrite": "Loading {new}.\n'Confirm': Overwrite {current}.\n'Cancel': Add as new.",
         "txt_char_updated": "Character successfully updated.",
         "txt_char_added": "Character successfully added to list.",
+        "txt_char_deleted_success": "Character deleted successfully.",
+        "txt_char_reset_success": "Active character reset successfully.",
         "txt_invalid_file": "Invalid character file.",
         "txt_leave_game_confirm": "Are you sure you want to leave the current game?",
         "txt_leave_success": "You have left the game.",
@@ -467,55 +497,13 @@ const TRANSLATIONS = {
         "txt_application_status": "Your application was denied or you were kicked.",
         "txt_player_count_error": "Player count must be between 1 and 10.",
         "txt_firebase_error": "Database (Firebase) error occurred.",
+        "txt_notes_saved": "Saved",
+        "txt_unnamed_char": "Unnamed Character",
+        "txt_empty_stunt": "(Empty)",
 
         // --- Status Messages ---
         "txt_status_live": "LIVE MODE: Connected to \"{campaign}\".",
         "txt_status_pending": "APPROVAL PENDING: Application sent for \"{campaign}\".",
-        // lang.js İÇİNDEKİ 'en' BÖLÜMÜNE EKLE:
-        "txt_fate_gt_refresh": "Fate Points cannot exceed Refresh value.",
-        "label_limit": "Limit:",
-        "label_used": "Used:",
-        "txt_empty_stunt": "(Empty)",
-        // EN Bölümü içine:
-"lbl_fate_cost": "-1 Fate Point",
-// EN Bölümü:
-"txt_unnamed_char": "Unnamed Character",
-"txt_char_deleted_success": "Character deleted successfully.",
-        "txt_char_reset_success": "Active character reset successfully.",
-        "title_notes": "Personal Notes",
-        "placeholder_notes": "Take notes for your adventure here...",
-        "txt_notes_saved": "Saved",
-        "btn_notes_toggle": "Notes",
-        "label_camp_skills": "Campaign Skills:",
-        "desc_camp_skills": "Remove unwanted skills with (X), add new ones below.",
-        "placeholder_add_skill": "New skill name...",
-        "btn_reset_skills": "Reset to Default List",
-        "msg_duplicate_skill": "This skill is already in the list!",
-        "btn_game_mode": "🎮 Game Mode",
-        "btn_edit_mode": "✏️ Edit Mode",
-        "lbl_game_mode_active": "Game Mode Active",
-        // --- Guide ---
-        "nav_guide": "How to Use?",
-        "guide_title": "Welcome & User Guide",
-        "guide_welcome": "Welcome to the FATE RPG Character Sheet app! This tool is designed to speed up and simplify your games.",
-        "guide_feat_1": "Character Creation & Editing",
-        "guide_feat_2": "Dice Roller",
-        "guide_feat_3": "Campaign Creation & Custom Skills (GM)",
-        "guide_feat_4": "Joining Campaigns (Live Play)",
-        "guide_warn_backup": "System is in development (BETA). It is recommended to take regular backups using 'Export' from the Tools menu to avoid data loss.",
-        "guide_warn_bugs": "If you find bugs or have suggestions, you can reach the developer via the social media icons (Discord/Reddit) in the menu.",
-        "guide_step_skill_title": "Check Skills",
-        "guide_step_skill_desc": "After joining a Campaign, always check the 'Skills' tab. The GM may have added or removed custom skills. Skills revert to normal when disconnected and return when reconnected.",
-        "guide_step_multi_title": "Multi-Character & Clean Play",
-        "guide_step_multi_desc": "If you have multiple characters; connect to the campaign only on game night with the relevant character. Always use the 'Leave Campaign' button when the game ends, then switch characters. This prevents data mix-ups.",
-        "guide_step_mode_title": "Game Mode & Dice Roller",
-        "guide_step_mode_desc": "First Connect to Campaign, then toggle 'Game Mode' (Gamepad Icon). To see dice, click the 'Dice Roller' tab from the menu; it will dock automatically below the character sheet.",
-        "btn_got_it": "Read & Understood",
-        // --- Guide Headers (ADDED) ---
-        "guide_header_features": "🌟 Basic Features",
-        "guide_header_warnings": "⚠️ Important Warnings",
-        "guide_header_steps": "🚀 How to Play? (Critical Steps)",
-        // (btn_got_it zaten vardı, yoksa ekle)
-        "btn_got_it": "Read & Understood",
+        "title_notes": "Personal Notes"
     }
 };

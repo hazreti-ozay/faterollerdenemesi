@@ -440,7 +440,7 @@ async function handleCharacterSwitch() {
         if (localStorage.getItem('fateCampaignStatus') === 'approved' || localStorage.getItem('fateCampaignStatus') === 'pending') {
             await showModalAlert({
                 title: "msg_operation_blocked",
-                message: "txt_blocked_live"
+                message: t("txt_blocked_live")
             });
             characterSelector.value = activeCharacterIndex;
             return;
