@@ -459,7 +459,7 @@ function handleAddNewCharacter() {
     if (localStorage.getItem('fateCampaignStatus') === 'approved' || localStorage.getItem('fateCampaignStatus') === 'pending') {
         showModalAlert({
             title: "msg_operation_blocked",
-            message: "txt_blocked_live"
+            message: t("txt_blocked_live")
         });
         return;
     }
@@ -2469,7 +2469,7 @@ function handleImportFile(event) {
                 if (localStorage.getItem('fateCampaignStatus') === 'approved' || localStorage.getItem('fateCampaignStatus') === 'pending') {
                     await showModalAlert({
                         title: "msg_operation_blocked",
-                        message: "txt_blocked_live"
+                        message: t("txt_blocked_live")
                     });
                     event.target.value = null; 
                     return;
@@ -2535,7 +2535,7 @@ async function handleDeleteCharacter() {
     if (localStorage.getItem('fateCampaignStatus') === 'approved' || localStorage.getItem('fateCampaignStatus') === 'pending') {
         await showModalAlert({
             title: "msg_operation_blocked",
-            message: "txt_blocked_live"
+            message: t("txt_blocked_live")
         });
         return;
     }
@@ -2608,7 +2608,7 @@ async function handleResetCharacterWipe() {
     if (localStorage.getItem('fateCampaignStatus') === 'approved' || localStorage.getItem('fateCampaignStatus') === 'pending') {
         await showModalAlert({
             title: "msg_operation_blocked",
-            message: "txt_blocked_live"
+            message: t("txt_blocked_live")
         });
         return;
     }

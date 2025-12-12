@@ -1,0 +1,69 @@
+===================================================================
+PROJE: FATE RYO Platformu
+SÜRÜM: v0.2 (Geliştirme Aşamasında)
+TANIM: Firebase tabanlı, gerçek zamanlı, çoklu karakter destekli FATE Core araç seti.
+===================================================================
+
+-------------------------------------------------------------------
+[1] MEVCUT DURUM (v0.1 - TAMAMLANDI)
+-------------------------------------------------------------------
+✅ Altyapı:
+   - Tek sayfa mimarisi (SPA) - HTML/CSS/JS.
+   - Firebase Firestore (v8) entegrasyonu.
+   - Modal ve Toast bildirim sistemleri (common.js gerektirmez, fate.js içinde).
+
+✅ Özellikler:
+   - Çoklu Karakter Desteği (localStorage dizi yapısı).
+   - Karakter Ekleme / Silme / Sıfırlama.
+   - Canlı GM Yönetimi (Anlık onay, red, atılma).
+   - Canlı Veri Senkronizasyonu (Stres, Fate puanı vb. anlık GM'e gider).
+   - FATE Core Kuralları (Beceri Piramidi, 4+3 Stres kutusu mantığı, Stunt limiti).
+   - Zar Atıcı (+2 Bonus, Yeniden Atma, Fate puanı harcama).
+   - "Academics" becerisi eklendi ve liste 19 beceriye tamamlandı.
+
+-------------------------------------------------------------------
+[2] YOL HARİTASI: YAMA v0.2 (PROFESYONEL SÜRÜM)
+-------------------------------------------------------------------
+Hedef: Kullanıcı deneyimini (UX) artırmak, sistemi globalleştirmek ve oyun esnasında kullanımı kolaylaştırmak.
+
+ÖNCELİK 1: ÇOKLU DİL DESTEĞİ (i18n)
+   - [ ] Dil dosyalarının oluşturulması (tr.json, en.json).
+   - [ ] HTML içindeki sabit metinlerin 'data-i18n' etiketleriyle değiştirilmesi.
+   - [ ] JS tarafında dil değiştirme fonksiyonunun yazılması.
+   - [ ] localStorage'da dil tercihinin saklanması.
+   - [ ] Dinamik içeriklerin (Beceri isimleri vb.) çeviri sistemine bağlanması.
+
+ÖNCELİK 2: SLIDING DRAWER NOT SİSTEMİ
+   - [ ] Sağ taraftan açılan kayar menü (Drawer) HTML/CSS yapısı.
+   - [ ] Açma/Kapama butonu entegrasyonu.
+   - [ ] Notların 'characterData.notes' alanına anlık kaydedilmesi.
+
+ÖNCELİK 3: KAMPANYA BAZLI DİNAMİK BECERİ SİSTEMİ
+   - [ ] GM Kampanya Oluşturma ekranına "Beceri Seti Düzenleyici" eklenmesi.
+   - [ ] Oyuncu bir kampanyaya bağlandığında, o kampanyanın beceri listesinin çekilmesi.
+   - [ ] Eski/Standart becerilerin yeni kampanya listesiyle eşleştirilmesi (Mapping).
+
+ÖNCELİK 4: "OYUN MODU" (DASHBOARD VIEW)
+   - [ ] CSS Grid tabanlı, tek ekranlık (scroll gerektirmeyen) tasarımın yapılması (.compact-mode).
+   - [ ] Düzenleme araçlarının (Sil butonu, Ekle dropdown'ı) bu modda gizlenmesi.
+   - [ ] "Göz/Kağıt" ikonu ile Normal Mod <-> Oyun Modu geçiş butonu.
+
+ÖNCELİK 5: ÖZEL PDF ÇIKTISI
+   - [ ] 'pdf-lib' kütüphanesinin projeye dahil edilmesi.
+   - [ ] Form alanları (AcroFields) tanımlanmış PDF şablonunun hazırlanması.
+   - [ ] JS verilerinin PDF alanlarına basılarak indirilmesi.
+
+-------------------------------------------------------------------
+[3] GELECEK PLANLARI (v0.3 ve Sonrası)
+-------------------------------------------------------------------
+   - Mimari Ayrıştırma: common.js, fate.js, vampire.js şeklinde dosya yapısına geçiş.
+   - Çoklu Sistem Desteği: Vampire: The Masquerade (V5) entegrasyonu.
+   - Ses Efektleri: Zar atma ve bildirim sesleri.
+   - Mobil Uygulama: PWA (Progressive Web App) desteği.
+
+-------------------------------------------------------------------
+NOTLAR VE KURALLAR
+-------------------------------------------------------------------
+   * Kodlama Standartı: Vanilla JS kullanılacak. Framework (React/Vue) yok.
+   * Stil Standartı: CSS değişkenleri (:root) üzerinden tema yönetimi yapılacak.
+   * Veri Güvenliği: Firebase kuralları (Security Rules) v0.2 sonunda sıkılaştırılacak.
