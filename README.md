@@ -117,7 +117,9 @@ Bu proje topluluk odaklıdır ve her türlü katkıya açıktır!
 
 ## 📄 Lisans
 
-Proje şu anda aktif geliştirme ve test aşamasındadır. Stabil sürüme geçildiğinde bir açık kaynak lisansı (örn: MIT) eklenecektir.
+MIT License
+
+Copyright (c) 2026 OziDev
 
 ---
-*Developed with ❤️ by Ozi for Cemiyet-i Perdaz.*
+*Developed with ❤️ by OziDev for Cemiyet-i Perdaz.*
