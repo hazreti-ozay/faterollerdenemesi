@@ -9,6 +9,7 @@ const TRANSLATIONS = {
         "nav_gm_admin": "GM Yönetim",
         "nav_credits": "Emeği Geçenler",
         "nav_guide": "Nasıl Kullanılır?",
+        "nav_tutorial": "FATE Nasıl Oynanır?",
 
         // --- Karakter Kartı ---
         "card_char_info": "Karakter Bilgileri",
@@ -263,6 +264,7 @@ const TRANSLATIONS = {
         "nav_gm_admin": "GM Admin",
         "nav_credits": "Credits",
         "nav_guide": "How to Use?",
+        "nav_tutorial": "How to Play FATE?",
 
         // --- Card Headers ---
         "card_char_info": "Character Info",

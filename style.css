@@ -2041,3 +2041,101 @@ body.game-mode-on .menu-divider
     margin-bottom: 8px;
     color: var(--color-text-muted);
 }
+/* === FATE ÖĞRETİCİ (TUTORIAL) STİLLERİ === */
+.tutorial-article {
+    padding: 30px 40px;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.tutorial-section {
+    margin-bottom: 30px;
+}
+
+.tutorial-section h3 {
+    color: var(--color-primary);
+    font-size: 1.3rem;
+    border-bottom: none;
+    margin-bottom: 15px;
+}
+
+.tutorial-section p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-text);
+    margin-bottom: 15px;
+}
+
+.tutorial-list {
+    list-style-type: none;
+    padding-left: 0;
+    color: var(--color-text-muted);
+}
+
+.tutorial-list li {
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+}
+
+.tutorial-list li::before {
+    content: "🎲";
+    position: absolute;
+    left: -5px;
+    top: 2px;
+    font-size: 0.9rem;
+}
+
+.tutorial-list li strong {
+    color: var(--color-text);
+}
+
+/* === DİL GİZLEME HİLESİ === */
+.lang-content.lang-en { display: none; } /* Varsayılan olarak EN gizli */
+html[lang="en"] .lang-content.lang-tr { display: none; } /* Dil EN ise TR'yi gizle */
+html[lang="en"] .lang-content.lang-en { display: block; } /* Dil EN ise EN'yi göster */
+
+@media (max-width: 600px) {
+    .tutorial-article { padding: 20px; }
+}
+/* === 1. BURGER MENÜ KÜÇÜK EKRAN FİXİ === */
+.burger-menu {
+    overflow-y: auto; /* Ekran kısaysa kaydırma çubuğu çıksın */
+}
+
+/* Çıkan kaydırma çubuğunu temamıza uyduralım (Google'ın çirkin gri çubuğu görünmesin) */
+.burger-menu::-webkit-scrollbar {
+    width: 6px;
+}
+.burger-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+.burger-menu::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 10px;
+}
+/* === 2. GAME MODE TAŞMA VE GENEL SCROLLBAR FİXİ === */
+
+/* Oyun modunda ana sayfanın kaymasını KESİNLİKLE yasaklıyoruz. Sadece iç kartlar kayabilir. */
+body.game-mode-on {
+    overflow: hidden !important; 
+}
+
+/* Tüm sitenin genel Chrome/Edge scrollbar'ını FATE temasına uyduralım */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--color-bg-darkest);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-bg-med);
+    border-radius: 10px;
+    border: 2px solid var(--color-bg-darkest);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-primary);
+}

@@ -33,6 +33,7 @@
         <div class="menu-divider"></div>
         <nav class="main-nav">
             <button id="guide-button" class="nav-button" data-i18n="nav_guide">Nasıl Kullanılır?</button>
+            <button class="nav-button" data-view="tutorial" data-i18n="nav_tutorial">FATE Nasıl Oynanır?</button>
             <button id="credits-button" class="nav-button" data-i18n="nav_credits">Emeği Geçenler</button>
         </nav>
         
@@ -438,6 +439,200 @@
                         Bu işlem geri alınamaz. Mevcut karakterinizdeki tüm verileri (aspektler, beceriler, stunt'lar) sıfırlar.
                     </p>
                     <button id="reset-char-button" class="btn btn-danger" data-i18n="btn_reset">Karakteri Sıfırla</button>
+                </div>
+            </section>
+            <section id="tutorial-view" class="tab-content">
+                <div class="character-card tutorial-article">
+                    
+                    <div class="lang-content lang-tr">
+                        <h2 class="card-title">🔥 FATE'e Hoş Geldiniz! (En Basit Haliyle) - Komple Rehber</h2>
+                        
+                        <div class="tutorial-section">
+                            <p>Selam millet! Efsanevi bir FATE macerasına hoş geldiniz! Bu, bizim "Öğretici Oyunumuz" olacak. Amacım hem 4 oyuncumuza hem de bizi izleyen herkese FATE'in neden bu kadar harika bir sistem olduğunu göstermek.</p>
+                            <p><strong>En Baştan Söyleyeyim: Korkmayın!</strong> D&D veya başka sistemler oynadıysanız, şimdi o "matematik" kısmını biraz unutmanızı istiyorum. FATE, "Hasar: 8" demez. FATE, <em>"Kılıcın darbesi, adamın zırhını çökertti ve kaburgasını kırdı!"</em> der. Biz bu gece "sayılara" değil, "hikayeye" odaklanacağız.</p>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section">
+                            <h3>FATE 101: Temel Kural (Yönler ve FATE Puanları)</h3>
+                            <p>FATE'te her şeyin temeli budur.</p>
+                            <ul class="tutorial-list">
+                                <li><strong>Yönler (Aspects) Nedir?</strong> Karakterinizin kim olduğunu anlatan cümlelerdir. "Güç: 18" gibi bir sayı değil. Sizin Yönünüz: <em>Kasabanın En Güçlü Adamı</em>'dır. Ve en önemlisi, Yönler sadece iyi şeyler olmak zorunda değildir. Karakterinizin bir de "Bela" (Trouble) Yönü vardır. Örnek: <em>Her Yerde Düşmanı Olan</em> veya <em>Karanlıktan Ölesiye Korkan</em>.</li>
+                                <li><strong>FATE Puanları (FP) Nedir?</strong> Bunlar sizin "para biriminiz". Sizin o "bölüm sonu canavarı" anlarınızı, o kahramanlıklarınızı yapmanızı sağlayan jetonlardır.</li>
+                            </ul>
+                            <p><strong>Bu ikisi nasıl çalışıyor? Basit bir ekonomiyle:</strong></p>
+                            <ul class="tutorial-list">
+                                <li><strong>1. Invoke (Kullanma): "Ben Harikayım!" Dediğin An:</strong><br>Ne zaman "Ben bu işte çok iyiyim!" demek isterseniz... 1 FATE Puanı (FP) harcarsınız. <br><em>Örnek: O devasa, Kilitli Mezar Kapısı'nı açmanız gerekiyor. Sen dersin ki: "1 FATE Puanı harcıyorum ve Kasabanın En Güçlü Adamı Yönümü kullanıyorum (Invoke)!" Sonuç: Zarınıza BÜYÜK bir bonus alırsınız (ya da zarı yeniden atarsınız) ve o kapıyı paramparça edersiniz.</em></li>
+                                <li><strong>2. Compel (Zorlama): "Eyvah!" Dediğin An (En Önemli Kısım):</strong><br>Peki, o harcadığınız FATE Puanlarını nasıl geri kazanacaksınız? Başınız belaya girdiğinde! İşte FATE'in parladığı yer burası. Ben (GM olarak) sizin o "Bela" Yönlerinizi gördüğümde, size bir FATE Puanı uzatacağım ve diyeceğim ki: <em>"Tamam, kasaba muhafızı sana 'Defol git, paçavralı!' dedi. Senin o Aşırı Gururlu Yönün tam da şimdi damarına basmaz mı? O muhafıza kafa atmak için harika bir zaman, değil mi?"</em><br><br>
+                                Burada iki seçeneğin var:<br>
+                                <strong>1. Kabul Edersin:</strong> "Evet, haklısın!" dersin, o FATE Puanını (FP) kaparsın ve muhafıza kafa atıp başını daha büyük belaya sokarsın.<br>
+                                <strong>2. Reddedersin:</strong> "Hayır, sakin kalacağım" dersin. Ama bunun bir bedeli var: O FATE Puanını reddetmek için sen 1 FP harcarsın.<br>
+                                <strong style="color: var(--color-accent-magic);">Yani: FATE'te, karakterinizin kusurları (Belaları) size FATE Puanı olarak geri döner. Rol yapmanız ödüllendirilir!</strong></li>
+                            </ul>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section">
+                            <h3>FATE 102: Bir Kağıt Parçasından Efsaneye (Karakter Yaratma)</h3>
+                            <p>Pekala, FATE'in temellerini anladık. Şimdi "Peki benim karakterim kim?" sorusuna geliyoruz. Karakter kağıdınızda (sitemizdeki ekranda) 5 ana "cümle" (Yön/Aspect) ve "özel hareketler" (Hüner/Stunts) olacak.</p>
+                            <ul class="tutorial-list">
+                                <li><strong>1. High Concept (Yüksek Konsept): "Sizin Film Afişiniz"</strong><br>Bu, karakterinizi tek bir nefeste, en havalı şekilde anlatan cümlenizdir. "Ben bir savaşçıyım" değil. O sıkıcı. FATE şunu sorar: "Tamam, savaşçısın ama ne savaşçısısın?"<br>
+                                <em>Örnekler: Veba Salgınından Kurtulan Son Rahip, Baron'un Mirasını Çalmaya Çalışan Piç Evlat, Köyünü Yakan Canavarı Arayan Öfkeli Avcı.</em></li>
+                                <li><strong>2. Trouble (Bela): "FATE Puanı Jeneratörünüz"</strong><br>Bu, karakterinizin en önemli Yönüdür. Çünkü bu, benim (GM olarak) size FATE Puanı vermek için en çok kullanacağım şeydir!<br>
+                                <em>Örnekler: Karanlıktan Ölesiye Korkan, Her Zaman Önce Kılıcını Çeker, Şehir Muhafızlarının Yüzbaşı'na Kan Borçlu.</em></li>
+                                <li><strong>3. Free Aspects (Serbest Yönler): "Hikayenin Geri Kalanı"</strong><br>Geriye kalan 3 Serbest Yön, hikayenizin geri kalanını doldurur: Geçmişinizden bir anı, önemli bir ilişkiniz, kutsal bir yemininiz veya size ait çok önemli bir eşyanız...<br>
+                                <em>Örnekler: Babamdan Kalan Paslı Ama Güvenilir Zırh, Asla Masum Birini Geride Bırakmam, Kardeşim Mezar Hırsızları Loncasında.</em></li>
+                                <li><strong>4. Stunts (Hünerler): "Sizin Özel Hareketleriniz"</strong><br>İşte "matematiğin" birazcık girdiği yer burası. Bir Hüner şöyle der: "Çünkü ben [Şu Konuda Çok İyiyim], [Bu Belirli Durumda] [Bu Özel Avantajı] alırım." Genellikle size belirli bir durumda +2 bonus verir veya kimsenin yapamadığı bir şeyi yapmanızı sağlar.<br>
+                                <em>Örnekler:<br>- Kalkan Duvarı: Çünkü ben bir Eski Askerim, bir saldırıyı Kalkanımla Engellediğimde zar atışıma +2 alırım.<br>- Sokakların Dili: Çünkü ben bir Şehir Faresiyim, Mezarlık Bekçileri gibi 'ayak takımı' hakkında Avantaj Yaratmak için zar attığımda, +2 alırım.</em></li>
+                            </ul>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section">
+                            <h3>FATE 103: Motor Nasıl Çalışıyor? (Zarlar, Merdiven ve 4 Eylem)</h3>
+                            <p>Şimdi, "Ben bir şey yapıyorum!" dediğinizde ne olacak?</p>
+                            <ul class="tutorial-list">
+                                <li><strong>1. O Garip Zarlar (FATE/Fudge Zarları):</strong> Zarların üzerinde + (Artı, +1), - (Eksi, -1) ve Boş (0) sembolleri vardır. Her zaman 4 tane atacaksınız. <em>Örnek: + + - 0 = Toplam +1.</em></li>
+                                <li><strong>2. "Merdiven" (The Ladder):</strong> FATE'te "Zorluk 15" demeyiz. "Zorluk Harika (+2)" deriz.<br>
+                                0 = Vasat, +1 = İyi, +2 = Harika, +4 = Efsanevi. Sizin beceriniz de bu sıfatlarladır (Örn: Dövüş: Harika (+2)).</li>
+                                <li><strong>3. "4 Eylem Menüsü" (Ne Yapabilirim?):</strong> Sıranız geldiğinde, aklınıza gelen herhangi bir havalı eylem şu 4 kategoriden birine girer:<br>
+                                <strong>A) Üstesinden Gel (Overcome):</strong> Bir engeli (kilitli kapı, sisli vadi) geçmeye çalışmak.<br>
+                                <strong>B) Avantaj Yarat (Create Advantage):</strong> FATE'in kalbi! Kendinize veya arkadaşlarınıza "pas atmak". Başarılı olursanız, oyuna <em>Gözleri Çamur Dolu</em> gibi yeni bir Yön eklersiniz.<br>
+                                <strong>C) Saldırı (Attack):</strong> Birine fiziksel veya zihinsel zarar vermeye çalışmak.<br>
+                                <strong>D) Savunma (Defend):</strong> Size "Saldırı" veya "Avantaj Yaratma" yapıldığında otomatik olarak devreye girer.</li>
+                            </ul>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section">
+                            <h3>FATE 104: İşler Sarpa Sardığında (Stres ve Sonuçlar)</h3>
+                            <p>Peki, "Saldırı" başarılı olursa ne olur? O "Dark Fantasy" oyunumuzda bir darbe aldığımızda ne yaşayacağız?</p>
+                            <ul class="tutorial-list">
+                                <li><strong>1. Stres (Stress) Kutuları: "Sıyırıklar ve Morluklar"</strong><br>Karakter kağıdınızda (sitemizde) "Stres" yazan birkaç küçük kutu göreceksiniz. Bunlar HP (Can Puanı) DEĞİLDİR! Bunlar, küçük darbeleri "soğurmanızı" sağlar ve sahne sonunda hemen sıfırlanır.</li>
+                                <li><strong>2. Sonuçlar (Consequences): "İşte Bu Acıdı!"</strong><br>Ya Stres kutularınız yetmezse? Veya darbe çok büyükse? O zaman "Sonuç" (Consequence) alırsınız. Bir Sonuç, sizin karakterinize eklenen yeni, olumsuz bir Yön demektir. Derin Pençe Yarası bir-iki sahnede iyileşirken, Kırık Kaburga haftalarca sizinle kalır! Artık düşmanlar bu yeni Bela Yönünüzü size karşı kullanabilir.</li>
+                                <li><strong>3. Teslim Olmak (Concede): "Akıllıca Geri Çekilmek"</strong><br>FATE'te "ölmek" çok zordur, ama "kaybetmek" vardır. Kaybediyorsanız, "Teslim Oluyorum!" diyebilirsiniz. Sahneyi kaybedersiniz ama hikayede ne kaybettiğinize siz karar verirsiniz. Üstelik bu yenilgi için 1 FATE Puanı (FP) ve aldığınız her Sonuç için ekstra FP kazanırsınız!</li>
+                            </ul>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section">
+                            <h3>FATE 105: Zarlar Değil, Hikaye Kazanır</h3>
+                            <p>Son ve en önemli dersimiz. FATE, zarlarda ne attığınızla ilgili bir oyun değildir. FATE, "O attığınız zara ne anlam yüklediğinizle" ilgili bir oyundur.</p>
+                            <ul class="tutorial-list">
+                                <li><strong>Kural 1: "Önce Kurgu, Sonra Mekanik"</strong><br>"Avantaj Yarat kullanıyorum" demeyin. Sıkıcıdır. Şunu deyin: "Yerdeki o çamuru alıp Worg'un gözüne fırlatıyorum!" Ben de "Harika! Bu bir 'Avantaj Yarat' zarıdır!" derim. Sizin göreviniz havalı şeyler yapmak, hangi kurala girdiğini bulmak benim görevim.</li>
+                                <li><strong>Kural 2: "Başarısızlık İleri Taşır"</strong><br>FATE'te başarısız bir zar, "Hiçbir şey olmadı" demek değildir. Başarısızlık, "Evet, başaramadın... ve işler daha da sarpa sardı!" demektir. Başarısızlık hikayeyi durdurmaz; daha da heyecanlı hale getirir!</li>
+                                <li><strong>Kural 3: "Evet, ve..." / "Hayır, ama..."</strong><br>Siz de "Evet, ve..." deyin! Muhafız kılıçla saldırdığında sadece savunma yapmayın, o kılıcın ne kadar eski olduğunu fark edip bunu bir avantaja çevirmeyi deneyin.</li>
+                                <li><strong>Kural 4: Siz de GM'siniz! (Hikaye Otoritesi)</strong><br>Bir FATE Puanı harcayarak, hikayeye benim bile düşünmediğim bir detayı ekleyebilirsiniz. "Benim Yönüm <em>Her Zaman Bir Kaçış Planı Vardır</em>. 1 FP harcıyorum ve bu yanan evin aslında gizli bir bodrum kapısı barındırdığını ilan ediyorum!" diyebilirsiniz.</li>
+                                <li><strong>Bonus Kural: "WOW... Ama Hayır!"</strong><br>Yazarlık hakkının bir sınırı vardır. Korkunç bir canavarın aslında sizin eski evcil hayvanınız olduğunu söylemek hikayenin tonunu bozar. Ama 1 FP harcayarak onun kafasını karıştırmayı başarabilirsiniz.</li>
+                            </ul>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section" style="text-align: center;">
+                            <h3 style="color: var(--color-text);">Özetle (Artık Cidden Son)</h3>
+                            <p style="font-size: 1.1rem;">FATE bir "simülasyon" değildir, bu bir "yaratım odası"dır.</p>
+                            <p style="color: var(--color-accent-magic); font-weight: 700;">Başarısız olmaktan korkmayın; bu hikayeyi daha iyi yapar.<br>
+                            "Hangi kuralı kullanmalıyım?" diye düşünmeyin. "En havalı ne yapabilirim?" diye düşünün.<br>
+                            Yönleriniz ve FATE Puanlarınız, hikayenin gidişatını belirlemeniz için size verilmiş "yazarlık" haklarıdır!</p>
+                            <p>Tüm bunları yaparken de o harika sitemiz bizim yerimize matematiği tutacak! Hazır mısınız? Çünkü hikaye başlıyor!</p>
+                        </div>
+                    </div>
+
+                    <div class="lang-content lang-en">
+                        <h2 class="card-title">🔥 Welcome to FATE! (In Its Simplest Form) - Complete Guide</h2>
+                        
+                        <div class="tutorial-section">
+                            <p>Hello everyone! Welcome to a legendary FATE adventure! This will be our "Tutorial Game." My goal is to show both our 4 players and everyone watching us why FATE is such an amazing system.</p>
+                            <p><strong>Let Me Say It Right from the Start: Don't be afraid!</strong> If you have played D&D or other systems, I want you to forget about that "math" part for a bit now. FATE doesn't say "Damage: 8". FATE says, <em>"The blow of the sword crushed the man's armor and broke his rib!"</em> Tonight, we will focus on the "story," not the "numbers."</p>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section">
+                            <h3>FATE 101: The Basic Rule (Aspects and FATE Points)</h3>
+                            <p>This is the foundation of everything in FATE.</p>
+                            <ul class="tutorial-list">
+                                <li><strong>What are Aspects?</strong> These are sentences that describe who your character is. Not a number like "Strength: 18". Your Aspect is: <em>The Strongest Man in Town</em>. And most importantly, Aspects don't just have to be good things. Your character also has a "Trouble" Aspect. Example: <em>Has Enemies Everywhere</em> or <em>Deathly Afraid of the Dark</em>.</li>
+                                <li><strong>What are FATE Points (FP)?</strong> These are your "currency." They are the tokens that allow you to pull off those "boss fight" moments and heroics.</li>
+                            </ul>
+                            <p><strong>How do these two work? Through a simple economy:</strong></p>
+                            <ul class="tutorial-list">
+                                <li><strong>1. Invoke: The Moment You Say "I Am Awesome!":</strong><br>Whenever you want to say "I am very good at this!"... you spend 1 FATE Point (FP).<br><em>Example: You need to open that giant, Locked Tomb Door. You say: "I am spending 1 FATE Point and invoking my The Strongest Man in Town Aspect!" Result: You get a HUGE bonus to your roll (or you reroll the dice) and you shatter that door.</em></li>
+                                <li><strong>2. Compel: The Moment You Say "Uh Oh!" (The Most Important Part):</strong><br>So, how will you earn back those FATE Points you spent? When you get into trouble! This is where FATE shines. When I (as the GM) see your "Trouble" Aspects, I will hand you a FATE Point and say: <em>"Okay, the town guard tells you 'Get lost, you in rags!' Wouldn't your Overly Proud Aspect hit a nerve right now? It's a great time to headbutt that guard, right?"</em><br><br>
+                                You have two options here:<br>
+                                <strong>1. You Accept:</strong> You say, "Yes, you're right!", you grab that FATE Point (FP), headbutt the guard, and get yourself into bigger trouble.<br>
+                                <strong>2. You Refuse:</strong> You say, "No, I will stay calm." But there is a price for this: You spend 1 FP to refuse that FATE Point.<br>
+                                <strong style="color: var(--color-accent-magic);">Meaning: In FATE, your character's flaws (Troubles) come back to you as FATE Points. Your roleplaying is rewarded!</strong></li>
+                            </ul>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section">
+                            <h3>FATE 102: From a Piece of Paper to a Legend (Character Creation)</h3>
+                            <p>Alright, we understand the basics of FATE. Now we come to the question, "So, who is my character?" On your character sheet (on the screen on our site), there will be 5 main "sentences" (Aspects) and "special moves" (Stunts).</p>
+                            <ul class="tutorial-list">
+                                <li><strong>1. High Concept: "Your Movie Poster"</strong><br>This is your sentence that describes your character in a single breath, in the coolest way possible. Not "I am a warrior". That's boring. FATE asks this: "Okay, you're a warrior, but what kind of warrior are you?"<br><em>Examples for Our Dark Fantasy Game: The Last Priest to Survive the Plague Epidemic, The Bastard Child Trying to Steal the Baron's Legacy, The Angry Hunter Seeking the Monster That Burned Their Village.</em></li>
+                                <li><strong>2. Trouble: "Your FATE Point Generator"</strong><br>This is your character's most important Aspect. Because this is what I (as the GM) will use the most to give you FATE Points!<br><em>Examples: Deathly Afraid of the Dark, Always Draws Their Sword First, Owes a Blood Debt to the Captain of the City Guards.</em></li>
+                                <li><strong>3. Free Aspects: "The Rest of the Story"</strong><br>The remaining 3 Free Aspects fill in the rest of your story: a memory from your past, an important relationship, a sacred vow, or a very important item belonging to you...<br><em>Examples: The Rusty But Reliable Armor Inherited From My Father (This is an Aspect! It can break, or it can save you!), I Never Leave an Innocent Behind, My Brother is in the Grave Robbers Guild.</em></li>
+                                <li><strong>4. Stunts: "Your Special Moves"</strong><br>Here is where the "math" enters just a little bit. A Stunt says: "Because I am [Very Good at This], I get [This Special Advantage] in [This Specific Situation]." It usually gives you a +2 bonus in a specific situation or allows you to do something no one else can do.<br><em>Examples:<br>- Shield Wall: Because I am a Veteran Soldier, I get a +2 to my roll when I Defend against an attack with my Shield.<br>- Language of the Streets: Because I am a City Rat, I get +2 when I roll to Create an Advantage regarding 'rabble' like Graveyard Keepers.</em></li>
+                            </ul>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section">
+                            <h3>FATE 103: How Does the Engine Work? (Dice, the Ladder, and the 4 Actions)</h3>
+                            <p>Now, what happens when you say, "I am doing something!"?</p>
+                            <ul class="tutorial-list">
+                                <li><strong>1. Those Weird Dice (FATE/Fudge Dice):</strong> There are + (Plus, +1), - (Minus, -1), and blank (Zero, 0) symbols on the dice. You will always roll 4 of them. <em>Example: + + - 0 = Total +1.</em></li>
+                                <li><strong>2. "The Ladder":</strong> In FATE, we don't say "Difficulty 15." We say "Difficulty Great (+2)."<br>0 = Mediocre, +1 = Good, +2 = Great, +4 = Legendary. Your skill is also measured with these adjectives (E.g., Fight: Great (+2)).</li>
+                                <li><strong>3. The "4 Actions Menu" (What Can I Do?):</strong> When it's your turn, any cool action that comes to your mind falls into one of these 4 categories:<br><strong>A) Overcome:</strong> Trying to get past an obstacle (a locked door, a foggy valley).<br><strong>B) Create an Advantage:</strong> The heart of FATE! "Passing the ball" to yourself or your friends. If you succeed, you add a new Aspect to the game, such as <em>Eyes Full of Mud</em>.<br><strong>C) Attack:</strong> Trying to inflict physical or mental harm on someone.<br><strong>D) Defend:</strong> Automatically triggers when someone tries to "Attack" or "Create an Advantage" against you.</li>
+                            </ul>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section">
+                            <h3>FATE 104: When Things Go South (Stress and Consequences)</h3>
+                            <p>So, what happens if an "Attack" is successful? What will we experience when we take a hit in our "Dark Fantasy" game?</p>
+                            <ul class="tutorial-list">
+                                <li><strong>1. Stress Boxes: "Scrapes and Bruises"</strong><br>On your character sheet (on our site), you will see a few small boxes labeled "Stress." These are NOT HP (Hit Points)! They allow you to "absorb" minor blows and reset immediately at the end of the scene.</li>
+                                <li><strong>2. Consequences: "Now That Hurt!"</strong><br>But what if your Stress boxes aren't enough? Or the blow is too big? Then you take a "Consequence." A Consequence means a new, negative Aspect is added to your character. While a Deep Claw Wound might heal in a scene or two, a Broken Rib (Moderate Consequence) or a Severed Finger (Severe Consequence) will stay with you for weeks! And now I (the GM) and the enemies can Invoke that Aspect against you or Compel you with it!</li>
+                                <li><strong>3. Conceding: "A Smart Retreat"</strong><br>It's very hard to "die" in FATE, but "losing" is a thing. If you see you're losing, you can say, "I Concede!" You lose the scene, but you decide what you lose in the story (not the GM). Plus, you earn 1 FATE Point (FP) for this defeat, and get an extra 1 FP for every Consequence you took up to that point!</li>
+                            </ul>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section">
+                            <h3>FATE 105: The Story Wins, Not the Dice (Being the Master of the Rules)</h3>
+                            <p>Our final and most important lesson. FATE is not a game about what you roll on the dice. FATE is a game about "the meaning you attach to the dice you roll."</p>
+                            <ul class="tutorial-list">
+                                <li><strong>Rule 1: "Fiction First"</strong><br>Don't just say, "I use Create an Advantage." It's boring. Say this: "I scoop up that mud from the ground and throw it into the Worg's eyes!" And I will say, "Great! That's a 'Create an Advantage' roll!" Your job is to "do cool things." It's my job to figure out which rule it falls under.</li>
+                                <li><strong>Rule 2: "Failing Forward"</strong><br>In FATE, a failed roll doesn't mean "Nothing happened." A failed roll means, "Yes, you didn't succeed... and things just got even more complicated!" Failure doesn't stop the story; it makes it even more exciting!</li>
+                                <li><strong>Rule 3: "Yes, and..." / "No, but..."</strong><br>You should also say "Yes, and..."! When the guard attacks you with a Broken Sword, you don't just defend; you notice how old and rusty that sword is, and you try to create an advantage!</li>
+                                <li><strong>Rule 4: You Are Also the GM! (Story Authority)</strong><br>By spending a FATE Point, you can add a detail to the story that even I hadn't thought of. You can say: "My Aspect is <em>Always Has an Escape Plan</em>. I'm spending 1 FATE Point and I want to add to the story that this Burning House is actually my old hideout and I know the location of a hidden cellar door!"</li>
+                                <li><strong>Bonus Rule: "WOW... But No!"</strong><br>There is a limit to this authorial right. Declaring that the Terrifying Worg is actually your pet "Peanut" ruins the tone and logic of the story. But by spending 1 FP, you can declare that the Worg is Confused Because It Smelled Peanut!</li>
+                            </ul>
+                        </div>
+
+                        <div class="menu-divider"></div>
+
+                        <div class="tutorial-section" style="text-align: center;">
+                            <h3 style="color: var(--color-text);">In Summary (Seriously, the End Now)</h3>
+                            <p style="font-size: 1.1rem;">FATE is not a "simulation", it is a "creation room."</p>
+                            <p style="color: var(--color-accent-magic); font-weight: 700;">Don't be afraid to fail; it makes the story better.<br>Don't think, "Which rule should I use?" Think, "What's the coolest thing I can do?"<br>Your Aspects and FATE Points are "authorial" rights given to you so you can determine the course of the story as much as I do!</p>
+                            <p>While we do all this, that awesome site of ours will handle the math for us! Are you ready? Because the story is starting!</p>
+                        </div>
+                    </div>
+                    
                 </div>
             </section>
 
