@@ -16,8 +16,9 @@
 
 Bu güncelleme ile platform sadece bir karakter kağıdı olmaktan çıkıp, yaşayan bir oyun masasına dönüştü.
 
+* 📜 **Kapsamlı FATE Rehberi (Yeni):** Sistemi hiç bilmeyenler veya kuralları hatırlamak isteyenler için menüye "Nasıl Oynanır?" sekmesi eklendi. Zar mekaniklerinden aspekt kullanımına kadar her şeyi anlatan çok dilli bir rehber yayında!
 * 🎮 **Oyun Modu (Game Mode):** Karakter yaratma ekranı bitti mi? **Gamepad ikonuna** tıklayın ve sadece oyun sırasında ihtiyacınız olan (Zar, Stres, Aspect) kompakt ızgara (grid) görünümüne geçin.
-* 🌍 **Çoklu Dil Desteği:** Platform artık **Türkçe** ve **İngilizce** seçeneklerine sahip.
+* 🌍 **Çoklu Dil Desteği:** Platform artık **Türkçe** ve **İngilizce** seçeneklerine sahip (Öğretici rehber dahil!).
 * 🔗 **Gelişmiş Kampanya Sistemi:** GM'ler artık kampanyalarına özel **Yetenek (Skill) Listeleri** oluşturabilir. Oyuncular kampanyaya bağlandığında karakter kağıtları otomatik olarak o oyunun kurallarına göre güncellenir.
 * ⚡ **Firebase Optimizasyonu:** Canlı modda veri işleme mantığı yeniden yazıldı. Artık sunucu şişmesi veya lag olmadan anlık değişiklik yapabilirsiniz.
 * 📝 **Hızlı Notlar:** Oyun sırasında siteyi terk etmeden alabileceğiniz, kalıcı stick-note (yapışkan not) sistemi eklendi.
@@ -56,6 +57,7 @@ Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 
 ### 🧙 Oyuncu İçin:
 
+* **Sistem Öğreticisi:** FATE kurallarını (Aspektler, Merdiven, Fate Puanı Ekonomisi vb.) sistem içinden çıkmadan öğrenmenizi sağlayan entegre "FATE Nasıl Oynanır?" rehberi.
 * **Oyun Modu (Game Mode):** Kampanyaya bağlandıktan sonra (veya bağımsız olarak) **Gamepad** ikonuna tıklayarak dikkatinizi dağıtmayan kompakt görünüme geçin.
 * **Entegre Zar Atıcı:** Oyun modunda karakter kağıdının altına sabitlenen panel ile sayfa değiştirmeden zar atın. ("Yeniden At" ve "+2 Ekle" destekli).
 * **Dinamik Skill Yönetimi:** Bir kampanyaya bağlandığınızda karakteriniz otomatik olarak GM'in belirlediği skill listesine güncellenir.
@@ -79,23 +81,24 @@ Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 
 Projeyi kendi bilgisayarınızda çalıştırmak ve geliştirmek için:
 
-1. **Bu repoyu klonlayın**:
+1. Bu repoyu klonlayın:
 
 ```bash
    git clone https://github.com/hazreti-ozay/faterollerdenemesi.git
 
 ```
 
-2. **Dizine gidin**:
+2. Dizine gidin:
 
 ```bash
 cd faterollerdenemesi
 
 ```
 
+
 3. `app.js` (veya ilgili config) dosyasını açın ve kendi Firebase proje bilgilerinizi (`apiKey`, `authDomain`, vb.) içeren `firebaseConfig` nesnesini güncelleyin.
 
-4. `index.html` dosyasını tarayıcınızda açın.
+5. `index.html` dosyasını tarayıcınızda açın.
 
 ---
 
@@ -107,6 +110,7 @@ Projenin stabilizasyonu ve geleceği için planlanan sıradaki adımlar:
 * ✅ **FATE Core Kural Entegrasyonu:** Dinamik Stres ve Consequence mekanikleri eklendi.
 * ✅ **Çoklu Karakter Desteği:** `localStorage` yapısı çoklu karakter listesine dönüştürüldü.
 * ✅ **v0.2 Güncellemesi:** Kampanya Skill Yönetimi, Oyun Modu Arayüzü ve Dil Desteği eklendi.
+* ✅ **Öğretici Eklentisi:** Sistemi bilmeyenler için oyun içi tam kapsamlı FATE rehberi eklendi.
 * ✨ **Gelecek Vizyonu:** Karakter görselleri (Avatar) yükleme desteği ve diğer (D&D dışı) FRP sistemleri için modüller.
 
 ---
