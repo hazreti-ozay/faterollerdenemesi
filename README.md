@@ -79,20 +79,22 @@ Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 
 Projeyi kendi bilgisayarınızda çalıştırmak ve geliştirmek için:
 
-1. Bu repoyu klonlayın:
-   ```bash
+1. **Bu repoyu klonlayın**:
+
+```bash
    git clone https://github.com/hazreti-ozay/faterollerdenemesi.git
 
 ```
 
-2. Dizine gidin:
+2. **Dizine gidin**:
+
 ```bash
 cd faterollerdenemesi
 
 ```
 
-
 3. `app.js` (veya ilgili config) dosyasını açın ve kendi Firebase proje bilgilerinizi (`apiKey`, `authDomain`, vb.) içeren `firebaseConfig` nesnesini güncelleyin.
+
 4. `index.html` dosyasını tarayıcınızda açın.
 
 ---
