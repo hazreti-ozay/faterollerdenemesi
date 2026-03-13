@@ -81,7 +81,7 @@ Projeyi kendi bilgisayarınızda çalıştırmak ve geliştirmek için:
 
 1. Bu repoyu klonlayın:
    ```bash
-   git clone [https://github.com/hazreti-ozay/faterollerdenemesi.git](https://github.com/hazreti-ozay/faterollerdenemesi.git)
+   git clone https://github.com/hazreti-ozay/faterollerdenemesi.git
 
 ```
 
