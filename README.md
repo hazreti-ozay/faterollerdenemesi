@@ -3,8 +3,8 @@
 > **FATE RYO sistemi için Firebase destekli web aracı; D&D dışı sistemler için modern, açık kaynaklı bir platformun ilk adımı.** (Public Beta!)
 
 [![Status](https://img.shields.io/badge/Status-Public%20Beta%20v0.2-orange)](https://hazreti-ozay.github.io/faterollerdenemesi/)
-[![Tech](https://img.shields.io/badge/Tech-JS%20%7C%20Firebase%20%7C%20HTML5-blue)]()
-[![License](https://img.shields.io/badge/License-Open%20Source-green)]()
+![Tech](https://img.shields.io/badge/Tech-JS%20%7C%20Firebase%20%7C%20HTML5-blue)
+![License](https://img.shields.io/badge/License-Open%20Source-green)
 
 🇬🇧 **English:** A Firebase-powered web tool for the FATE RPG system; the first step in a modern, open-source platform for non-D&D systems. (Public Beta!)
 
@@ -35,8 +35,7 @@ Bu proje şu anda **aktif geliştirme ve test (Beta)** aşamasındadır. Sistem 
 
 ## 🎯 Projenin Amacı ve Vizyonu
 
-Bu projenin nihai vizyonu, **D&D Beyond**'un Dungeons & Dragons için sunduğu entegre ve modern deneyimi, FATE gibi (D&D harici) diğer harika FRP sistemleri için de sağlayabilmektir.
-Bu araç, o vizyonun ilk adımıdır ve FATE sistemi üzerine odaklanmıştır.
+Bu projenin nihai vizyonu, **D&D Beyond**'un Dungeons & Dragons için sunduğu entegre ve modern deneyimi, FATE gibi (D&D harici) diğer harika FRP sistemleri için de sağlayabilmektir. Bu araç, o vizyonun ilk adımıdır ve FATE sistemi üzerine odaklanmıştır.
 
 ---
 
@@ -44,7 +43,7 @@ Bu araç, o vizyonun ilk adımıdır ve FATE sistemi üzerine odaklanmıştır.
 
 Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 
-### 🧑‍⚖️ GM (Game Master) için:
+### 🧑‍⚖️ GM (Game Master) İçin:
 
 * **Gelişmiş Kampanya Yönetimi:** Yeni FATE kampanyaları oluşturun (Setting, Lore, Kişi Sayısı). **YENİ:** Kampanyanıza özel **Skill Set (Yetenek Listesi)** tanımlayın ve oyuncularınızı bu kurallara göre oynatın.
 * **GM Yönetim Paneli:** Şifre korumalı özel GM paneline erişim.
@@ -55,7 +54,7 @@ Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 * **Oyuncu Yönetimi:** Onaylanmış oyuncuları kampanyadan "Atın" (Oyuncu sayacı anlık güncellenir).
 * **Canlı Durum Aspektleri:** GM panelinden eklediğiniz "Durum Aspektleri" anlık olarak oyuncunun zar atıcısına yansır.
 
-### 🧙 Oyuncu için:
+### 🧙 Oyuncu İçin:
 
 * **Oyun Modu (Game Mode):** Kampanyaya bağlandıktan sonra (veya bağımsız olarak) **Gamepad** ikonuna tıklayarak dikkatinizi dağıtmayan kompakt görünüme geçin.
 * **Entegre Zar Atıcı:** Oyun modunda karakter kağıdının altına sabitlenen panel ile sayfa değiştirmeden zar atın. ("Yeniden At" ve "+2 Ekle" destekli).
@@ -76,20 +75,25 @@ Projenin şu anki sürümü aşağıdaki işlevleri tam olarak desteklemektedir:
 
 ---
 
-## 🚀 Kurulum (Yerel (Local) Geliştirme İçin)
+## 🚀 Kurulum (Yerel / Local Geliştirme İçin)
 
 Projeyi kendi bilgisayarınızda çalıştırmak ve geliştirmek için:
 
-1.  Bu repoyu klonlayın:
-    ```bash
-    git clone [https://github.com/hazreti-ozay/faterollerdenemesi.git](https://github.com/hazreti-ozay/faterollerdenemesi.git)
-    ```
-2.  Dizine gidin:
-    ```bash
-    cd faterollerdenemesi
-    ```
-3.  `app.js` (veya ilgili config) dosyasını açın ve kendi Firebase proje bilgilerinizi (`apiKey`, `authDomain`, vb.) içeren `firebaseConfig` nesnesini güncelleyin.
-4.  `index.html` dosyasını tarayıcınızda açın.
+1. Bu repoyu klonlayın:
+   ```bash
+   git clone [https://github.com/hazreti-ozay/faterollerdenemesi.git](https://github.com/hazreti-ozay/faterollerdenemesi.git)
+
+```
+
+2. Dizine gidin:
+```bash
+cd faterollerdenemesi
+
+```
+
+
+3. `app.js` (veya ilgili config) dosyasını açın ve kendi Firebase proje bilgilerinizi (`apiKey`, `authDomain`, vb.) içeren `firebaseConfig` nesnesini güncelleyin.
+4. `index.html` dosyasını tarayıcınızda açın.
 
 ---
 
@@ -122,4 +126,7 @@ MIT License
 Copyright (c) 2026 OziDev
 
 ---
-*Developed with ❤️ by OziDev for Cemiyet-i Perdaz.*
+
+<div align="center">
+  Developed with ❤️ by <a href="https://github.com/hazreti-ozay">OziDev</a>
+</div>
