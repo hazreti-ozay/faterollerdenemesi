@@ -130,9 +130,9 @@ p.card-description {
 .burger-menu {
     position: fixed;
     top: 0;
-    bottom: 0; /* height: 100vh; yerine bunu ekledik */
     left: calc(var(--menu-width) * -1);
     width: var(--menu-width);
+    height: 100vh;
     background-color: var(--color-bg-dark);
     border-right: 1px solid var(--color-border);
     box-shadow: 4px 0 20px 5px var(--shadow-color);
@@ -2115,27 +2115,4 @@ html[lang="en"] .lang-content.lang-en { display: block; } /* Dil EN ise EN'yi g�
 .burger-menu::-webkit-scrollbar-thumb {
     background-color: var(--color-primary);
     border-radius: 10px;
-}
-/* === 2. GAME MODE TAŞMA VE GENEL SCROLLBAR FİXİ === */
-
-/* Oyun modunda ana sayfanın kaymasını KESİNLİKLE yasaklıyoruz. Sadece iç kartlar kayabilir. */
-body.game-mode-on {
-    overflow: hidden !important; 
-}
-
-/* Tüm sitenin genel Chrome/Edge scrollbar'ını FATE temasına uyduralım */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-::-webkit-scrollbar-track {
-    background: var(--color-bg-darkest);
-}
-::-webkit-scrollbar-thumb {
-    background-color: var(--color-bg-med);
-    border-radius: 10px;
-    border: 2px solid var(--color-bg-darkest);
-}
-::-webkit-scrollbar-thumb:hover {
-    background-color: var(--color-primary);
 }
