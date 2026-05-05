@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hazreti-ozay.github.io/faterollerdenemesi/sitemap.xml
