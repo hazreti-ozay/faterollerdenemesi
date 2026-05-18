@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- === TEMEL SEO METADATA === -->
     <title>FATE RPG Araç Seti | Fate Zar Atıcı ve Campaign Yönetimi</title>
-    <meta name="description" content="Ücretsiz FATE RPG asistanı. Tarayıcı üzerinden FATE dice (zar) at, karakter kağıdını kolayca yönet ve arkadaşlarınla online campaign oluştur.">
-    <meta name="keywords" content="FATE RPG, fate zar atıcı, fate dice, zar at, campaign oluştur, karakter kağıdı, VTT, masaüstü rol yapma oyunu">
+    <meta name="description"
+        content="Ücretsiz FATE RPG asistanı. Tarayıcı üzerinden FATE dice (zar) at, karakter kağıdını kolayca yönet ve arkadaşlarınla online campaign oluştur.">
+    <meta name="keywords"
+        content="FATE RPG, fate zar atıcı, fate dice, zar at, campaign oluştur, karakter kağıdı, VTT, masaüstü rol yapma oyunu">
     <meta name="author" content="OziDev">
     <meta name="robots" content="index, follow">
 
     <!-- === OPEN GRAPH (Sosyal Medya ve Discord Önizlemeleri İçin) === -->
     <meta property="og:title" content="FATE RPG Araç Seti | Karakter, Zar ve Campaign Yönetimi">
-    <meta property="og:description" content="Tarayıcı üzerinden FATE dice (zar) at, karakterini yönet ve online campaign oluştur. FATE oyuncuları için tam donanımlı web aracı.">
+    <meta property="og:description"
+        content="Tarayıcı üzerinden FATE dice (zar) at, karakterini yönet ve online campaign oluştur. FATE oyuncuları için tam donanımlı web aracı.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://hazreti-ozay.github.io/faterollerdenemesi/">
     <meta property="og:image" content="https://hazreti-ozay.github.io/faterollerdenemesi/fate.jpg">
@@ -23,42 +27,45 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+SC:wght@500;700&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="faviconn.ico">
 </head>
+
 <body data-theme="dark">
 
     <aside id="burger-menu" class="burger-menu">
         <h1 class="menu-title">FATE</h1>
-        
+
         <nav class="main-nav">
             <button class="nav-button active" data-view="char" data-i18n="nav_char">Karakter Sayfası</button>
             <button class="nav-button" data-view="roller" data-i18n="nav_roller">Zar Atıcı</button>
             <button class="nav-button" data-view="find-campaign" data-i18n="nav_find_campaign">Kampanya Ara</button>
             <button class="nav-button" data-view="campaign" data-i18n="nav_campaign">Kampanya Paneli (GM)</button>
         </nav>
-        
+
         <div class="menu-divider"></div>
         <h2 class="menu-subtitle">Araçlar</h2>
         <nav class="main-nav">
             <button class="nav-button" data-view="import-export" data-i18n="nav_tools">İçe / Dışa Aktar</button>
         </nav>
-        
+
         <div class="menu-divider"></div>
         <nav class="main-nav">
             <button id="guide-button" class="nav-button" data-i18n="nav_guide">Nasıl Kullanılır?</button>
             <button class="nav-button" data-view="tutorial" data-i18n="nav_tutorial">FATE Nasıl Oynanır?</button>
             <button id="credits-button" class="nav-button" data-i18n="nav_credits">Emeği Geçenler</button>
         </nav>
-        
+
         <nav class="main-nav" style="display: none;">
-             <button class="nav-button" data-view="gm-admin" data-i18n="nav_gm_admin">GM Yönetim</button>
+            <button class="nav-button" data-view="gm-admin" data-i18n="nav_gm_admin">GM Yönetim</button>
         </nav>
 
         <footer class="menu-footer">
             <div class="language-group" style="width: 100%; margin: 0; padding: 0;">
-                <label for="language-selector" style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 5px; display: block;">Dil / Language</label>
+                <label for="language-selector"
+                    style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 5px; display: block;">Dil /
+                    Language</label>
                 <select id="language-selector" class="language-dropdown">
                     <option value="tr">🇹🇷 Türkçe</option>
                     <option value="en">🇬🇧 English</option>
@@ -67,29 +74,47 @@
 
             <div class="menu-divider" style="width: 100%; margin: 15px 0;"></div>
 
-            <div class="footer-bottom-row" style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
-                
-                <div class="menu-links">
-                    <a href="https://discord.gg/8sj6FR5N2D" id="discord-link" class="social-link" title="Discord Sunucusu" target="_blank">
-                        <svg viewBox="0 0 245 240"><path fill="currentColor" d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zM140.9 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z"></path><path fill="currentColor" d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.6 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.9 1-27.9-1.2-4.1-.7-8.1-1.4-11.9-2.1-16.5-3.6-22.1-3.6-22.1-3.6s4.6 8.3 17.5 12.1c-3 3.8-6.7 8.3-6.7 8.3-22.1 0-28.5-22.1-28.5-22.1 0-32.6 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.1-1.5 6-3.6c13.1-6.4 23.7-7.4 30.8-7.7 2.1-.1 4.2 0 6.1.1 13.9 1.1 24.6 3.3 35.1 7.4 2.3.9 4.1 1.8 5.7 2.7 0 0-8.3-7.9-26.3-13.1l.9-1.2s13.7-.3 28.1 10.5c0 0 14.4 25.7 14.4 58.3 0 0-6.4 22.1-28.5 22.1z"></path></svg>
-                    </a>
-                    
-                    <a href="https://github.com/hazreti-ozay" id="github-link" class="social-link" title="GitHub" target="_blank">
-                        <svg viewBox="0 0 16 16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
-                    </a>
+            <div class="footer-bottom-row"
+                style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
 
-                    <a href="https://www.reddit.com/r/CemiyetiPerdaz/" id="reddit-link" class="social-link" title="Reddit" target="_blank">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                            <path fill="currentColor" d="M0 256C0 114.6 114.6 0 256 0S512 114.6 512 256 397.4 512 256 512L37.1 512c-13.7 0-20.5-16.5-10.9-26.2L75 437C28.7 390.7 0 326.7 0 256zM349.6 153.6c23.6 0 42.7-19.1 42.7-42.7s-19.1-42.7-42.7-42.7c-20.6 0-37.8 14.6-41.8 34-34.5 3.7-61.4 33-61.4 68.4l0 .2c-37.5 1.6-71.8 12.3-99 29.1-10.1-7.8-22.8-12.5-36.5-12.5-33 0-59.8 26.8-59.8 59.8 0 24 14.1 44.6 34.4 54.1 2 69.4 77.6 125.2 170.6 125.2s168.7-55.9 170.6-125.3c20.2-9.6 34.1-30.2 34.1-54 0-33-26.8-59.8-59.8-59.8-13.7 0-26.3 4.6-36.4 12.4-27.4-17-62.1-27.7-100-29.1l0-.2c0-25.4 18.9-46.5 43.4-49.9 4.4 18.8 21.3 32.8 41.5 32.8l.1 .2zM177.1 246.9c16.7 0 29.5 17.6 28.5 39.3s-13.5 29.6-30.3 29.6-31.4-8.8-30.4-30.5 15.4-38.3 32.1-38.3l.1-.1zm190.1 38.3c1 21.7-13.7 30.5-30.4 30.5s-29.3-7.9-30.3-29.6 11.8-39.3 28.5-39.3 31.2 16.6 32.1 38.3l.1 .1zm-48.1 56.7c-10.3 24.6-34.6 41.9-63 41.9s-52.7-17.3-63-41.9c-1.2-2.9 .8-6.2 3.9-6.5 18.4-1.9 38.3-2.9 59.1-2.9s40.7 1 59.1 2.9c3.1 .3 5.1 3.6 3.9 6.5z"/>
+                <div class="menu-links">
+                    <a href="https://discord.gg/perdaz" id="discord-link" class="social-link"
+                        title="Discord Sunucusu" target="_blank">
+                        <svg viewBox="0 0 245 240">
+                            <path fill="currentColor"
+                                d="M104.4 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zM140.9 103.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z">
+                            </path>
+                            <path fill="currentColor"
+                                d="M189.5 20h-134C44.2 20 35 29.2 35 40.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V40.6c0-11.4-9.2-20.6-20.5-20.6zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.6 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.9 1-27.9-1.2-4.1-.7-8.1-1.4-11.9-2.1-16.5-3.6-22.1-3.6-22.1-3.6s4.6 8.3 17.5 12.1c-3 3.8-6.7 8.3-6.7 8.3-22.1 0-28.5-22.1-28.5-22.1 0-32.6 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.1-1.5 6-3.6c13.1-6.4 23.7-7.4 30.8-7.7 2.1-.1 4.2 0 6.1.1 13.9 1.1 24.6 3.3 35.1 7.4 2.3.9 4.1 1.8 5.7 2.7 0 0-8.3-7.9-26.3-13.1l.9-1.2s13.7-.3 28.1 10.5c0 0 14.4 25.7 14.4 58.3 0 0-6.4 22.1-28.5 22.1z">
+                            </path>
                         </svg>
                     </a>
-                    <a href="https://ozidev.vercel.app" id="portfolio-link" class="social-link" title="Geliştirici Portfolyosu" target="_blank">
-    <svg viewBox="0 0 512 512">
-        <path fill="currentColor" d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64h185.4c2.2 20.4 3.3 41.8 3.3 64zm28.8-64h123.1c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 169.2 147.9c-9.1-1.8-18.3-3.1-27.7-3.7zM112 256c0 22 1.1 43.4 3.2 64H8.6c-5.3-20.5-8.1-41.9-8.1-64s2.8-43.5 8.1-64h106.7c-2.1 20.6-3.2 42-3.2 64zm-56.7-96H135.3c10-63.9 29.8-117.4 55.3-151.6C112.3 29.1 48.6 85.9 21.4 156.3c9.1-1.8 18.3-3.1 27.7-3.7zM160 192h192c-10-66.8-33.6-120.3-63.6-145.5c-6.8-5.7-14.2-10.3-21.9-13.6c-9.6-4.1-19.5-6.5-29.6-6.8h-1.8c-10 .3-20 2.7-29.6 6.8c-7.7 3.3-15 7.9-21.9 13.6c-30 25.2-53.6 78.7-63.6 145.5zm0 128c10 66.8 33.6 120.3 63.6 145.5c6.8 5.7 14.2 10.3 21.9 13.6c9.6 4.1 19.5 6.5 29.6 6.8h1.8c10-.3 20-2.7 29.6-6.8c7.7-3.3 15-7.9 21.9-13.6c30-25.2 53.6-78.7 63.6-145.5H160zm-24.7 144H18.7c9.3-.6 18.5-1.9 27.7-3.7c27.2 70.5 90.9 127.2 169.2 147.9c-25.5-34.2-45.3-87.7-55.3-151.6v.1zm223.4 0h116.6c-9.3-.6-18.5-1.9-27.7-3.7c-27.2 70.5-90.9 127.2-169.2 147.9c25.5-34.2 45.3-87.7 55.3-151.6v.1z"/>
-    </svg>
-</a>
+
+                    <a href="https://github.com/hazreti-ozay" id="github-link" class="social-link" title="GitHub"
+                        target="_blank">
+                        <svg viewBox="0 0 16 16">
+                            <path fill="currentColor"
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z">
+                            </path>
+                        </svg>
+                    </a>
+
+                    <a href="https://www.reddit.com/r/CemiyetiPerdaz/" id="reddit-link" class="social-link"
+                        title="Reddit" target="_blank">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path fill="currentColor"
+                                d="M0 256C0 114.6 114.6 0 256 0S512 114.6 512 256 397.4 512 256 512L37.1 512c-13.7 0-20.5-16.5-10.9-26.2L75 437C28.7 390.7 0 326.7 0 256zM349.6 153.6c23.6 0 42.7-19.1 42.7-42.7s-19.1-42.7-42.7-42.7c-20.6 0-37.8 14.6-41.8 34-34.5 3.7-61.4 33-61.4 68.4l0 .2c-37.5 1.6-71.8 12.3-99 29.1-10.1-7.8-22.8-12.5-36.5-12.5-33 0-59.8 26.8-59.8 59.8 0 24 14.1 44.6 34.4 54.1 2 69.4 77.6 125.2 170.6 125.2s168.7-55.9 170.6-125.3c20.2-9.6 34.1-30.2 34.1-54 0-33-26.8-59.8-59.8-59.8-13.7 0-26.3 4.6-36.4 12.4-27.4-17-62.1-27.7-100-29.1l0-.2c0-25.4 18.9-46.5 43.4-49.9 4.4 18.8 21.3 32.8 41.5 32.8l.1 .2zM177.1 246.9c16.7 0 29.5 17.6 28.5 39.3s-13.5 29.6-30.3 29.6-31.4-8.8-30.4-30.5 15.4-38.3 32.1-38.3l.1-.1zm190.1 38.3c1 21.7-13.7 30.5-30.4 30.5s-29.3-7.9-30.3-29.6 11.8-39.3 28.5-39.3 31.2 16.6 32.1 38.3l.1 .1zm-48.1 56.7c-10.3 24.6-34.6 41.9-63 41.9s-52.7-17.3-63-41.9c-1.2-2.9 .8-6.2 3.9-6.5 18.4-1.9 38.3-2.9 59.1-2.9s40.7 1 59.1 2.9c3.1 .3 5.1 3.6 3.9 6.5z" />
+                        </svg>
+                    </a>
+                    <a href="https://ozidev.vercel.app" id="portfolio-link" class="social-link"
+                        title="Geliştirici Portfolyosu" target="_blank">
+                        <svg viewBox="0 0 512 512">
+                            <path fill="currentColor"
+                                d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64h185.4c2.2 20.4 3.3 41.8 3.3 64zm28.8-64h123.1c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 169.2 147.9c-9.1-1.8-18.3-3.1-27.7-3.7zM112 256c0 22 1.1 43.4 3.2 64H8.6c-5.3-20.5-8.1-41.9-8.1-64s2.8-43.5 8.1-64h106.7c-2.1 20.6-3.2 42-3.2 64zm-56.7-96H135.3c10-63.9 29.8-117.4 55.3-151.6C112.3 29.1 48.6 85.9 21.4 156.3c9.1-1.8 18.3-3.1 27.7-3.7zM160 192h192c-10-66.8-33.6-120.3-63.6-145.5c-6.8-5.7-14.2-10.3-21.9-13.6c-9.6-4.1-19.5-6.5-29.6-6.8h-1.8c-10 .3-20 2.7-29.6 6.8c-7.7 3.3-15 7.9-21.9 13.6c-30 25.2-53.6 78.7-63.6 145.5zm0 128c10 66.8 33.6 120.3 63.6 145.5c6.8 5.7 14.2 10.3 21.9 13.6c9.6 4.1 19.5 6.5 29.6 6.8h1.8c10-.3 20-2.7 29.6-6.8c7.7-3.3 15-7.9 21.9-13.6c30-25.2 53.6-78.7 63.6-145.5H160zm-24.7 144H18.7c9.3-.6 18.5-1.9 27.7-3.7c27.2 70.5 90.9 127.2 169.2 147.9c-25.5-34.2-45.3-87.7-55.3-151.6v.1zm223.4 0h116.6c-9.3-.6-18.5-1.9-27.7-3.7c-27.2 70.5-90.9 127.2-169.2 147.9c25.5-34.2 45.3-87.7 55.3-151.6v.1z" />
+                        </svg>
+                    </a>
                 </div>
-                
+
                 <div style="display: flex; gap: 5px; align-items: center;">
                     <button id="theme-toggle-button" class="btn theme-toggle" title="Temayı Değiştir">☀️</button>
                 </div>
@@ -103,37 +128,42 @@
         <main class="app-content">
 
             <section id="char-view" class="tab-content active">
-                
+
                 <div id="card-identity" class="character-card">
                     <h2 class="card-title" data-i18n="card_char_info">Karakter Bilgileri</h2>
 
                     <div id="character-management-group" class="character-management-group">
-                        <button id="game-mode-toggle-btn" class="btn btn-secondary" title="Modu Değiştir" style="margin-right: 5px;">
+                        <button id="game-mode-toggle-btn" class="btn btn-secondary" title="Modu Değiştir"
+                            style="margin-right: 5px;">
                             <span id="game-mode-icon">✏️</span>
                         </button>
                         <select id="character-selector" title="Karakter Seç">
                         </select>
                         <button id="add-new-character-btn" class="btn btn-primary" title="Yeni Karakter Ekle">+</button>
-                        <button id="delete-character-btn" class="btn btn-danger" title="Aktif Karakteri Sil" data-i18n="btn_delete">Sil</button>
+                        <button id="delete-character-btn" class="btn btn-danger" title="Aktif Karakteri Sil"
+                            data-i18n="btn_delete">Sil</button>
                     </div>
                     <div class="menu-divider" style="margin-top: 0;"></div>
 
-                    <div id="campaign-status-display"
-                         style="margin-bottom: 15px; padding: 10px 15px; border-radius: 5px; background-color: var(--color-bg-med); color: var(--color-accent-magic); font-weight: 700;
+                    <div id="campaign-status-display" style="margin-bottom: 15px; padding: 10px 15px; border-radius: 5px; background-color: var(--color-bg-med); color: var(--color-accent-magic); font-weight: 700;
                                 display: none; justify-content: space-between; align-items: center;">
                         <span id="campaign-status-text"></span>
-                        <button id="leave-campaign-button" class="btn btn-danger-outline" style="display: none;" data-i18n="btn_leave_campaign">Oyundan Ayrıl</button>
+                        <button id="leave-campaign-button" class="btn btn-danger-outline" style="display: none;"
+                            data-i18n="btn_leave_campaign">Oyundan Ayrıl</button>
                     </div>
 
                     <div class="form-group">
-    <label for="char-name" data-i18n="label_name">İsim:</label>
-    <textarea id="char-name" class="char-field" rows="1" style="resize: none; overflow: hidden;"></textarea>
-</div>
+                        <label for="char-name" data-i18n="label_name">İsim:</label>
+                        <textarea id="char-name" class="char-field" rows="1"
+                            style="resize: none; overflow: hidden;"></textarea>
+                    </div>
                     <div class="form-group">
-    <label for="char-desc" data-i18n="label_desc">Açıklama:</label>
-    <textarea id="char-desc" class="char-field" rows="3"style="resize: none; data-i18n-placeholder="placeholder_char_desc" placeholder="Karakterinizin kısa tanımı..."></textarea>
-</div>
-                    
+                        <label for="char-desc" data-i18n="label_desc">Açıklama:</label>
+                        <textarea id="char-desc" class="char-field" rows="3"
+                            style="resize: none;" data-i18n-placeholder="placeholder_char_desc"
+                            placeholder="Karakterinizin kısa tanımı..."></textarea>
+                    </div>
+
                     <div class="stats-grid">
                         <div class="form-group">
                             <label for="char-refresh" data-i18n="label_refresh">Refresh:</label>
@@ -142,9 +172,11 @@
                         <div class="form-group fate-tracker">
                             <label data-i18n="label_fate_points">Fate Puanı:</label>
                             <div class="fate-point-controls">
-                                <button id="minus-fate-point" class="btn btn-danger-outline btn-round" title="Fate Puanı Harca">−</button>
+                                <button id="minus-fate-point" class="btn btn-danger-outline btn-round"
+                                    title="Fate Puanı Harca">−</button>
                                 <span id="char-fate-points" class="fate-point-display">3</span>
-                                <button id="plus-fate-point" class="btn btn-primary-outline btn-round" title="Fate Puanı Kazan">+</button>
+                                <button id="plus-fate-point" class="btn btn-primary-outline btn-round"
+                                    title="Fate Puanı Kazan">+</button>
                             </div>
                         </div>
                     </div>
@@ -153,25 +185,35 @@
                 <div id="card-aspects" class="character-card">
                     <h2 class="card-title" data-i18n="card_aspects">Aspektler (Aspects)</h2>
                     <div class="form-group">
-    <label for="char-high-concept" data-i18n="label_high_concept">High Concept:</label>
-    <textarea id="char-high-concept" class="char-field" rows="4"style="resize: none; data-i18n-placeholder="placeholder_high_concept" placeholder="Örn: 'Sihir Güçlü Kılıç Ustası'"></textarea>
-</div>
-<div class="form-group">
-    <label for="char-trouble" data-i18n="label_trouble">Trouble:</label>
-    <textarea id="char-trouble" class="char-field" rows="4"style="resize: none; data-i18n-placeholder="placeholder_trouble" placeholder="Örn: 'Altına Olan Zafiyeti'"></textarea>
-</div>
-<div class="form-group">
-    <label for="char-relationship" data-i18n="label_relationship">Relationship:</label>
-    <textarea id="char-relationship" class="char-field" rows="4"style="resize: none; data-i18n-placeholder="placeholder_relationship" placeholder="Örn: 'Eski Ustama Borçluyum'"></textarea>
-</div>
-<div class="form-group">
-    <label for="char-aspect-1" data-i18n="label_aspect1">Serbest Aspekt 1:</label>
-    <textarea id="char-aspect-1" class="char-field" rows="4"style="resize: none; data-i18n-placeholder="placeholder_aspect" placeholder="..."></textarea>
-</div>
-<div class="form-group">
-    <label for="char-aspect-2" data-i18n="label_aspect2">Serbest Aspekt 2:</label>
-    <textarea id="char-aspect-2" class="char-field" rows="4"style="resize: none; data-i18n-placeholder="placeholder_aspect" placeholder="..."></textarea>
-</div>
+                        <label for="char-high-concept" data-i18n="label_high_concept">High Concept:</label>
+                        <textarea id="char-high-concept" class="char-field" rows="4"
+                            style="resize: none;" data-i18n-placeholder="placeholder_high_concept"
+                            placeholder="Örn: 'Sihir Güçlü Kılıç Ustası'"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="char-trouble" data-i18n="label_trouble">Trouble:</label>
+                        <textarea id="char-trouble" class="char-field" rows="4"
+                            style="resize: none;" data-i18n-placeholder="placeholder_trouble"
+                            placeholder="Örn: 'Altına Olan Zafiyeti'"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="char-relationship" data-i18n="label_relationship">Relationship:</label>
+                        <textarea id="char-relationship" class="char-field" rows="4"
+                            style="resize: none;" data-i18n-placeholder="placeholder_relationship"
+                            placeholder="Örn: 'Eski Ustama Borçluyum'"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="char-aspect-1" data-i18n="label_aspect1">Serbest Aspekt 1:</label>
+                        <textarea id="char-aspect-1" class="char-field" rows="4"
+                            style="resize: none;" data-i18n-placeholder="placeholder_aspect"
+                            placeholder="..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="char-aspect-2" data-i18n="label_aspect2">Serbest Aspekt 2:</label>
+                        <textarea id="char-aspect-2" class="char-field" rows="4"
+                            style="resize: none;" data-i18n-placeholder="placeholder_aspect"
+                            placeholder="..."></textarea>
+                    </div>
                 </div>
 
                 <div id="card-skills" class="character-card">
@@ -180,14 +222,17 @@
                 </div>
                 <div id="card-stunts" class="character-card">
                     <h2 class="card-title" data-i18n="card_stunts">Yetenekler (Stunts)</h2>
-                    
+
                     <div id="stunt-counter" class="stunt-counter">
-                    <span><span data-i18n="label_limit">Limit:</span> <strong id="stunt-limit-display">3</strong></span>
-                    <span><span data-i18n="label_used">Kullanılan:</span> <strong id="stunt-current-display">0</strong></span>
-                </div>
+                        <span><span data-i18n="label_limit">Limit:</span> <strong
+                                id="stunt-limit-display">3</strong></span>
+                        <span><span data-i18n="label_used">Kullanılan:</span> <strong
+                                id="stunt-current-display">0</strong></span>
+                    </div>
                     <div id="stunt-list-ul" class="stunt-list"></div>
                     <div class="stunt-adder-group">
-                        <input type="text" id="stunt-input" data-i18n-placeholder="placeholder_stunt" placeholder="Yeni Stunt açıklaması...">
+                        <input type="text" id="stunt-input" data-i18n-placeholder="placeholder_stunt"
+                            placeholder="Yeni Stunt açıklaması...">
                         <button id="add-stunt-button" class="btn btn-primary" data-i18n="btn_add">+</button>
                     </div>
                 </div>
@@ -207,8 +252,10 @@
                                 <input type="text" id="consequence-mild" class="char-field">
                             </div>
 
-                            <div class="form-group-vertical" id="form-group-consequence-mild-extra" style="display: none;">
-                                <label for="consequence-mild-extra" style="color: var(--color-accent-magic);" data-i18n="label_mild_extra">
+                            <div class="form-group-vertical" id="form-group-consequence-mild-extra"
+                                style="display: none;">
+                                <label for="consequence-mild-extra" style="color: var(--color-accent-magic);"
+                                    data-i18n="label_mild_extra">
                                     Ekstra Hafif (Mild -2):
                                 </label>
                                 <input type="text" id="consequence-mild-extra" class="char-field">
@@ -227,7 +274,7 @@
             </section>
 
             <section id="roller-view" class="tab-content roller-grid">
-                
+
                 <div class="character-card">
                     <h2 class="card-title" data-i18n="card_roller_title">FATE ZAR ATICI</h2>
                     <div class="roller-action-row">
@@ -243,7 +290,7 @@
                         <div class="die">?</div>
                         <div class="die">?</div>
                     </div>
-                    
+
                     <div class="result-area">
                         <div class="result-detail">
                             <span id="result-dice" data-i18n="log_roll_dice">Zar: 0</span>
@@ -252,14 +299,14 @@
                         <hr class="result-divider">
                         <div id="result-total" class="result-total">0</div>
                         <div id="result-descriptor" class="result-descriptor">...</div>
-                        
+
                         <div id="fate-spend-buttons" style="display: none; margin-top: 15px;">
-                            
+
                             <button id="spend-fate-point-button" class="btn btn-accent">
                                 <span data-i18n="btn_add_result">SONUCA +2 EKLE</span>
-                               <span class="fate-cost-badge" data-i18n="lbl_fate_cost">-1 Fate Puanı</span>
+                                <span class="fate-cost-badge" data-i18n="lbl_fate_cost">-1 Fate Puanı</span>
                             </button>
-                            
+
                             <button id="reroll-fate-button" class="btn btn-secondary">
                                 <span data-i18n="btn_reroll">YENİDEN AT</span>
                                 <span class="fate-cost-badge" data-i18n="lbl_fate_cost">-1 Fate Puanı</span>
@@ -276,20 +323,21 @@
                     </ul>
                 </div>
 
-                <div id="live-situation-aspects-card" class="character-card" 
-                     style="grid-column: 1 / -1; display: none;">
+                <div id="live-situation-aspects-card" class="character-card"
+                    style="grid-column: 1 / -1; display: none;">
                     <h2 class="card-title" data-i18n="card_live_aspects">Canlı Durum Aspektleri (GM)</h2>
                     <div id="live-situation-aspect-list" class="stunt-list">
                     </div>
                 </div>
 
             </section>
-            
+
             <section id="find-campaign-view" class="tab-content">
                 <div class="character-card">
                     <h2 class="card-title" data-i18n="card_public_campaigns">Genel Kampanyalar</h2>
                     <p class="card-description" data-i18n="desc_public_campaigns">
-                        Mevcut oyunları arayın ve karakterinizi gönderin. Bir GM iseniz, "Yönet" butonuna basıp şifrenizi girin.
+                        Mevcut oyunları arayın ve karakterinizi gönderin. Bir GM iseniz, "Yönet" butonuna basıp
+                        şifrenizi girin.
                     </p>
                     <div id="public-campaign-list">
                         <div class="stunt-list-item muted">Genel kampanya bulunamadı veya yükleniyor...</div>
@@ -303,14 +351,16 @@
                     <p class="card-description" data-i18n="desc_new_campaign">
                         Oyuncuların lobi ekranında göreceği bilgileri doldurun.
                     </p>
-                    
+
                     <div class="form-group">
                         <label for="new-campaign-name" data-i18n="label_camp_name">Oyun Adı:</label>
-                        <input type="text" id="new-campaign-name" class="char-field" data-i18n-placeholder="placeholder_camp_name" placeholder="Örn: 'Kayıp Kader Kristali'">
+                        <input type="text" id="new-campaign-name" class="char-field"
+                            data-i18n-placeholder="placeholder_camp_name" placeholder="Örn: 'Kayıp Kader Kristali'">
                     </div>
                     <div class="form-group">
                         <label for="new-campaign-gm-name" data-i18n="label_camp_gm">GM Adı:</label>
-                        <input type="text" id="new-campaign-gm-name" class="char-field" data-i18n-placeholder="placeholder_camp_gm" placeholder="Görünmesini istediğiniz isim...">
+                        <input type="text" id="new-campaign-gm-name" class="char-field"
+                            data-i18n-placeholder="placeholder_camp_gm" placeholder="Görünmesini istediğiniz isim...">
                     </div>
                     <div class="form-group">
                         <label for="new-campaign-system" data-i18n="label_camp_system">Sistem:</label>
@@ -319,9 +369,11 @@
 
                     <div class="form-group">
                         <label for="new-campaign-setting" data-i18n="label_camp_setting">Setting / Dünya:</label>
-                        <input type="text" id="new-campaign-setting" class="char-field" data-i18n-placeholder="placeholder_camp_setting" placeholder="Örn: 'Ev Yapımı Fantastik, Cyberpunk'">
+                        <input type="text" id="new-campaign-setting" class="char-field"
+                            data-i18n-placeholder="placeholder_camp_setting"
+                            placeholder="Örn: 'Ev Yapımı Fantastik, Cyberpunk'">
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="new-campaign-players" data-i18n="label_camp_players">Kişi Sayısı:</label>
                         <input type="number" id="new-campaign-players" class="char-field" value="3" min="1" max="10">
@@ -329,58 +381,70 @@
 
                     <div class="form-group">
                         <label for="new-campaign-desc" data-i18n="label_camp_desc">Hikaye Kancası:</label>
-                        <input type="text" id="new-campaign-desc" class="char-field" data-i18n-placeholder="placeholder_camp_desc" placeholder="Oyuncular için kısa bir macera kancası...">
+                        <input type="text" id="new-campaign-desc" class="char-field"
+                            data-i18n-placeholder="placeholder_camp_desc"
+                            placeholder="Oyuncular için kısa bir macera kancası...">
                     </div>
                     <div class="form-group-vertical" style="margin-top: 15px;">
-                        <label style="font-weight: 700; color: var(--color-accent-magic);" data-i18n="label_camp_skills">
+                        <label style="font-weight: 700; color: var(--color-accent-magic);"
+                            data-i18n="label_camp_skills">
                             Kampanya Becerileri:
                         </label>
-                        <p class="card-description" style="font-size: 0.85rem; margin-bottom: 5px;" data-i18n="desc_camp_skills">
+                        <p class="card-description" style="font-size: 0.85rem; margin-bottom: 5px;"
+                            data-i18n="desc_camp_skills">
                             İstemediklerinizi çıkarın, yenilerini ekleyin.
                         </p>
-                        
+
                         <div id="campaign-skill-chips" class="skill-chips-container">
-                            </div>
+                        </div>
 
                         <div class="stunt-adder-group" style="margin-top: 10px;">
-                            <input type="text" id="campaign-skill-add-input" data-i18n-placeholder="placeholder_add_skill" placeholder="Yeni beceri adı..." class="char-field">
+                            <input type="text" id="campaign-skill-add-input"
+                                data-i18n-placeholder="placeholder_add_skill" placeholder="Yeni beceri adı..."
+                                class="char-field">
                             <button id="campaign-skill-add-btn" class="btn btn-primary">+</button>
                         </div>
-                        
-                        <button id="campaign-skill-reset-btn" class="btn btn-secondary" style="margin-top: 5px; font-size: 0.8rem; padding: 5px 10px;" data-i18n="btn_reset_skills">
+
+                        <button id="campaign-skill-reset-btn" class="btn btn-secondary"
+                            style="margin-top: 5px; font-size: 0.8rem; padding: 5px 10px;" data-i18n="btn_reset_skills">
                             Varsayılan Listeye Dön
                         </button>
                     </div>
 
                     <div class="form-group-vertical">
-                        <label for="new-campaign-lore" style="font-weight: 700; color: var(--color-text-muted);" data-i18n="label_camp_lore">
+                        <label for="new-campaign-lore" style="font-weight: 700; color: var(--color-text-muted);"
+                            data-i18n="label_camp_lore">
                             Detaylar / Lore (Opsiyonel):
                         </label>
-                        <textarea id="new-campaign-lore" class="char-field" rows="5" 
-                                  data-i18n-placeholder="placeholder_camp_lore"
-                                  placeholder="Ev kuralları, önemli NPC'ler, dünya bilgisi..."
-                                  style="resize: vertical;"></textarea>
+                        <textarea id="new-campaign-lore" class="char-field" rows="5"
+                            data-i18n-placeholder="placeholder_camp_lore"
+                            placeholder="Ev kuralları, önemli NPC'ler, dünya bilgisi..."
+                            style="resize: vertical;"></textarea>
                     </div>
 
-                    
+
                     <div class="menu-divider"></div>
-                    
+
                     <div class="form-group">
                         <label for="new-campaign-password" data-i18n="label_camp_password">Yönetim Şifresi:</label>
-                        <input type="password" id="new-campaign-password" class="char-field" data-i18n-placeholder="placeholder_camp_password" placeholder="Unutmayacağınız bir şifre girin">
+                        <input type="password" id="new-campaign-password" class="char-field"
+                            data-i18n-placeholder="placeholder_camp_password"
+                            placeholder="Unutmayacağınız bir şifre girin">
                     </div>
-                    
-                    <button id="create-campaign-button" class="btn btn-primary" style="width: 100%; margin-top: 10px;" data-i18n="btn_create_campaign">
+
+                    <button id="create-campaign-button" class="btn btn-primary" style="width: 100%; margin-top: 10px;"
+                        data-i18n="btn_create_campaign">
                         Kampanyayı Lobiye Ekle
                     </button>
-                    <button id="update-campaign-button" class="btn btn-accent" style="width: 100%; margin-top: 10px; display: none;" data-i18n="btn_update_campaign">
+                    <button id="update-campaign-button" class="btn btn-accent"
+                        style="width: 100%; margin-top: 10px; display: none;" data-i18n="btn_update_campaign">
                         Kampanya Bilgilerini Güncelle
                     </button>
                 </div>
             </section>
-            
+
             <section id="gm-admin-view" class="tab-content">
-                
+
                 <div class="character-card">
                     <h2 id="gm-admin-title" class="card-title" data-i18n="card_gm_admin">Kampanya Yönetimi</h2>
                     <p class="card-description" data-i18n="desc_gm_admin">
@@ -393,8 +457,10 @@
                     <div id="gm-situation-aspect-list" class="stunt-list">
                     </div>
                     <div class="stunt-adder-group">
-                        <input type="text" id="gm-situation-aspect-input" data-i18n-placeholder="placeholder_gm_aspect" placeholder="Yeni durum aspekti...">
-                        <button id="gm-add-situation-aspect-button" class="btn btn-primary" data-i18n="btn_add">+</button>
+                        <input type="text" id="gm-situation-aspect-input" data-i18n-placeholder="placeholder_gm_aspect"
+                            placeholder="Yeni durum aspekti...">
+                        <button id="gm-add-situation-aspect-button" class="btn btn-primary"
+                            data-i18n="btn_add">+</button>
                     </div>
                 </div>
 
@@ -403,9 +469,11 @@
                     <div class="form-group fate-tracker" style="justify-content: center; margin-bottom: 0;">
                         <label data-i18n="label_current_points">Güncel Puan:</label>
                         <div class="fate-point-controls">
-                            <button id="gm-minus-fate-point" class="btn btn-danger-outline btn-round" title="Fate Puanı Harca">−</button>
+                            <button id="gm-minus-fate-point" class="btn btn-danger-outline btn-round"
+                                title="Fate Puanı Harca">−</button>
                             <span id="gm-fate-points-display" class="fate-point-display">0</span>
-                            <button id="gm-plus-fate-point" class="btn btn-primary-outline btn-round" title="Fate Puanı Kazan">+</button>
+                            <button id="gm-plus-fate-point" class="btn btn-primary-outline btn-round"
+                                title="Fate Puanı Kazan">+</button>
                         </div>
                     </div>
                 </div>
@@ -420,18 +488,21 @@
                     <h2 class="card-title" data-i18n="card_approved_players">Onaylanmış Oyuncular</h2>
                     <div id="gm-approved-players-list">
                     </div>
-                </div> 
-                
+                </div>
+
                 <div class="character-card danger-zone">
                     <h2 class="card-title" data-i18n="card_danger_zone">Tehlikeli Bölge</h2>
                     <p class="card-description" data-i18n="desc_danger_zone_camp">
                         Bu işlem geri alınamaz. Kampanyayı, içindeki tüm oyuncuları ve başvuruları kalıcı olarak siler.
                     </p>
-                    <button id="edit-campaign-button" class="btn btn-secondary" style="margin-bottom: 10px; width: 100%;" data-i18n="btn_update_campaign">Kampanya Bilgilerini Düzenle</button>
+                    <button id="edit-campaign-button" class="btn btn-secondary"
+                        style="margin-bottom: 10px; width: 100%;" data-i18n="btn_update_campaign">Kampanya Bilgilerini
+                        Düzenle</button>
 
-                    <button id="delete-campaign-button" class="btn btn-danger" data-i18n="btn_delete_campaign">Kampanyayı Kalıcı Olarak Sil</button>
+                    <button id="delete-campaign-button" class="btn btn-danger"
+                        data-i18n="btn_delete_campaign">Kampanyayı Kalıcı Olarak Sil</button>
                 </div>
-                
+
             </section>
 
 
@@ -439,32 +510,42 @@
                 <div class="character-card">
                     <h2 class="card-title" data-i18n="card_char_data">Karakter Verisi</h2>
                     <p class="card-description" data-i18n="desc_char_data">
-                        Karakterinizi bir `.json` dosyası olarak kaydedebilir veya daha önce kaydettiğiniz bir dosyayı yükleyebilirsiniz. Bu, karakterinizi paylaşmanın en iyi yoludur.
+                        Karakterinizi bir `.json` dosyası olarak kaydedebilir veya daha önce kaydettiğiniz bir dosyayı
+                        yükleyebilirsiniz. Bu, karakterinizi paylaşmanın en iyi yoludur.
                     </p>
                     <div class="import-export-buttons">
-                        <button id="export-char-button" class="btn btn-primary" data-i18n="btn_export">Karakteri Dışa Aktar (Export)</button>
+                        <button id="export-char-button" class="btn btn-primary" data-i18n="btn_export">Karakteri Dışa
+                            Aktar (Export)</button>
                         <input type="file" id="import-file-input" accept=".json" style="display: none;">
-                        <button id="import-char-button" class="btn btn-secondary" data-i18n="btn_import">Karakteri İçe Aktar (Import)</button>
+                        <button id="import-char-button" class="btn btn-secondary" data-i18n="btn_import">Karakteri İçe
+                            Aktar (Import)</button>
                     </div>
                 </div>
 
                 <div class="character-card danger-zone">
                     <h2 class="card-title" data-i18n="card_danger_zone">Tehlikeli Bölge</h2>
                     <p class="card-description" data-i18n="desc_danger_zone_char">
-                        Bu işlem geri alınamaz. Mevcut karakterinizdeki tüm verileri (aspektler, beceriler, stunt'lar) sıfırlar.
+                        Bu işlem geri alınamaz. Mevcut karakterinizdeki tüm verileri (aspektler, beceriler, stunt'lar)
+                        sıfırlar.
                     </p>
-                    <button id="reset-char-button" class="btn btn-danger" data-i18n="btn_reset">Karakteri Sıfırla</button>
+                    <button id="reset-char-button" class="btn btn-danger" data-i18n="btn_reset">Karakteri
+                        Sıfırla</button>
                 </div>
             </section>
             <section id="tutorial-view" class="tab-content">
                 <div class="character-card tutorial-article">
-                    
+
                     <div class="lang-content lang-tr">
                         <h2 class="card-title">🔥 FATE'e Hoş Geldiniz! (En Basit Haliyle) - Komple Rehber</h2>
-                        
+
                         <div class="tutorial-section">
-                            <p>Selam millet! Efsanevi bir FATE macerasına hoş geldiniz! Bu, bizim "Öğretici Oyunumuz" olacak. Amacım hem 4 oyuncumuza hem de bizi izleyen herkese FATE'in neden bu kadar harika bir sistem olduğunu göstermek.</p>
-                            <p><strong>En Baştan Söyleyeyim: Korkmayın!</strong> D&D veya başka sistemler oynadıysanız, şimdi o "matematik" kısmını biraz unutmanızı istiyorum. FATE, "Hasar: 8" demez. FATE, <em>"Kılıcın darbesi, adamın zırhını çökertti ve kaburgasını kırdı!"</em> der. Biz bu gece "sayılara" değil, "hikayeye" odaklanacağız.</p>
+                            <p>Selam millet! Efsanevi bir FATE macerasına hoş geldiniz! Bu, bizim "Öğretici Oyunumuz"
+                                olacak. Amacım hem 4 oyuncumuza hem de bizi izleyen herkese FATE'in neden bu kadar
+                                harika bir sistem olduğunu göstermek.</p>
+                            <p><strong>En Baştan Söyleyeyim: Korkmayın!</strong> D&D veya başka sistemler oynadıysanız,
+                                şimdi o "matematik" kısmını biraz unutmanızı istiyorum. FATE, "Hasar: 8" demez. FATE,
+                                <em>"Kılıcın darbesi, adamın zırhını çökertti ve kaburgasını kırdı!"</em> der. Biz bu
+                                gece "sayılara" değil, "hikayeye" odaklanacağız.</p>
                         </div>
 
                         <div class="menu-divider"></div>
@@ -473,17 +554,39 @@
                             <h3>FATE 101: Temel Kural (Yönler ve FATE Puanları)</h3>
                             <p>FATE'te her şeyin temeli budur.</p>
                             <ul class="tutorial-list">
-                                <li><strong>Yönler (Aspects) Nedir?</strong> Karakterinizin kim olduğunu anlatan cümlelerdir. "Güç: 18" gibi bir sayı değil. Sizin Yönünüz: <em>Kasabanın En Güçlü Adamı</em>'dır. Ve en önemlisi, Yönler sadece iyi şeyler olmak zorunda değildir. Karakterinizin bir de "Bela" (Trouble) Yönü vardır. Örnek: <em>Her Yerde Düşmanı Olan</em> veya <em>Karanlıktan Ölesiye Korkan</em>.</li>
-                                <li><strong>FATE Puanları (FP) Nedir?</strong> Bunlar sizin "para biriminiz". Sizin o "bölüm sonu canavarı" anlarınızı, o kahramanlıklarınızı yapmanızı sağlayan jetonlardır.</li>
+                                <li><strong>Yönler (Aspects) Nedir?</strong> Karakterinizin kim olduğunu anlatan
+                                    cümlelerdir. "Güç: 18" gibi bir sayı değil. Sizin Yönünüz: <em>Kasabanın En Güçlü
+                                        Adamı</em>'dır. Ve en önemlisi, Yönler sadece iyi şeyler olmak zorunda değildir.
+                                    Karakterinizin bir de "Bela" (Trouble) Yönü vardır. Örnek: <em>Her Yerde Düşmanı
+                                        Olan</em> veya <em>Karanlıktan Ölesiye Korkan</em>.</li>
+                                <li><strong>FATE Puanları (FP) Nedir?</strong> Bunlar sizin "para biriminiz". Sizin o
+                                    "bölüm sonu canavarı" anlarınızı, o kahramanlıklarınızı yapmanızı sağlayan
+                                    jetonlardır.</li>
                             </ul>
                             <p><strong>Bu ikisi nasıl çalışıyor? Basit bir ekonomiyle:</strong></p>
                             <ul class="tutorial-list">
-                                <li><strong>1. Invoke (Kullanma): "Ben Harikayım!" Dediğin An:</strong><br>Ne zaman "Ben bu işte çok iyiyim!" demek isterseniz... 1 FATE Puanı (FP) harcarsınız. <br><em>Örnek: O devasa, Kilitli Mezar Kapısı'nı açmanız gerekiyor. Sen dersin ki: "1 FATE Puanı harcıyorum ve Kasabanın En Güçlü Adamı Yönümü kullanıyorum (Invoke)!" Sonuç: Zarınıza BÜYÜK bir bonus alırsınız (ya da zarı yeniden atarsınız) ve o kapıyı paramparça edersiniz.</em></li>
-                                <li><strong>2. Compel (Zorlama): "Eyvah!" Dediğin An (En Önemli Kısım):</strong><br>Peki, o harcadığınız FATE Puanlarını nasıl geri kazanacaksınız? Başınız belaya girdiğinde! İşte FATE'in parladığı yer burası. Ben (GM olarak) sizin o "Bela" Yönlerinizi gördüğümde, size bir FATE Puanı uzatacağım ve diyeceğim ki: <em>"Tamam, kasaba muhafızı sana 'Defol git, paçavralı!' dedi. Senin o Aşırı Gururlu Yönün tam da şimdi damarına basmaz mı? O muhafıza kafa atmak için harika bir zaman, değil mi?"</em><br><br>
-                                Burada iki seçeneğin var:<br>
-                                <strong>1. Kabul Edersin:</strong> "Evet, haklısın!" dersin, o FATE Puanını (FP) kaparsın ve muhafıza kafa atıp başını daha büyük belaya sokarsın.<br>
-                                <strong>2. Reddedersin:</strong> "Hayır, sakin kalacağım" dersin. Ama bunun bir bedeli var: O FATE Puanını reddetmek için sen 1 FP harcarsın.<br>
-                                <strong style="color: var(--color-accent-magic);">Yani: FATE'te, karakterinizin kusurları (Belaları) size FATE Puanı olarak geri döner. Rol yapmanız ödüllendirilir!</strong></li>
+                                <li><strong>1. Invoke (Kullanma): "Ben Harikayım!" Dediğin An:</strong><br>Ne zaman "Ben
+                                    bu işte çok iyiyim!" demek isterseniz... 1 FATE Puanı (FP) harcarsınız.
+                                    <br><em>Örnek: O devasa, Kilitli Mezar Kapısı'nı açmanız gerekiyor. Sen dersin ki:
+                                        "1 FATE Puanı harcıyorum ve Kasabanın En Güçlü Adamı Yönümü kullanıyorum
+                                        (Invoke)!" Sonuç: Zarınıza BÜYÜK bir bonus alırsınız (ya da zarı yeniden
+                                        atarsınız) ve o kapıyı paramparça edersiniz.</em></li>
+                                <li><strong>2. Compel (Zorlama): "Eyvah!" Dediğin An (En Önemli
+                                        Kısım):</strong><br>Peki, o harcadığınız FATE Puanlarını nasıl geri
+                                    kazanacaksınız? Başınız belaya girdiğinde! İşte FATE'in parladığı yer burası. Ben
+                                    (GM olarak) sizin o "Bela" Yönlerinizi gördüğümde, size bir FATE Puanı uzatacağım ve
+                                    diyeceğim ki: <em>"Tamam, kasaba muhafızı sana 'Defol git, paçavralı!' dedi. Senin o
+                                        Aşırı Gururlu Yönün tam da şimdi damarına basmaz mı? O muhafıza kafa atmak için
+                                        harika bir zaman, değil mi?"</em><br><br>
+                                    Burada iki seçeneğin var:<br>
+                                    <strong>1. Kabul Edersin:</strong> "Evet, haklısın!" dersin, o FATE Puanını (FP)
+                                    kaparsın ve muhafıza kafa atıp başını daha büyük belaya sokarsın.<br>
+                                    <strong>2. Reddedersin:</strong> "Hayır, sakin kalacağım" dersin. Ama bunun bir
+                                    bedeli var: O FATE Puanını reddetmek için sen 1 FP harcarsın.<br>
+                                    <strong style="color: var(--color-accent-magic);">Yani: FATE'te, karakterinizin
+                                        kusurları (Belaları) size FATE Puanı olarak geri döner. Rol yapmanız
+                                        ödüllendirilir!</strong>
+                                </li>
                             </ul>
                         </div>
 
@@ -491,16 +594,40 @@
 
                         <div class="tutorial-section">
                             <h3>FATE 102: Bir Kağıt Parçasından Efsaneye (Karakter Yaratma)</h3>
-                            <p>Pekala, FATE'in temellerini anladık. Şimdi "Peki benim karakterim kim?" sorusuna geliyoruz. Karakter kağıdınızda (sitemizdeki ekranda) 5 ana "cümle" (Yön/Aspect) ve "özel hareketler" (Hüner/Stunts) olacak.</p>
+                            <p>Pekala, FATE'in temellerini anladık. Şimdi "Peki benim karakterim kim?" sorusuna
+                                geliyoruz. Karakter kağıdınızda (sitemizdeki ekranda) 5 ana "cümle" (Yön/Aspect) ve
+                                "özel hareketler" (Hüner/Stunts) olacak.</p>
                             <ul class="tutorial-list">
-                                <li><strong>1. High Concept (Yüksek Konsept): "Sizin Film Afişiniz"</strong><br>Bu, karakterinizi tek bir nefeste, en havalı şekilde anlatan cümlenizdir. "Ben bir savaşçıyım" değil. O sıkıcı. FATE şunu sorar: "Tamam, savaşçısın ama ne savaşçısısın?"<br>
-                                <em>Örnekler: Veba Salgınından Kurtulan Son Rahip, Baron'un Mirasını Çalmaya Çalışan Piç Evlat, Köyünü Yakan Canavarı Arayan Öfkeli Avcı.</em></li>
-                                <li><strong>2. Trouble (Bela): "FATE Puanı Jeneratörünüz"</strong><br>Bu, karakterinizin en önemli Yönüdür. Çünkü bu, benim (GM olarak) size FATE Puanı vermek için en çok kullanacağım şeydir!<br>
-                                <em>Örnekler: Karanlıktan Ölesiye Korkan, Her Zaman Önce Kılıcını Çeker, Şehir Muhafızlarının Yüzbaşı'na Kan Borçlu.</em></li>
-                                <li><strong>3. Free Aspects (Serbest Yönler): "Hikayenin Geri Kalanı"</strong><br>Geriye kalan 3 Serbest Yön, hikayenizin geri kalanını doldurur: Geçmişinizden bir anı, önemli bir ilişkiniz, kutsal bir yemininiz veya size ait çok önemli bir eşyanız...<br>
-                                <em>Örnekler: Babamdan Kalan Paslı Ama Güvenilir Zırh, Asla Masum Birini Geride Bırakmam, Kardeşim Mezar Hırsızları Loncasında.</em></li>
-                                <li><strong>4. Stunts (Hünerler): "Sizin Özel Hareketleriniz"</strong><br>İşte "matematiğin" birazcık girdiği yer burası. Bir Hüner şöyle der: "Çünkü ben [Şu Konuda Çok İyiyim], [Bu Belirli Durumda] [Bu Özel Avantajı] alırım." Genellikle size belirli bir durumda +2 bonus verir veya kimsenin yapamadığı bir şeyi yapmanızı sağlar.<br>
-                                <em>Örnekler:<br>- Kalkan Duvarı: Çünkü ben bir Eski Askerim, bir saldırıyı Kalkanımla Engellediğimde zar atışıma +2 alırım.<br>- Sokakların Dili: Çünkü ben bir Şehir Faresiyim, Mezarlık Bekçileri gibi 'ayak takımı' hakkında Avantaj Yaratmak için zar attığımda, +2 alırım.</em></li>
+                                <li><strong>1. High Concept (Yüksek Konsept): "Sizin Film Afişiniz"</strong><br>Bu,
+                                    karakterinizi tek bir nefeste, en havalı şekilde anlatan cümlenizdir. "Ben bir
+                                    savaşçıyım" değil. O sıkıcı. FATE şunu sorar: "Tamam, savaşçısın ama ne
+                                    savaşçısısın?"<br>
+                                    <em>Örnekler: Veba Salgınından Kurtulan Son Rahip, Baron'un Mirasını Çalmaya Çalışan
+                                        Piç Evlat, Köyünü Yakan Canavarı Arayan Öfkeli Avcı.</em>
+                                </li>
+                                <li><strong>2. Trouble (Bela): "FATE Puanı Jeneratörünüz"</strong><br>Bu, karakterinizin
+                                    en önemli Yönüdür. Çünkü bu, benim (GM olarak) size FATE Puanı vermek için en çok
+                                    kullanacağım şeydir!<br>
+                                    <em>Örnekler: Karanlıktan Ölesiye Korkan, Her Zaman Önce Kılıcını Çeker, Şehir
+                                        Muhafızlarının Yüzbaşı'na Kan Borçlu.</em>
+                                </li>
+                                <li><strong>3. Free Aspects (Serbest Yönler): "Hikayenin Geri Kalanı"</strong><br>Geriye
+                                    kalan 3 Serbest Yön, hikayenizin geri kalanını doldurur: Geçmişinizden bir anı,
+                                    önemli bir ilişkiniz, kutsal bir yemininiz veya size ait çok önemli bir
+                                    eşyanız...<br>
+                                    <em>Örnekler: Babamdan Kalan Paslı Ama Güvenilir Zırh, Asla Masum Birini Geride
+                                        Bırakmam, Kardeşim Mezar Hırsızları Loncasında.</em>
+                                </li>
+                                <li><strong>4. Stunts (Hünerler): "Sizin Özel Hareketleriniz"</strong><br>İşte
+                                    "matematiğin" birazcık girdiği yer burası. Bir Hüner şöyle der: "Çünkü ben [Şu
+                                    Konuda Çok İyiyim], [Bu Belirli Durumda] [Bu Özel Avantajı] alırım." Genellikle size
+                                    belirli bir durumda +2 bonus verir veya kimsenin yapamadığı bir şeyi yapmanızı
+                                    sağlar.<br>
+                                    <em>Örnekler:<br>- Kalkan Duvarı: Çünkü ben bir Eski Askerim, bir saldırıyı
+                                        Kalkanımla Engellediğimde zar atışıma +2 alırım.<br>- Sokakların Dili: Çünkü ben
+                                        bir Şehir Faresiyim, Mezarlık Bekçileri gibi 'ayak takımı' hakkında Avantaj
+                                        Yaratmak için zar attığımda, +2 alırım.</em>
+                                </li>
                             </ul>
                         </div>
 
@@ -510,14 +637,25 @@
                             <h3>FATE 103: Motor Nasıl Çalışıyor? (Zarlar, Merdiven ve 4 Eylem)</h3>
                             <p>Şimdi, "Ben bir şey yapıyorum!" dediğinizde ne olacak?</p>
                             <ul class="tutorial-list">
-                                <li><strong>1. O Garip Zarlar (FATE/Fudge Zarları):</strong> Zarların üzerinde + (Artı, +1), - (Eksi, -1) ve Boş (0) sembolleri vardır. Her zaman 4 tane atacaksınız. <em>Örnek: + + - 0 = Toplam +1.</em></li>
-                                <li><strong>2. "Merdiven" (The Ladder):</strong> FATE'te "Zorluk 15" demeyiz. "Zorluk Harika (+2)" deriz.<br>
-                                0 = Vasat, +1 = İyi, +2 = Harika, +4 = Efsanevi. Sizin beceriniz de bu sıfatlarladır (Örn: Dövüş: Harika (+2)).</li>
-                                <li><strong>3. "4 Eylem Menüsü" (Ne Yapabilirim?):</strong> Sıranız geldiğinde, aklınıza gelen herhangi bir havalı eylem şu 4 kategoriden birine girer:<br>
-                                <strong>A) Üstesinden Gel (Overcome):</strong> Bir engeli (kilitli kapı, sisli vadi) geçmeye çalışmak.<br>
-                                <strong>B) Avantaj Yarat (Create Advantage):</strong> FATE'in kalbi! Kendinize veya arkadaşlarınıza "pas atmak". Başarılı olursanız, oyuna <em>Gözleri Çamur Dolu</em> gibi yeni bir Yön eklersiniz.<br>
-                                <strong>C) Saldırı (Attack):</strong> Birine fiziksel veya zihinsel zarar vermeye çalışmak.<br>
-                                <strong>D) Savunma (Defend):</strong> Size "Saldırı" veya "Avantaj Yaratma" yapıldığında otomatik olarak devreye girer.</li>
+                                <li><strong>1. O Garip Zarlar (FATE/Fudge Zarları):</strong> Zarların üzerinde + (Artı,
+                                    +1), - (Eksi, -1) ve Boş (0) sembolleri vardır. Her zaman 4 tane atacaksınız.
+                                    <em>Örnek: + + - 0 = Toplam +1.</em></li>
+                                <li><strong>2. "Merdiven" (The Ladder):</strong> FATE'te "Zorluk 15" demeyiz. "Zorluk
+                                    Harika (+2)" deriz.<br>
+                                    0 = Vasat, +1 = İyi, +2 = Harika, +4 = Efsanevi. Sizin beceriniz de bu sıfatlarladır
+                                    (Örn: Dövüş: Harika (+2)).</li>
+                                <li><strong>3. "4 Eylem Menüsü" (Ne Yapabilirim?):</strong> Sıranız geldiğinde, aklınıza
+                                    gelen herhangi bir havalı eylem şu 4 kategoriden birine girer:<br>
+                                    <strong>A) Üstesinden Gel (Overcome):</strong> Bir engeli (kilitli kapı, sisli vadi)
+                                    geçmeye çalışmak.<br>
+                                    <strong>B) Avantaj Yarat (Create Advantage):</strong> FATE'in kalbi! Kendinize veya
+                                    arkadaşlarınıza "pas atmak". Başarılı olursanız, oyuna <em>Gözleri Çamur Dolu</em>
+                                    gibi yeni bir Yön eklersiniz.<br>
+                                    <strong>C) Saldırı (Attack):</strong> Birine fiziksel veya zihinsel zarar vermeye
+                                    çalışmak.<br>
+                                    <strong>D) Savunma (Defend):</strong> Size "Saldırı" veya "Avantaj Yaratma"
+                                    yapıldığında otomatik olarak devreye girer.
+                                </li>
                             </ul>
                         </div>
 
@@ -525,11 +663,23 @@
 
                         <div class="tutorial-section">
                             <h3>FATE 104: İşler Sarpa Sardığında (Stres ve Sonuçlar)</h3>
-                            <p>Peki, "Saldırı" başarılı olursa ne olur? O "Dark Fantasy" oyunumuzda bir darbe aldığımızda ne yaşayacağız?</p>
+                            <p>Peki, "Saldırı" başarılı olursa ne olur? O "Dark Fantasy" oyunumuzda bir darbe
+                                aldığımızda ne yaşayacağız?</p>
                             <ul class="tutorial-list">
-                                <li><strong>1. Stres (Stress) Kutuları: "Sıyırıklar ve Morluklar"</strong><br>Karakter kağıdınızda (sitemizde) "Stres" yazan birkaç küçük kutu göreceksiniz. Bunlar HP (Can Puanı) DEĞİLDİR! Bunlar, küçük darbeleri "soğurmanızı" sağlar ve sahne sonunda hemen sıfırlanır.</li>
-                                <li><strong>2. Sonuçlar (Consequences): "İşte Bu Acıdı!"</strong><br>Ya Stres kutularınız yetmezse? Veya darbe çok büyükse? O zaman "Sonuç" (Consequence) alırsınız. Bir Sonuç, sizin karakterinize eklenen yeni, olumsuz bir Yön demektir. Derin Pençe Yarası bir-iki sahnede iyileşirken, Kırık Kaburga haftalarca sizinle kalır! Artık düşmanlar bu yeni Bela Yönünüzü size karşı kullanabilir.</li>
-                                <li><strong>3. Teslim Olmak (Concede): "Akıllıca Geri Çekilmek"</strong><br>FATE'te "ölmek" çok zordur, ama "kaybetmek" vardır. Kaybediyorsanız, "Teslim Oluyorum!" diyebilirsiniz. Sahneyi kaybedersiniz ama hikayede ne kaybettiğinize siz karar verirsiniz. Üstelik bu yenilgi için 1 FATE Puanı (FP) ve aldığınız her Sonuç için ekstra FP kazanırsınız!</li>
+                                <li><strong>1. Stres (Stress) Kutuları: "Sıyırıklar ve Morluklar"</strong><br>Karakter
+                                    kağıdınızda (sitemizde) "Stres" yazan birkaç küçük kutu göreceksiniz. Bunlar HP (Can
+                                    Puanı) DEĞİLDİR! Bunlar, küçük darbeleri "soğurmanızı" sağlar ve sahne sonunda hemen
+                                    sıfırlanır.</li>
+                                <li><strong>2. Sonuçlar (Consequences): "İşte Bu Acıdı!"</strong><br>Ya Stres
+                                    kutularınız yetmezse? Veya darbe çok büyükse? O zaman "Sonuç" (Consequence)
+                                    alırsınız. Bir Sonuç, sizin karakterinize eklenen yeni, olumsuz bir Yön demektir.
+                                    Derin Pençe Yarası bir-iki sahnede iyileşirken, Kırık Kaburga haftalarca sizinle
+                                    kalır! Artık düşmanlar bu yeni Bela Yönünüzü size karşı kullanabilir.</li>
+                                <li><strong>3. Teslim Olmak (Concede): "Akıllıca Geri Çekilmek"</strong><br>FATE'te
+                                    "ölmek" çok zordur, ama "kaybetmek" vardır. Kaybediyorsanız, "Teslim Oluyorum!"
+                                    diyebilirsiniz. Sahneyi kaybedersiniz ama hikayede ne kaybettiğinize siz karar
+                                    verirsiniz. Üstelik bu yenilgi için 1 FATE Puanı (FP) ve aldığınız her Sonuç için
+                                    ekstra FP kazanırsınız!</li>
                             </ul>
                         </div>
 
@@ -537,13 +687,28 @@
 
                         <div class="tutorial-section">
                             <h3>FATE 105: Zarlar Değil, Hikaye Kazanır</h3>
-                            <p>Son ve en önemli dersimiz. FATE, zarlarda ne attığınızla ilgili bir oyun değildir. FATE, "O attığınız zara ne anlam yüklediğinizle" ilgili bir oyundur.</p>
+                            <p>Son ve en önemli dersimiz. FATE, zarlarda ne attığınızla ilgili bir oyun değildir. FATE,
+                                "O attığınız zara ne anlam yüklediğinizle" ilgili bir oyundur.</p>
                             <ul class="tutorial-list">
-                                <li><strong>Kural 1: "Önce Kurgu, Sonra Mekanik"</strong><br>"Avantaj Yarat kullanıyorum" demeyin. Sıkıcıdır. Şunu deyin: "Yerdeki o çamuru alıp Worg'un gözüne fırlatıyorum!" Ben de "Harika! Bu bir 'Avantaj Yarat' zarıdır!" derim. Sizin göreviniz havalı şeyler yapmak, hangi kurala girdiğini bulmak benim görevim.</li>
-                                <li><strong>Kural 2: "Başarısızlık İleri Taşır"</strong><br>FATE'te başarısız bir zar, "Hiçbir şey olmadı" demek değildir. Başarısızlık, "Evet, başaramadın... ve işler daha da sarpa sardı!" demektir. Başarısızlık hikayeyi durdurmaz; daha da heyecanlı hale getirir!</li>
-                                <li><strong>Kural 3: "Evet, ve..." / "Hayır, ama..."</strong><br>Siz de "Evet, ve..." deyin! Muhafız kılıçla saldırdığında sadece savunma yapmayın, o kılıcın ne kadar eski olduğunu fark edip bunu bir avantaja çevirmeyi deneyin.</li>
-                                <li><strong>Kural 4: Siz de GM'siniz! (Hikaye Otoritesi)</strong><br>Bir FATE Puanı harcayarak, hikayeye benim bile düşünmediğim bir detayı ekleyebilirsiniz. "Benim Yönüm <em>Her Zaman Bir Kaçış Planı Vardır</em>. 1 FP harcıyorum ve bu yanan evin aslında gizli bir bodrum kapısı barındırdığını ilan ediyorum!" diyebilirsiniz.</li>
-                                <li><strong>Bonus Kural: "WOW... Ama Hayır!"</strong><br>Yazarlık hakkının bir sınırı vardır. Korkunç bir canavarın aslında sizin eski evcil hayvanınız olduğunu söylemek hikayenin tonunu bozar. Ama 1 FP harcayarak onun kafasını karıştırmayı başarabilirsiniz.</li>
+                                <li><strong>Kural 1: "Önce Kurgu, Sonra Mekanik"</strong><br>"Avantaj Yarat
+                                    kullanıyorum" demeyin. Sıkıcıdır. Şunu deyin: "Yerdeki o çamuru alıp Worg'un gözüne
+                                    fırlatıyorum!" Ben de "Harika! Bu bir 'Avantaj Yarat' zarıdır!" derim. Sizin
+                                    göreviniz havalı şeyler yapmak, hangi kurala girdiğini bulmak benim görevim.</li>
+                                <li><strong>Kural 2: "Başarısızlık İleri Taşır"</strong><br>FATE'te başarısız bir zar,
+                                    "Hiçbir şey olmadı" demek değildir. Başarısızlık, "Evet, başaramadın... ve işler
+                                    daha da sarpa sardı!" demektir. Başarısızlık hikayeyi durdurmaz; daha da heyecanlı
+                                    hale getirir!</li>
+                                <li><strong>Kural 3: "Evet, ve..." / "Hayır, ama..."</strong><br>Siz de "Evet, ve..."
+                                    deyin! Muhafız kılıçla saldırdığında sadece savunma yapmayın, o kılıcın ne kadar
+                                    eski olduğunu fark edip bunu bir avantaja çevirmeyi deneyin.</li>
+                                <li><strong>Kural 4: Siz de GM'siniz! (Hikaye Otoritesi)</strong><br>Bir FATE Puanı
+                                    harcayarak, hikayeye benim bile düşünmediğim bir detayı ekleyebilirsiniz. "Benim
+                                    Yönüm <em>Her Zaman Bir Kaçış Planı Vardır</em>. 1 FP harcıyorum ve bu yanan evin
+                                    aslında gizli bir bodrum kapısı barındırdığını ilan ediyorum!" diyebilirsiniz.</li>
+                                <li><strong>Bonus Kural: "WOW... Ama Hayır!"</strong><br>Yazarlık hakkının bir sınırı
+                                    vardır. Korkunç bir canavarın aslında sizin eski evcil hayvanınız olduğunu söylemek
+                                    hikayenin tonunu bozar. Ama 1 FP harcayarak onun kafasını karıştırmayı
+                                    başarabilirsiniz.</li>
                             </ul>
                         </div>
 
@@ -552,19 +717,29 @@
                         <div class="tutorial-section" style="text-align: center;">
                             <h3 style="color: var(--color-text);">Özetle (Artık Cidden Son)</h3>
                             <p style="font-size: 1.1rem;">FATE bir "simülasyon" değildir, bu bir "yaratım odası"dır.</p>
-                            <p style="color: var(--color-accent-magic); font-weight: 700;">Başarısız olmaktan korkmayın; bu hikayeyi daha iyi yapar.<br>
-                            "Hangi kuralı kullanmalıyım?" diye düşünmeyin. "En havalı ne yapabilirim?" diye düşünün.<br>
-                            Yönleriniz ve FATE Puanlarınız, hikayenin gidişatını belirlemeniz için size verilmiş "yazarlık" haklarıdır!</p>
-                            <p>Tüm bunları yaparken de o harika sitemiz bizim yerimize matematiği tutacak! Hazır mısınız? Çünkü hikaye başlıyor!</p>
+                            <p style="color: var(--color-accent-magic); font-weight: 700;">Başarısız olmaktan korkmayın;
+                                bu hikayeyi daha iyi yapar.<br>
+                                "Hangi kuralı kullanmalıyım?" diye düşünmeyin. "En havalı ne yapabilirim?" diye
+                                düşünün.<br>
+                                Yönleriniz ve FATE Puanlarınız, hikayenin gidişatını belirlemeniz için size verilmiş
+                                "yazarlık" haklarıdır!</p>
+                            <p>Tüm bunları yaparken de o harika sitemiz bizim yerimize matematiği tutacak! Hazır
+                                mısınız? Çünkü hikaye başlıyor!</p>
                         </div>
                     </div>
 
                     <div class="lang-content lang-en">
                         <h2 class="card-title">🔥 Welcome to FATE! (In Its Simplest Form) - Complete Guide</h2>
-                        
+
                         <div class="tutorial-section">
-                            <p>Hello everyone! Welcome to a legendary FATE adventure! This will be our "Tutorial Game." My goal is to show both our 4 players and everyone watching us why FATE is such an amazing system.</p>
-                            <p><strong>Let Me Say It Right from the Start: Don't be afraid!</strong> If you have played D&D or other systems, I want you to forget about that "math" part for a bit now. FATE doesn't say "Damage: 8". FATE says, <em>"The blow of the sword crushed the man's armor and broke his rib!"</em> Tonight, we will focus on the "story," not the "numbers."</p>
+                            <p>Hello everyone! Welcome to a legendary FATE adventure! This will be our "Tutorial Game."
+                                My goal is to show both our 4 players and everyone watching us why FATE is such an
+                                amazing system.</p>
+                            <p><strong>Let Me Say It Right from the Start: Don't be afraid!</strong> If you have played
+                                D&D or other systems, I want you to forget about that "math" part for a bit now. FATE
+                                doesn't say "Damage: 8". FATE says, <em>"The blow of the sword crushed the man's armor
+                                    and broke his rib!"</em> Tonight, we will focus on the "story," not the "numbers."
+                            </p>
                         </div>
 
                         <div class="menu-divider"></div>
@@ -573,17 +748,36 @@
                             <h3>FATE 101: The Basic Rule (Aspects and FATE Points)</h3>
                             <p>This is the foundation of everything in FATE.</p>
                             <ul class="tutorial-list">
-                                <li><strong>What are Aspects?</strong> These are sentences that describe who your character is. Not a number like "Strength: 18". Your Aspect is: <em>The Strongest Man in Town</em>. And most importantly, Aspects don't just have to be good things. Your character also has a "Trouble" Aspect. Example: <em>Has Enemies Everywhere</em> or <em>Deathly Afraid of the Dark</em>.</li>
-                                <li><strong>What are FATE Points (FP)?</strong> These are your "currency." They are the tokens that allow you to pull off those "boss fight" moments and heroics.</li>
+                                <li><strong>What are Aspects?</strong> These are sentences that describe who your
+                                    character is. Not a number like "Strength: 18". Your Aspect is: <em>The Strongest
+                                        Man in Town</em>. And most importantly, Aspects don't just have to be good
+                                    things. Your character also has a "Trouble" Aspect. Example: <em>Has Enemies
+                                        Everywhere</em> or <em>Deathly Afraid of the Dark</em>.</li>
+                                <li><strong>What are FATE Points (FP)?</strong> These are your "currency." They are the
+                                    tokens that allow you to pull off those "boss fight" moments and heroics.</li>
                             </ul>
                             <p><strong>How do these two work? Through a simple economy:</strong></p>
                             <ul class="tutorial-list">
-                                <li><strong>1. Invoke: The Moment You Say "I Am Awesome!":</strong><br>Whenever you want to say "I am very good at this!"... you spend 1 FATE Point (FP).<br><em>Example: You need to open that giant, Locked Tomb Door. You say: "I am spending 1 FATE Point and invoking my The Strongest Man in Town Aspect!" Result: You get a HUGE bonus to your roll (or you reroll the dice) and you shatter that door.</em></li>
-                                <li><strong>2. Compel: The Moment You Say "Uh Oh!" (The Most Important Part):</strong><br>So, how will you earn back those FATE Points you spent? When you get into trouble! This is where FATE shines. When I (as the GM) see your "Trouble" Aspects, I will hand you a FATE Point and say: <em>"Okay, the town guard tells you 'Get lost, you in rags!' Wouldn't your Overly Proud Aspect hit a nerve right now? It's a great time to headbutt that guard, right?"</em><br><br>
-                                You have two options here:<br>
-                                <strong>1. You Accept:</strong> You say, "Yes, you're right!", you grab that FATE Point (FP), headbutt the guard, and get yourself into bigger trouble.<br>
-                                <strong>2. You Refuse:</strong> You say, "No, I will stay calm." But there is a price for this: You spend 1 FP to refuse that FATE Point.<br>
-                                <strong style="color: var(--color-accent-magic);">Meaning: In FATE, your character's flaws (Troubles) come back to you as FATE Points. Your roleplaying is rewarded!</strong></li>
+                                <li><strong>1. Invoke: The Moment You Say "I Am Awesome!":</strong><br>Whenever you want
+                                    to say "I am very good at this!"... you spend 1 FATE Point (FP).<br><em>Example: You
+                                        need to open that giant, Locked Tomb Door. You say: "I am spending 1 FATE Point
+                                        and invoking my The Strongest Man in Town Aspect!" Result: You get a HUGE bonus
+                                        to your roll (or you reroll the dice) and you shatter that door.</em></li>
+                                <li><strong>2. Compel: The Moment You Say "Uh Oh!" (The Most Important
+                                        Part):</strong><br>So, how will you earn back those FATE Points you spent? When
+                                    you get into trouble! This is where FATE shines. When I (as the GM) see your
+                                    "Trouble" Aspects, I will hand you a FATE Point and say: <em>"Okay, the town guard
+                                        tells you 'Get lost, you in rags!' Wouldn't your Overly Proud Aspect hit a nerve
+                                        right now? It's a great time to headbutt that guard, right?"</em><br><br>
+                                    You have two options here:<br>
+                                    <strong>1. You Accept:</strong> You say, "Yes, you're right!", you grab that FATE
+                                    Point (FP), headbutt the guard, and get yourself into bigger trouble.<br>
+                                    <strong>2. You Refuse:</strong> You say, "No, I will stay calm." But there is a
+                                    price for this: You spend 1 FP to refuse that FATE Point.<br>
+                                    <strong style="color: var(--color-accent-magic);">Meaning: In FATE, your character's
+                                        flaws (Troubles) come back to you as FATE Points. Your roleplaying is
+                                        rewarded!</strong>
+                                </li>
                             </ul>
                         </div>
 
@@ -591,12 +785,35 @@
 
                         <div class="tutorial-section">
                             <h3>FATE 102: From a Piece of Paper to a Legend (Character Creation)</h3>
-                            <p>Alright, we understand the basics of FATE. Now we come to the question, "So, who is my character?" On your character sheet (on the screen on our site), there will be 5 main "sentences" (Aspects) and "special moves" (Stunts).</p>
+                            <p>Alright, we understand the basics of FATE. Now we come to the question, "So, who is my
+                                character?" On your character sheet (on the screen on our site), there will be 5 main
+                                "sentences" (Aspects) and "special moves" (Stunts).</p>
                             <ul class="tutorial-list">
-                                <li><strong>1. High Concept: "Your Movie Poster"</strong><br>This is your sentence that describes your character in a single breath, in the coolest way possible. Not "I am a warrior". That's boring. FATE asks this: "Okay, you're a warrior, but what kind of warrior are you?"<br><em>Examples for Our Dark Fantasy Game: The Last Priest to Survive the Plague Epidemic, The Bastard Child Trying to Steal the Baron's Legacy, The Angry Hunter Seeking the Monster That Burned Their Village.</em></li>
-                                <li><strong>2. Trouble: "Your FATE Point Generator"</strong><br>This is your character's most important Aspect. Because this is what I (as the GM) will use the most to give you FATE Points!<br><em>Examples: Deathly Afraid of the Dark, Always Draws Their Sword First, Owes a Blood Debt to the Captain of the City Guards.</em></li>
-                                <li><strong>3. Free Aspects: "The Rest of the Story"</strong><br>The remaining 3 Free Aspects fill in the rest of your story: a memory from your past, an important relationship, a sacred vow, or a very important item belonging to you...<br><em>Examples: The Rusty But Reliable Armor Inherited From My Father (This is an Aspect! It can break, or it can save you!), I Never Leave an Innocent Behind, My Brother is in the Grave Robbers Guild.</em></li>
-                                <li><strong>4. Stunts: "Your Special Moves"</strong><br>Here is where the "math" enters just a little bit. A Stunt says: "Because I am [Very Good at This], I get [This Special Advantage] in [This Specific Situation]." It usually gives you a +2 bonus in a specific situation or allows you to do something no one else can do.<br><em>Examples:<br>- Shield Wall: Because I am a Veteran Soldier, I get a +2 to my roll when I Defend against an attack with my Shield.<br>- Language of the Streets: Because I am a City Rat, I get +2 when I roll to Create an Advantage regarding 'rabble' like Graveyard Keepers.</em></li>
+                                <li><strong>1. High Concept: "Your Movie Poster"</strong><br>This is your sentence that
+                                    describes your character in a single breath, in the coolest way possible. Not "I am
+                                    a warrior". That's boring. FATE asks this: "Okay, you're a warrior, but what kind of
+                                    warrior are you?"<br><em>Examples for Our Dark Fantasy Game: The Last Priest to
+                                        Survive the Plague Epidemic, The Bastard Child Trying to Steal the Baron's
+                                        Legacy, The Angry Hunter Seeking the Monster That Burned Their Village.</em>
+                                </li>
+                                <li><strong>2. Trouble: "Your FATE Point Generator"</strong><br>This is your character's
+                                    most important Aspect. Because this is what I (as the GM) will use the most to give
+                                    you FATE Points!<br><em>Examples: Deathly Afraid of the Dark, Always Draws Their
+                                        Sword First, Owes a Blood Debt to the Captain of the City Guards.</em></li>
+                                <li><strong>3. Free Aspects: "The Rest of the Story"</strong><br>The remaining 3 Free
+                                    Aspects fill in the rest of your story: a memory from your past, an important
+                                    relationship, a sacred vow, or a very important item belonging to
+                                    you...<br><em>Examples: The Rusty But Reliable Armor Inherited From My Father (This
+                                        is an Aspect! It can break, or it can save you!), I Never Leave an Innocent
+                                        Behind, My Brother is in the Grave Robbers Guild.</em></li>
+                                <li><strong>4. Stunts: "Your Special Moves"</strong><br>Here is where the "math" enters
+                                    just a little bit. A Stunt says: "Because I am [Very Good at This], I get [This
+                                    Special Advantage] in [This Specific Situation]." It usually gives you a +2 bonus in
+                                    a specific situation or allows you to do something no one else can
+                                    do.<br><em>Examples:<br>- Shield Wall: Because I am a Veteran Soldier, I get a +2 to
+                                        my roll when I Defend against an attack with my Shield.<br>- Language of the
+                                        Streets: Because I am a City Rat, I get +2 when I roll to Create an Advantage
+                                        regarding 'rabble' like Graveyard Keepers.</em></li>
                             </ul>
                         </div>
 
@@ -606,9 +823,21 @@
                             <h3>FATE 103: How Does the Engine Work? (Dice, the Ladder, and the 4 Actions)</h3>
                             <p>Now, what happens when you say, "I am doing something!"?</p>
                             <ul class="tutorial-list">
-                                <li><strong>1. Those Weird Dice (FATE/Fudge Dice):</strong> There are + (Plus, +1), - (Minus, -1), and blank (Zero, 0) symbols on the dice. You will always roll 4 of them. <em>Example: + + - 0 = Total +1.</em></li>
-                                <li><strong>2. "The Ladder":</strong> In FATE, we don't say "Difficulty 15." We say "Difficulty Great (+2)."<br>0 = Mediocre, +1 = Good, +2 = Great, +4 = Legendary. Your skill is also measured with these adjectives (E.g., Fight: Great (+2)).</li>
-                                <li><strong>3. The "4 Actions Menu" (What Can I Do?):</strong> When it's your turn, any cool action that comes to your mind falls into one of these 4 categories:<br><strong>A) Overcome:</strong> Trying to get past an obstacle (a locked door, a foggy valley).<br><strong>B) Create an Advantage:</strong> The heart of FATE! "Passing the ball" to yourself or your friends. If you succeed, you add a new Aspect to the game, such as <em>Eyes Full of Mud</em>.<br><strong>C) Attack:</strong> Trying to inflict physical or mental harm on someone.<br><strong>D) Defend:</strong> Automatically triggers when someone tries to "Attack" or "Create an Advantage" against you.</li>
+                                <li><strong>1. Those Weird Dice (FATE/Fudge Dice):</strong> There are + (Plus, +1), -
+                                    (Minus, -1), and blank (Zero, 0) symbols on the dice. You will always roll 4 of
+                                    them. <em>Example: + + - 0 = Total +1.</em></li>
+                                <li><strong>2. "The Ladder":</strong> In FATE, we don't say "Difficulty 15." We say
+                                    "Difficulty Great (+2)."<br>0 = Mediocre, +1 = Good, +2 = Great, +4 = Legendary.
+                                    Your skill is also measured with these adjectives (E.g., Fight: Great (+2)).</li>
+                                <li><strong>3. The "4 Actions Menu" (What Can I Do?):</strong> When it's your turn, any
+                                    cool action that comes to your mind falls into one of these 4
+                                    categories:<br><strong>A) Overcome:</strong> Trying to get past an obstacle (a
+                                    locked door, a foggy valley).<br><strong>B) Create an Advantage:</strong> The heart
+                                    of FATE! "Passing the ball" to yourself or your friends. If you succeed, you add a
+                                    new Aspect to the game, such as <em>Eyes Full of Mud</em>.<br><strong>C)
+                                        Attack:</strong> Trying to inflict physical or mental harm on
+                                    someone.<br><strong>D) Defend:</strong> Automatically triggers when someone tries to
+                                    "Attack" or "Create an Advantage" against you.</li>
                             </ul>
                         </div>
 
@@ -616,11 +845,24 @@
 
                         <div class="tutorial-section">
                             <h3>FATE 104: When Things Go South (Stress and Consequences)</h3>
-                            <p>So, what happens if an "Attack" is successful? What will we experience when we take a hit in our "Dark Fantasy" game?</p>
+                            <p>So, what happens if an "Attack" is successful? What will we experience when we take a hit
+                                in our "Dark Fantasy" game?</p>
                             <ul class="tutorial-list">
-                                <li><strong>1. Stress Boxes: "Scrapes and Bruises"</strong><br>On your character sheet (on our site), you will see a few small boxes labeled "Stress." These are NOT HP (Hit Points)! They allow you to "absorb" minor blows and reset immediately at the end of the scene.</li>
-                                <li><strong>2. Consequences: "Now That Hurt!"</strong><br>But what if your Stress boxes aren't enough? Or the blow is too big? Then you take a "Consequence." A Consequence means a new, negative Aspect is added to your character. While a Deep Claw Wound might heal in a scene or two, a Broken Rib (Moderate Consequence) or a Severed Finger (Severe Consequence) will stay with you for weeks! And now I (the GM) and the enemies can Invoke that Aspect against you or Compel you with it!</li>
-                                <li><strong>3. Conceding: "A Smart Retreat"</strong><br>It's very hard to "die" in FATE, but "losing" is a thing. If you see you're losing, you can say, "I Concede!" You lose the scene, but you decide what you lose in the story (not the GM). Plus, you earn 1 FATE Point (FP) for this defeat, and get an extra 1 FP for every Consequence you took up to that point!</li>
+                                <li><strong>1. Stress Boxes: "Scrapes and Bruises"</strong><br>On your character sheet
+                                    (on our site), you will see a few small boxes labeled "Stress." These are NOT HP
+                                    (Hit Points)! They allow you to "absorb" minor blows and reset immediately at the
+                                    end of the scene.</li>
+                                <li><strong>2. Consequences: "Now That Hurt!"</strong><br>But what if your Stress boxes
+                                    aren't enough? Or the blow is too big? Then you take a "Consequence." A Consequence
+                                    means a new, negative Aspect is added to your character. While a Deep Claw Wound
+                                    might heal in a scene or two, a Broken Rib (Moderate Consequence) or a Severed
+                                    Finger (Severe Consequence) will stay with you for weeks! And now I (the GM) and the
+                                    enemies can Invoke that Aspect against you or Compel you with it!</li>
+                                <li><strong>3. Conceding: "A Smart Retreat"</strong><br>It's very hard to "die" in FATE,
+                                    but "losing" is a thing. If you see you're losing, you can say, "I Concede!" You
+                                    lose the scene, but you decide what you lose in the story (not the GM). Plus, you
+                                    earn 1 FATE Point (FP) for this defeat, and get an extra 1 FP for every Consequence
+                                    you took up to that point!</li>
                             </ul>
                         </div>
 
@@ -628,13 +870,30 @@
 
                         <div class="tutorial-section">
                             <h3>FATE 105: The Story Wins, Not the Dice (Being the Master of the Rules)</h3>
-                            <p>Our final and most important lesson. FATE is not a game about what you roll on the dice. FATE is a game about "the meaning you attach to the dice you roll."</p>
+                            <p>Our final and most important lesson. FATE is not a game about what you roll on the dice.
+                                FATE is a game about "the meaning you attach to the dice you roll."</p>
                             <ul class="tutorial-list">
-                                <li><strong>Rule 1: "Fiction First"</strong><br>Don't just say, "I use Create an Advantage." It's boring. Say this: "I scoop up that mud from the ground and throw it into the Worg's eyes!" And I will say, "Great! That's a 'Create an Advantage' roll!" Your job is to "do cool things." It's my job to figure out which rule it falls under.</li>
-                                <li><strong>Rule 2: "Failing Forward"</strong><br>In FATE, a failed roll doesn't mean "Nothing happened." A failed roll means, "Yes, you didn't succeed... and things just got even more complicated!" Failure doesn't stop the story; it makes it even more exciting!</li>
-                                <li><strong>Rule 3: "Yes, and..." / "No, but..."</strong><br>You should also say "Yes, and..."! When the guard attacks you with a Broken Sword, you don't just defend; you notice how old and rusty that sword is, and you try to create an advantage!</li>
-                                <li><strong>Rule 4: You Are Also the GM! (Story Authority)</strong><br>By spending a FATE Point, you can add a detail to the story that even I hadn't thought of. You can say: "My Aspect is <em>Always Has an Escape Plan</em>. I'm spending 1 FATE Point and I want to add to the story that this Burning House is actually my old hideout and I know the location of a hidden cellar door!"</li>
-                                <li><strong>Bonus Rule: "WOW... But No!"</strong><br>There is a limit to this authorial right. Declaring that the Terrifying Worg is actually your pet "Peanut" ruins the tone and logic of the story. But by spending 1 FP, you can declare that the Worg is Confused Because It Smelled Peanut!</li>
+                                <li><strong>Rule 1: "Fiction First"</strong><br>Don't just say, "I use Create an
+                                    Advantage." It's boring. Say this: "I scoop up that mud from the ground and throw it
+                                    into the Worg's eyes!" And I will say, "Great! That's a 'Create an Advantage' roll!"
+                                    Your job is to "do cool things." It's my job to figure out which rule it falls
+                                    under.</li>
+                                <li><strong>Rule 2: "Failing Forward"</strong><br>In FATE, a failed roll doesn't mean
+                                    "Nothing happened." A failed roll means, "Yes, you didn't succeed... and things just
+                                    got even more complicated!" Failure doesn't stop the story; it makes it even more
+                                    exciting!</li>
+                                <li><strong>Rule 3: "Yes, and..." / "No, but..."</strong><br>You should also say "Yes,
+                                    and..."! When the guard attacks you with a Broken Sword, you don't just defend; you
+                                    notice how old and rusty that sword is, and you try to create an advantage!</li>
+                                <li><strong>Rule 4: You Are Also the GM! (Story Authority)</strong><br>By spending a
+                                    FATE Point, you can add a detail to the story that even I hadn't thought of. You can
+                                    say: "My Aspect is <em>Always Has an Escape Plan</em>. I'm spending 1 FATE Point and
+                                    I want to add to the story that this Burning House is actually my old hideout and I
+                                    know the location of a hidden cellar door!"</li>
+                                <li><strong>Bonus Rule: "WOW... But No!"</strong><br>There is a limit to this authorial
+                                    right. Declaring that the Terrifying Worg is actually your pet "Peanut" ruins the
+                                    tone and logic of the story. But by spending 1 FP, you can declare that the Worg is
+                                    Confused Because It Smelled Peanut!</li>
                             </ul>
                         </div>
 
@@ -643,22 +902,26 @@
                         <div class="tutorial-section" style="text-align: center;">
                             <h3 style="color: var(--color-text);">In Summary (Seriously, the End Now)</h3>
                             <p style="font-size: 1.1rem;">FATE is not a "simulation", it is a "creation room."</p>
-                            <p style="color: var(--color-accent-magic); font-weight: 700;">Don't be afraid to fail; it makes the story better.<br>Don't think, "Which rule should I use?" Think, "What's the coolest thing I can do?"<br>Your Aspects and FATE Points are "authorial" rights given to you so you can determine the course of the story as much as I do!</p>
-                            <p>While we do all this, that awesome site of ours will handle the math for us! Are you ready? Because the story is starting!</p>
+                            <p style="color: var(--color-accent-magic); font-weight: 700;">Don't be afraid to fail; it
+                                makes the story better.<br>Don't think, "Which rule should I use?" Think, "What's the
+                                coolest thing I can do?"<br>Your Aspects and FATE Points are "authorial" rights given to
+                                you so you can determine the course of the story as much as I do!</p>
+                            <p>While we do all this, that awesome site of ours will handle the math for us! Are you
+                                ready? Because the story is starting!</p>
                         </div>
                     </div>
-                    
+
                 </div>
             </section>
 
         </main>
-    </div> 
-    
+    </div>
+
     <div id="modal-overlay" class="modal-hidden">
         <div id="modal-container">
             <h2 id="modal-title" class="card-title" style="margin-top: 0; margin-bottom: 15px;"></h2>
             <p id="modal-message"></p>
-            
+
             <div id="modal-input-group" class="form-group-vertical" style="display: none;">
                 <input type="text" id="modal-input" class="char-field">
             </div>
@@ -669,11 +932,11 @@
             </div>
         </div>
     </div>
-    
+
     <div id="credits-overlay" class="modal-hidden">
         <div id="credits-card" class="character-card credits-box">
             <h2 class="credits-title" data-i18n="credits_title">Emeği Geçenler</h2>
-            
+
             <div class="credits-section">
                 <h3 data-i18n="credits_dev">Geliştirici & Kodlama</h3>
                 <p class="credits-name highlight">OziDev</p>
@@ -694,69 +957,84 @@
             </div>
 
             <div class="credits-footer">
-                <button id="close-credits-button" class="btn btn-accent credits-close-btn" data-i18n="btn_close">Kapat</button>
+                <button id="close-credits-button" class="btn btn-accent credits-close-btn"
+                    data-i18n="btn_close">Kapat</button>
             </div>
         </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    
+
     <script src="lang.js"></script>
-    
+
     <script src="app.js"></script>
     <div id="save-toast-notification" class="toast-notification" data-i18n="msg_saved">
         Kaydedildi!
     </div>
     <div id="notes-drawer" class="notes-drawer">
-    <button id="notes-toggle-btn" class="notes-toggle-btn">
-        <span id="notes-toggle-text" data-i18n="btn_notes_toggle">Notlar</span>
-    </button>
-    <div class="notes-content">
-        <h3 data-i18n="title_notes">Notlar</h3>
-        <textarea id="player-notes-area" data-i18n-placeholder="placeholder_notes"></textarea>
-        <div class="notes-footer">
-            <small id="notes-status-msg" style="color: #888; font-size: 0.8rem;"></small>
+        <button id="notes-toggle-btn" class="notes-toggle-btn">
+            <span id="notes-toggle-text" data-i18n="btn_notes_toggle">Notlar</span>
+        </button>
+        <div class="notes-content">
+            <h3 data-i18n="title_notes">Notlar</h3>
+            <textarea id="player-notes-area" data-i18n-placeholder="placeholder_notes"></textarea>
+            <div class="notes-footer">
+                <small id="notes-status-msg" style="color: #888; font-size: 0.8rem;"></small>
+            </div>
         </div>
     </div>
-</div>
-<div id="guide-overlay" class="modal-hidden">
-    <div id="guide-container">
-        <h2 class="card-title" style="text-align: center; color: var(--color-accent-magic); margin-top: 0;" data-i18n="guide_title">Hoş Geldiniz</h2>
-        
-        <div class="guide-content">
-            
-            <p data-i18n="guide_welcome" style="margin-bottom: 20px; font-size: 1.1rem;">FATE RPG Karakter Kağıdı uygulamasına hoş geldiniz!</p>
+    <div id="guide-overlay" class="modal-hidden">
+        <div id="guide-container">
+            <h2 class="card-title" style="text-align: center; color: var(--color-accent-magic); margin-top: 0;"
+                data-i18n="guide_title">Hoş Geldiniz</h2>
 
-            <h3 data-i18n="guide_header_features" style="color: var(--color-primary); font-size: 1.1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 5px; margin-top: 20px;"></h3>
-            <ul style="list-style: disc; padding-left: 20px; margin-bottom: 15px;">
-                <li data-i18n="guide_feat_1">Karakter Yaratma & Düzenleme</li>
-                <li data-i18n="guide_feat_2">Zar Atıcı (Dice Roller)</li>
-                <li data-i18n="guide_feat_3">Kampanya Oluşturma & Beceri Özelleştirme (GM)</li>
-                <li data-i18n="guide_feat_4">Kampanyalara Katılma (Canlı Oyun)</li>
-            </ul>
+            <div class="guide-content">
 
-            <h3 data-i18n="guide_header_warnings" style="color: var(--color-danger); font-size: 1.1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 5px; margin-top: 20px;"></h3>
-            <p data-i18n="guide_warn_backup">Sistem geliştirme aşamasındadır. Verilerinizi kaybetmemek için...</p>
-            <p data-i18n="guide_warn_bugs">Hata bulursanız...</p>
+                <p data-i18n="guide_welcome" style="margin-bottom: 20px; font-size: 1.1rem;">FATE RPG Karakter Kağıdı
+                    uygulamasına hoş geldiniz!</p>
 
-            <h3 data-i18n="guide_header_steps" style="color: var(--color-accent-magic); font-size: 1.1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 5px; margin-top: 20px;"></h3>
-            
-            <p style="margin-top: 15px;"><strong>1. <span data-i18n="guide_step_skill_title">Becerileri Kontrol Edin:</span></strong></p>
-            <p data-i18n="guide_step_skill_desc" style="font-size: 0.95rem; color: var(--color-text-muted);">...</p>
+                <h3 data-i18n="guide_header_features"
+                    style="color: var(--color-primary); font-size: 1.1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 5px; margin-top: 20px;">
+                </h3>
+                <ul style="list-style: disc; padding-left: 20px; margin-bottom: 15px;">
+                    <li data-i18n="guide_feat_1">Karakter Yaratma & Düzenleme</li>
+                    <li data-i18n="guide_feat_2">Zar Atıcı (Dice Roller)</li>
+                    <li data-i18n="guide_feat_3">Kampanya Oluşturma & Beceri Özelleştirme (GM)</li>
+                    <li data-i18n="guide_feat_4">Kampanyalara Katılma (Canlı Oyun)</li>
+                </ul>
 
-            <p style="margin-top: 15px;"><strong>2. <span data-i18n="guide_step_multi_title">Çoklu Karakter & Temiz Oyun:</span></strong></p>
-            <p data-i18n="guide_step_multi_desc" style="font-size: 0.95rem; color: var(--color-text-muted);">...</p>
+                <h3 data-i18n="guide_header_warnings"
+                    style="color: var(--color-danger); font-size: 1.1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 5px; margin-top: 20px;">
+                </h3>
+                <p data-i18n="guide_warn_backup">Sistem geliştirme aşamasındadır. Verilerinizi kaybetmemek için...</p>
+                <p data-i18n="guide_warn_bugs">Hata bulursanız...</p>
 
-            <p style="margin-top: 15px;"><strong>3. <span data-i18n="guide_step_mode_title">Oyun Modu & Zar Atıcı:</span></strong></p>
-            <p data-i18n="guide_step_mode_desc" style="font-size: 0.95rem; color: var(--color-text-muted);">...</p>
+                <h3 data-i18n="guide_header_steps"
+                    style="color: var(--color-accent-magic); font-size: 1.1rem; border-bottom: 1px solid var(--color-border); padding-bottom: 5px; margin-top: 20px;">
+                </h3>
 
-        </div>
+                <p style="margin-top: 15px;"><strong>1. <span data-i18n="guide_step_skill_title">Becerileri Kontrol
+                            Edin:</span></strong></p>
+                <p data-i18n="guide_step_skill_desc" style="font-size: 0.95rem; color: var(--color-text-muted);">...</p>
 
-        <div class="modal-buttons" style="margin-top: 25px;">
-            <button id="close-guide-button" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1.1rem;" data-i18n="btn_got_it">Okudum, Anladım</button>
+                <p style="margin-top: 15px;"><strong>2. <span data-i18n="guide_step_multi_title">Çoklu Karakter & Temiz
+                            Oyun:</span></strong></p>
+                <p data-i18n="guide_step_multi_desc" style="font-size: 0.95rem; color: var(--color-text-muted);">...</p>
+
+                <p style="margin-top: 15px;"><strong>3. <span data-i18n="guide_step_mode_title">Oyun Modu & Zar
+                            Atıcı:</span></strong></p>
+                <p data-i18n="guide_step_mode_desc" style="font-size: 0.95rem; color: var(--color-text-muted);">...</p>
+
+            </div>
+
+            <div class="modal-buttons" style="margin-top: 25px;">
+                <button id="close-guide-button" class="btn btn-primary"
+                    style="width: 100%; padding: 12px; font-size: 1.1rem;" data-i18n="btn_got_it">Okudum,
+                    Anladım</button>
+            </div>
         </div>
     </div>
-</div>
 </body>
+
 </html>
